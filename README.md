@@ -4,9 +4,9 @@
 
 ## **1. Team**
 
-> 476702 **Pinja Hokkanen** 
-> 488732 **Tatu Koivisto** 
-> 526270 **Leevi Lappi**
+> 476702 Pinja Hokkanen
+> 488732 Tatu Koivisto
+> 526270 Leevi Lappi
 
 Our team consists of two second year students and a fourth year student, all from Information Networks major. We all have some experience on front-end development techniques and UI design, but have never worked with Django before. 
 
