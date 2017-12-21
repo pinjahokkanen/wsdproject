@@ -4,9 +4,11 @@
 
 ## **1. Team**
 
-| 476702 Pinja Hokkanen |
-| 488732 Tatu Koivisto	|
-| 526270 Leevi Lappi	|
+| Student ID  | Team Member    |
+| ----------- |:-------------- |
+| 476702      | Pinja Hokkanen |
+| 488732      | Tatu Koivisto  |
+| 526270      | Leevi Lappi    |
 
 Our team consists of two second year students and a fourth year student, all from Information Networks major. We all have some experience on front-end development techniques and UI design, but have never worked with Django before. 
 
@@ -124,7 +126,7 @@ We have created a rough schedule for the development and more strict deadlines f
 
 ## **5. Testing**
 
-….
+We work using lean principles and test continuously parts we have built. The service platform does not seem to be too big for running tests manually. 
 
 
 ## **6. Risk Analysis**
