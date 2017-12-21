@@ -10,13 +10,11 @@
 
 Our team consists of two second year students and a fourth year student, all from Information Networks major. We all have some experience on front-end development techniques and UI design, but have never worked with Django before. 
 
-----
 ## **2. Goal**
 Our first goal is to develop a well made and neat platform, that has all the mandatory requirements implemented thoroughly to ensure the basic functionalities of the service. We aim to emphasise the usability and user experience of the service, thus make it user-friendly and visually pleasing using common web design principles. Our service aims to cater the needs of our potential users and we will have a user centered approach in our business model, development and design. Since multiple displays and connectedness are important factors influencing web development, we intend to make the platform responsive and have proper social media integrations. 
 	
 Also, we believe that this project would be a great part to each of our personal portfolio, which is why we are ready to invest our efforts in creating a quality platform.
 
----
 ## **3. Plans**
 
 We begin our project by creating few visual interpretations of our ideas to establish a common vision on how our platform should look like.  We plan to implement all the mandatory requirements as well as we possibly can to get max points from each item on the list. However, we are interested in implementing multiple additional features for our personal learning, but also to cover if mistakes happen in implementing mandatory requirements. 
@@ -53,7 +51,7 @@ Practical implementation will rely on course material, Django’s own documentat
 	- Use of management methods to increase team productivity, communication and efficiency
 	- Making good documentation of the project 
 
-###3.1  Additional features
+### 3.1  Additional features
 
 > **3rd party login:** 
 > We aim to integrate and enable logins from other
@@ -89,25 +87,25 @@ Practical implementation will rely on course material, Django’s own documentat
 
 
 
-###3.2 Priorities
+### 3.2 Priorities
 
 We will have two main priorities when developing the service. First, we will focus on the mandatory requirements and basic functionalities, since everything else is built on that. Even great extra features will not compensate insufficient basic functionality of the service. Second, we’ll focus on the usability of our platform. Competition has a big effect on the current market situation, and our team believes that superior user experience leads to a greater market share. After we have ensured that these priorities have been addressed and fill both mandatory and our requirements, we will implement additional features.
 
-###3.3 Initial Draft of Models
+### 3.3 Initial Draft of Models
 
 ![MODELS](https://lh6.googleusercontent.com/F3_drMVUkObKQfPNquZcMsPJ4Q5f-MQsvFOKQ-rfKiyNJYSTEQu0osS5jwPr2MNCsrFlEWNiR6SjmCzaBR5G=w1920-h925)
 
 We are still considering if we one more mode: Sales, as well as if we need the Game-objects at User model.  
 
-##**4. Process and Time Schedule**
+## **4. Process and Time Schedule**
 
 We will proceed in our development process by dividing the project into clearly defined parts that are relevant at the current time and state of the platform. Each of the team members can then independently work on those parts to ensure the continuous development. Due to the time constraints of the team members, we will communicate mainly using digital channels. We will also try to meet face-to-face when necessary, preferably once a week, to discuss the current status of the development, new features and how those should be implemented and the labour of work together. 
 
-##4.1 Communication channels
+## 4.1 Communication channels
 
 We will use **Telegram** as a main channel for communication and **Git** as secondary in addition to the **ad-hoc meetings** when necessary. This kind of remote communication requires a well managed project, which is why we plan to utilize Kanban methods and Trello with Kanban Flow - service as an example.
 
-##4.2 Schedule
+## 4.2 Schedule
 
 We have created a rough schedule for the development and more strict deadlines for important milestones, but since we also want our process to be agile, we are aware and ready for possible adjustments and changes.
 
@@ -124,12 +122,12 @@ We have created a rough schedule for the development and more strict deadlines f
 **Week 5 - 6:** We will implement the additional features, squash bugs and test the system rigorously
 
 
-##**5. Testing**
+## **5. Testing**
 
 ….
 
 
-##**6. Risk Analysis**
+## **6. Risk Analysis**
 
 Biggest risks in our work comes from the limitation of time. Our team member’s have multiple commitments to work, school projects and extra activities. This can lead to a situation where work accumulates faster than final deadline’s approach. 
 
