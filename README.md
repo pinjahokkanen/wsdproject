@@ -1,6 +1,5 @@
 # Online Game Store - Project Plan | CS-C3170 Web Software Development, 2017-2018
 
-----------
 
 ## **1. Team**
 
