@@ -1,5 +1,5 @@
-# **Online Game Store - Project Plan** | CS-C3170 Web Software Development, 2017-2018
 
+<h1>**Online Game Store - Project Plan** <br/> | CS-C3170 Web Software Development, 2017-2018</h1>
 
 ## **1. Team**
 
