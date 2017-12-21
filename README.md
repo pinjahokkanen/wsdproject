@@ -1,9 +1,9 @@
-# Online Game Store - Project Plan | CS-C3170 Web Software Development, 2017-2018
+# Online Game Store - Project Plan -- CS-C3170 Web Software Development, 2017-2018
 
 
 ## **1. Team**
 
-| Student ID  | Team Member    |
+| **Student ID**  | **Team Member**    |
 | ----------- |:-------------- |
 | 476702      | Pinja Hokkanen |
 | 488732      | Tatu Koivisto  |
