@@ -22,7 +22,7 @@ We begin our project by creating few visual interpretations of our ideas to esta
 	
 Practical implementation will rely on course material, Django’s own documentation and guides found on the internet on Django. We will probably utilize external libraries and resources to increase development speed, naturally in the limitations of course learning objectives and allowance of open-source licenses. 
 
-**Mandatory requirements to be implemented:**
+### 3.1 Mandatory requirements to be implemented:
 	
 >**Authentication** 
 	 - Utilization of Django Auth 
@@ -52,7 +52,7 @@ Practical implementation will rely on course material, Django’s own documentat
 	- Use of management methods to increase team productivity, communication and efficiency
 	- Making good documentation of the project 
 
-### 3.1  Additional features
+### 3.2  Additional features
 
 > **3rd party login:** 
 > We aim to integrate and enable logins from other
@@ -88,11 +88,11 @@ Practical implementation will rely on course material, Django’s own documentat
 
 
 
-### 3.2 Priorities
+### 3.3 Priorities
 
 We will have two main priorities when developing the service. First, we will focus on the mandatory requirements and basic functionalities, since everything else is built on that. Even great extra features will not compensate insufficient basic functionality of the service. Second, we’ll focus on the usability of our platform. Competition has a big effect on the current market situation, and our team believes that superior user experience leads to a greater market share. After we have ensured that these priorities have been addressed and fill both mandatory and our requirements, we will implement additional features.
 
-### 3.3 Initial Draft of Models
+### 3.4 Initial Draft of Models
 
 ![MODELS](https://lh6.googleusercontent.com/F3_drMVUkObKQfPNquZcMsPJ4Q5f-MQsvFOKQ-rfKiyNJYSTEQu0osS5jwPr2MNCsrFlEWNiR6SjmCzaBR5G=w1920-h925)
 
