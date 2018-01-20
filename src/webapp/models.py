@@ -25,9 +25,5 @@ class Game(models.Model):
     states = models.IntegerField() #WHAT IS THIS?!?!?!?!
     url = models.URLField()
     price = models.DecimalField(max_digits=10, decimal_places=2) #Changed the float to decimal due to rounding issues
-    developer = models.ForeignKey('User', related_name='developed_games', null=True, on_delete=models.SET_NULL)
-    highscores = models.ManyToManyField('User', related_name='highscores', related_query_name='scores')
-
-class User(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    #had to do something in order to make game - model work
+    developer = models.ForeignKey('Profile', related_name='developed_games', null=True, on_delete=models.SET_NULL)
+    highscores = models.ManyToManyField('Profile', related_name='highscores', related_query_name='scores')
