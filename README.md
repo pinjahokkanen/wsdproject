@@ -1,49 +1,3 @@
-<<<<<<< HEAD
-# Python: Getting Started
-
-A barebones Django app, which can easily be deployed to Heroku.
-
-This application supports the [Getting Started with Python on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python) article - check it out.
-
-## Running Locally
-
-Make sure you have Python [installed properly](http://install.python-guide.org). Also, install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) and [Postgres](https://devcenter.heroku.com/articles/heroku-postgresql#local-setup).
-
-```sh
-$ git clone git@github.com:heroku/python-getting-started.git
-$ cd python-getting-started
-
-$ pipenv install
-
-$ createdb python_getting_started
-
-$ python manage.py migrate
-$ python manage.py collectstatic
-
-$ heroku local
-```
-
-Your app should now be running on [localhost:5000](http://localhost:5000/).
-
-## Deploying to Heroku
-
-```sh
-$ heroku create
-$ git push heroku master
-
-$ heroku run python manage.py migrate
-$ heroku open
-```
-or
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
-
-## Documentation
-
-For more information about using Python on Heroku, see these Dev Center articles:
-
-- [Python on Heroku](https://devcenter.heroku.com/categories/python)
-=======
 
 <h1> <b> Online Game Store - Project Plan </b> <br/>CS-C3170 Web Software Development, 2017-2018</h1>
 
@@ -180,4 +134,3 @@ Biggest risks in our work comes from the limitation of time. Our team member’s
 
 Therefore, we aim to counter this risk by agreeing to minimal amount of work per week that every member must commit to. This way the project advances constantly and approach of deadline becomes more manageable.
 
->>>>>>> a787382552737895843e9a53a5a226b1f11f0034
