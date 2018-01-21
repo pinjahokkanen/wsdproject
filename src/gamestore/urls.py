@@ -19,6 +19,9 @@ from django.urls import re_path
 from webapp import views
 from django.contrib.auth import views as auth_views
 
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 urlpatterns = [
 	re_path(r'^login/$', auth_views.login, name='login'),
@@ -26,4 +29,4 @@ urlpatterns = [
     re_path(r'^signup/$', views.signup, name='signup'),
     path('admin/', admin.site.urls),
     path('', views.index, name="index")
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

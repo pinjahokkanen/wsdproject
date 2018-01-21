@@ -120,6 +120,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
 # Only when running in Heroku
 if "DYNO" in os.environ:
     STATIC_ROOT = 'staticfiles'
