@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, redirect
-from webapp.templates.forms import SignUpForm
+from django.shortcuts import render, redirect, get_object_or_404
+from webapp.templates.forms import SignUpForm, NewGameForm
+
 
 
 # Create your views here.
@@ -22,3 +23,26 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
+
+def addgame(request):
+    if request.method == 'POST':
+        form = NewGameForm(request.POST)
+        if form.is_valid():
+            game = form.save(commit=False)
+
+
+            name = form.cleaned_data.get('name')
+            description = form.cleaned_data.get('description')
+            url = form.cleaned_data.get('url')
+            price = form.cleaned_data.get('price')
+            #game.developer = request.user TO BE ADDED
+
+            form.save()
+            return redirect('')
+    else:
+        form = NewGameForm()
+    return render(request, 'addgame.html', {'form': form})
+
+
+
+

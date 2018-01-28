@@ -27,6 +27,7 @@ urlpatterns = [
 	re_path(r'^login/$', auth_views.login, name='login'),
     re_path(r'^logout/$', auth_views.logout, name='logout'),
     re_path(r'^signup/$', views.signup, name='signup'),
+    re_path(r'^addgame/$', views.addgame, name='addgame'),
     path('admin/', admin.site.urls),
     path('', views.index, name="index")
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

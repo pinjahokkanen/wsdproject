@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from ..models import Game
 
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
@@ -9,4 +10,10 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'password1', 'password2', )
+        fields = ('username', 'password1', 'password2',)
+
+class NewGameForm(forms.ModelForm):
+
+	class Meta:
+		model = Game
+		fields = ('url', 'name', 'description', 'price',)

@@ -4,7 +4,7 @@
   	{% load static %}
   	<meta charset="utf-8">
 
-  	<title>{% block title %}Amazing Webapp{% endblock %}</title>
+  	<title>{% block title %}Game Store{% endblock %}</title>
   	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   	<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
@@ -19,6 +19,7 @@
           <a class="navbar-brand" href="{% url 'index' %}">Home page</a>
           <a class="navbar-brand" href="{% url 'login' %}">Login</a>
           <a class="navbar-brand" href="{% url 'signup' %}">Signup</a>
+          <a class="navbar-brand" href="{% url 'addgame' %}">Add Game</a>
         </div>
       </nav>
       <div class="container">
