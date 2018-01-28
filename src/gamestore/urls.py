@@ -14,8 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from django.urls import re_path
+from django.urls import path, re_path, include
 from webapp import views
 from django.contrib.auth import views as auth_views
 
@@ -28,6 +27,10 @@ urlpatterns = [
     re_path(r'^logout/$', auth_views.logout, name='logout'),
     re_path(r'^signup/$', views.signup, name='signup'),
     re_path(r'^addgame/$', views.addgame, name='addgame'),
+
+    re_path(r'^games/', include('games.urls')),
+    
+
     path('admin/', admin.site.urls),
     path('', views.index, name="index")
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,0 +1,12 @@
+{% if all_games %}
+<h3>Game Listing</h3>
+
+<ul>
+	{% for game in all_games %}
+	<li><a href="/games/{{ game.id }}/">{{ game.name }}</li>
+	{% endfor %}
+
+</ul>
+{% else %}
+	<h3>No games to show</h3>
+{% endif %}
