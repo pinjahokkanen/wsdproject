@@ -17,3 +17,5 @@ class NewGameForm(forms.ModelForm):
 	class Meta:
 		model = Game
 		fields = ('url', 'name', 'description', 'price',)
+
+

@@ -17,17 +17,25 @@
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
           <a class="navbar-brand" href="{% url 'index' %}">Home page</a>
-          <a class="navbar-brand" href="{% url 'login' %}">Login</a>
+         <!-- <a class="navbar-brand" href="{% url 'login' %}">Login</a> -->
           <a class="navbar-brand" href="{% url 'signup' %}">Signup</a>
           <a class="navbar-brand" href="{% url 'addgame' %}">Add Game</a>
           <a class="navbar-brand" href="/games">Games</a>
+
+          {% if user.is_active %}
+            <p class="navbar-brand">{% firstof user.get_short_name user.get_username %}</p>
+          {% else %}
+            <a class="navbar-brand" href="{% url 'login' %}">Login</a>
+          {% endif %}
         </div>
+        
+
       </nav>
       <div class="container">
-        <ol class="breadcrumb my-4">
+       <!-- ei toimi <ol class="breadcrumb my-4">
           {% block breadcrumb %}
           {% endblock %}
-        </ol>
+        </ol> -->
         {% block content %}
         {% endblock %}
       </div>
