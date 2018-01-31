@@ -128,6 +128,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
+LOGIN_REDIRECT_URL = '/'
+
 # Only when running in Heroku
 if "DYNO" in os.environ:
     STATIC_ROOT = 'staticfiles'

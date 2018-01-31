@@ -1,7 +1,7 @@
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect, get_object_or_404
-from webapp.templates.forms import SignUpForm, NewGameForm
+from webapp.templates.forms import SignUpForm, NewGameForm, UserLoginForm
 from django.views.generic import View
 from django.views.generic.edit import FormView
 
@@ -31,6 +31,17 @@ class UserFormView(FormView):
             login(request, user)
             return redirect('/games/')
         return render(request, 'signup.html', {'form': form})
+
+class LoginView(FormView):
+    def post(self, request):
+        form = UserLoginForm(request.POST or None)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+
+        return render(request, 'registration/login.html', {'form': form})
+
+
 
 '''
 def signup(request):

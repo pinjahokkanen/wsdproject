@@ -19,3 +19,20 @@ class NewGameForm(forms.ModelForm):
 		fields = ('url', 'name', 'description', 'price',)
 
 
+class UserLoginForm(forms.Form):
+	username = forms.CharField()
+	password = forms.CharField(widget=forms.PasswordInput)
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
