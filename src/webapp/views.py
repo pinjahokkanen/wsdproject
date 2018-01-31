@@ -38,7 +38,8 @@ class LoginView(FormView):
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
-
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
         return render(request, 'registration/login.html', {'form': form})
 
 
