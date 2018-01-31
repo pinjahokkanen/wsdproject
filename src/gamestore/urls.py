@@ -26,12 +26,11 @@ app_name = 'gamestore'
 
 urlpatterns = [
 	re_path(r'^login/$', auth_views.login, name='login'),
-    re_path(r'^logout/$', auth_views.logout, {'next_page': '/login'},  name='logout'),
+    path('admin/', admin.site.urls),
+    path('', views.index, name="index"),
     re_path(r'^signup/$', views.UserFormView.as_view(), name='signup'),
+    re_path(r'^logout/$', auth_views.logout, {'next_page': '/login'},  name='logout'),
     re_path(r'^addgame/$', views.addgame, name='addgame'),
     re_path(r'^games/', include('games.urls'), name='games'),
     
-
-    path('admin/', admin.site.urls),
-    path('', views.index, name="index")
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

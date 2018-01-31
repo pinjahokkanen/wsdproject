@@ -19,12 +19,11 @@
           <a class="navbar-brand" href="{% url 'index' %}">Home page</a>
          <!-- <a class="navbar-brand" href="{% url 'login' %}">Login</a> -->
           <a class="navbar-brand" href="{% url 'signup' %}">Signup</a>
-          <a class="navbar-brand" href="{% url 'addgame' %}">Add Game</a>
-          <a class="navbar-brand" href="/games">Games</a>
-
           {% if user.is_active %}
-            <a class="navbar-brand" href="/logout">Logout</a>
-            <p class="navbar-brand">Hi {% firstof user.get_short_name user.get_username %}!</p>
+          <a class="navbar-brand" href="{% url 'addgame' %}">Add Game</a>
+          <a class="navbar-brand" href="/games">Games</a>       
+          <a class="navbar-brand" href="/logout">Logout</a>
+          <p class="navbar-brand">Hi {% firstof user.get_short_name user.get_username %}!</p>
           {% else %}
             <a class="navbar-brand" href="{% url 'login' %}">Login</a>
           {% endif %}
