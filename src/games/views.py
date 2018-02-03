@@ -9,6 +9,13 @@ class IndexView(generic.ListView):
 	def get_queryset(self):
 		return Game.objects.all()
 
+# class UserDetailView(generic.ListView):
+# 	template_name = 'games/index.html'
+# 	context_object_name = 'user_games'
+
+# 	def get_queryset(self):
+# 		return request.user.games
+
 # functio versiot benchmarkiksi
 
 #def index(request):
