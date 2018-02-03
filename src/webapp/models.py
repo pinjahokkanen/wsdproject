@@ -8,7 +8,9 @@ from django.urls import reverse
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
-    is_developer = models.BooleanField(default=False)
+    developer = models.BooleanField(default=False) #false = player, True=developer
+    games = models.ManyToManyField('Game', related_name='+')
+    developed_games = models.ManyToManyField('Game')
 
     def __unicode__(self):
         return str(self.user.username) #How viewed in django admin, same as __str__ in python2
@@ -34,8 +36,8 @@ class Game(models.Model):
     #states = models.IntegerField() #WHAT IS THIS?!?!?!?!
     url = models.URLField()
     price = models.DecimalField(max_digits=10, decimal_places=2) #Changed the float to decimal due to rounding issues
-    developer = models.ForeignKey('Profile', related_name='developed_games', null=True, on_delete=models.SET_NULL)
-    highscores = models.ManyToManyField('Profile', related_name='highscores', related_query_name='scores')
+    developer = models.ForeignKey('Profile', null=True, on_delete=models.SET_NULL)
+#    highscores = models.ManyToManyField('Profile', related_name='highscores', related_query_name='scores')
 
     def get_absolute_url(self):
         return reverse()
@@ -45,3 +47,10 @@ class Game(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Highscores(models.Model):
+    game = models.ForeignKey('Game', on_delete=models.CASCADE)
+    user = models.ForeignKey('Profile', on_delete=models.CASCADE)
+    score = models.IntegerField()
+    timestamp = models.DateTimeField()
