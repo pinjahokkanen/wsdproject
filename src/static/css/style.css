@@ -50,3 +50,66 @@ h3.gallery {
 .gallery {
 
 }
+
+/*SINGLE GAME*/
+
+div.game {
+	background-color: grey;
+	width: 100%
+}
+
+div.game h3 {
+	padding: 20px 20px 0 20px;
+	font-style: bold;
+	text-transform: uppercase;
+}
+
+div.game h3 a{
+	text-decoration: none;
+	color: white;
+}
+
+div.game iframe {
+	margin: 20px 0 20px 20px;
+}
+
+div.game hr {
+	width: 97%;
+	margin: 0 0 0 20px;
+}
+
+div.game section {
+	background-color: lightgrey;
+	float:right;
+
+	margin: 20px 15px 0 0;
+	width: 390px;
+	height: 500px;
+}
+
+
+
+.snippet {
+	background-color: whitesmoke;
+	margin: 0 10px;
+	padding: 5px ;
+}
+
+#sec-header {
+	margin: 20px 0 0 10px;
+	font-weight: 600;
+}
+
+div.gamedetails{
+	background-color: whitesmoke;
+}
+
+div.gamedetails p {
+	padding-bottom: 1.5%;
+	margin-left: 30px
+}
+
+div.gamedetails h4 {
+	padding-top: 1.5%;
+	margin-left: 30px;
+}

@@ -4,7 +4,6 @@
 {% block title %}Game Store{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 <a href="../">Back</a>
 {% if all_games %}
@@ -14,7 +13,7 @@
 <h3 class="gallery">My library</h3>
 
 <ul class="gallery">
-	{% for game in all_games %}
+	{% for game in user_games %}
 		<li id="library">
 			<img src="{% static "img/NaN.png" %}" alt="Image not found"/>
 			<h4><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
