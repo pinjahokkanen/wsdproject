@@ -1,0 +1,43 @@
+
+/*GAME STORE LIST*/
+
+h3.gallery {
+	margin: 20px 0;
+}
+
+.gallery li {
+    display: inline;
+    list-style: none;
+    width: 195px;
+    height: 220px;
+    float: left;
+    margin: 0 10px 10px 0;
+    text-align: left;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #dddddd;
+}
+
+.gallery li img{
+	border-color: #cccccc;
+	border-width: 1px;
+	border-style: solid;
+}
+
+.gallery li h4 {
+	margin: 10px 20px;
+	font-size: 16px;
+}
+
+.gallery li p {
+	margin: 5px 20px;
+}
+
+.gallery li a {
+	text-decoration: none;
+}
+
+.gallery {
+
+}
