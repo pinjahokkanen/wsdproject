@@ -2,23 +2,23 @@ from django.http import Http404
 from webapp.models import Game
 from django.views import generic
 
-	class IndexView(generic.ListView):
-		template_name = 'games/index.html'
-		context_object_name = 'all_games'
+class IndexView(generic.ListView):
+	template_name = 'games/index.html'
+	context_object_name = 'all_games'
 
-		def get_queryset(self):
-			return Game.objects.all()
+	def get_queryset(self):
+		return Game.objects.all()
 
-	# functio versiot benchmarkiksi		
+	# functio versiot benchmarkiksi
 
 	#def index(request):
 	#	all_games = Game.objects.all()
 	#	return render(request, "games/index.html", {'all_games': all_games})
 
 
-	class DetailView(generic.DetailView):
-		model = Game
-		template_name = 'games/singlegame.html'
+class DetailView(generic.DetailView):
+	model = Game
+	template_name = 'games/singlegame.html'
 
 
 
@@ -28,13 +28,3 @@ from django.views import generic
 	#	except Game.DoesNotExist:
 	#		raise Http404("Game Not Found")
 	#	return render(request, "games/singlegame.html", {'game': game})
-
-
-
-
-
-
-
-
-
-
