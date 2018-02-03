@@ -9,11 +9,11 @@ class IndexView(generic.ListView):
 	def get_queryset(self):
 		return Game.objects.all()
 
-	# functio versiot benchmarkiksi
+# functio versiot benchmarkiksi
 
-	#def index(request):
-	#	all_games = Game.objects.all()
-	#	return render(request, "games/index.html", {'all_games': all_games})
+#def index(request):
+#	all_games = Game.objects.all()
+#	return render(request, "games/index.html", {'all_games': all_games})
 
 
 class DetailView(generic.DetailView):
@@ -22,9 +22,9 @@ class DetailView(generic.DetailView):
 
 
 
-	#def singlegame(request, game_id):
-	#	try:
-	#		game = Game.objects.get(id=game_id)
-	#	except Game.DoesNotExist:
-	#		raise Http404("Game Not Found")
-	#	return render(request, "games/singlegame.html", {'game': game})
+#def singlegame(request, game_id):
+#	try:
+#		game = Game.objects.get(id=game_id)
+#	except Game.DoesNotExist:
+#		raise Http404("Game Not Found")
+#	return render(request, "games/singlegame.html", {'game': game})
