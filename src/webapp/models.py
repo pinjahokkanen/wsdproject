@@ -8,6 +8,7 @@ from django.urls import reverse
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
+    is_developer = models.BooleanField(default=False)
 
     def __unicode__(self):
         return str(self.user.username) #How viewed in django admin, same as __str__ in python2
@@ -44,4 +45,3 @@ class Game(models.Model):
 
     def __str__(self):
         return self.name
-
