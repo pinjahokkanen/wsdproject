@@ -4,13 +4,19 @@ from django.shortcuts import render, redirect, get_object_or_404
 from webapp.templates.forms import SignUpForm, NewGameForm, UserLoginForm
 from django.views.generic import View
 from django.views.generic.edit import FormView
+from webapp.models import Game, Profile
 
 
 
 
 # Create your views here.
 def index(request):
-    return render(request, "webapp/index.html", {})
+    userobj = Profile.objects.get(pk=request.user.id)
+    all_games = userobj.developed_games.all()
+    for game in all_games:
+        print game.name
+
+    return render(request, "webapp/index.html", {'all_games': all_games})
 
 class UserFormView(FormView):
 
@@ -78,7 +84,3 @@ def addgame(request):
     else:
         form = NewGameForm()
     return render(request, 'addgame.html', {'form': form})
-
-
-
-
