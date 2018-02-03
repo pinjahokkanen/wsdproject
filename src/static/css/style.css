@@ -1,11 +1,20 @@
 
 /*GAME STORE LIST*/
 
+
+#library{
+	background-color: #bcdbbd
+}
+
 h3.gallery {
-	margin: 20px 0;
+	padding: 15px 0;
+	clear: both;
+	width: 100%;
 }
 
 .gallery li {
+	background-color: #cccccc;
+
     display: inline;
     list-style: none;
     width: 195px;

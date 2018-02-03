@@ -1,26 +1,41 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Game Store{% endblock %}
 
 {% block content %}
-
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 <a href="../">Back</a>
 {% if all_games %}
-<h3 class="gallery">Game Listing</h3>
+
+<h2 class="gallery">Game Listing</h3>
+
+<h3 class="gallery">My library</h3>
 
 <ul class="gallery">
 	{% for game in all_games %}
-	<li>
-		<img src="{% static "img/NaN.png" %}" alt="Image not found"/>
-		<h4><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
-		<p>Developer: {{game.developer}}</p>
-	</li>
-	{% endfor %}
-
+		<li id="library">
+			<img src="{% static "img/NaN.png" %}" alt="Image not found"/>
+			<h4><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
+			<p>Developer: {{game.developer}}</p>
+		</li>
+		{% endfor %}
 </ul>
+
+
+<h3 class="gallery"> Game store </h3>
+
+<ul class="gallery">
+	{% for game in all_games %}
+		<li>
+			<img src="{% static "img/NaN.png" %}" alt="Image not found"/>
+			<h4><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
+			<p>Developer: {{game.developer}}</p>
+		</li>
+		{% endfor %}
+</ul>
+
 {% else %}
 	<h3>No games to show</h3>
 {% endif %}
