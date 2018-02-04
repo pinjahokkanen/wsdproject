@@ -27,11 +27,13 @@
 
 <ul class="gallery">
 	{% for game in all_games %}
+	 {% if game not in request.user.profile.games.all%}
 		<li>
 			<img src="{% static "img/NaN.png" %}" alt="Image not found"/>
 			<h4><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
 			<p>Developer: {{game.developer}}</p>
 		</li>
+		{% endif %}
 		{% endfor %}
 </ul>
 
