@@ -5,7 +5,46 @@
 
 {% block content %}
 
+{% if game not in request.user.profile.games.all  %}
+
+
+<!-- VIEW FOR GAME NOT IN USER INVENTORY -->
+
+<a href="../">Back</a>
+<div class="game">
+	<h3><a href="{{game.url}}">{{ game }}</a></h3>
+	<hr>
+	<iframe src="{% static "img/NoAccess.png" %}" height="500" width="700" style="border:none;"></iframe>
+
+	<section>
+
+		<p id="sec-header"> <i class="fas fa-caret-down"></i> Purchase</p>
+		<div class="snippet">
+			<div>
+				<span id="price">{{game.price}} €</span>
+				<button type="button" class="btn-success"><a href="../"> <i class="fas fa-cart-plus"></i></a></button> 
+				<button type="button" class="btn-success"><a href="../">PURCHASE</a></button> 
+			</div>
+			
+		</div>
+
+		<p id="sec-header"> <i class="fas fa-caret-down"></i> Description</p>
+		<div class="snippet">
+			
+			<p>{{game.description}}</p>
+		</div>
+	</section>
+		
+ </div>
+
+<div class="gamedetails">
+	<h4>{{game.name}}</h4>
+	<p>Game By: {{game.developer}}  &nbsp; | &nbsp;  <i class="far fa-clock"></i> Added on {{game.date}}</p>
+</div>
+
+
 <!-- VIEW IF GAME IS IN INVENTORY -->
+{% else %}
 <a href="../">Back</a>
 <div class="game">
 	<h3><a href="{{game.url}}">{{ game }}</a></h3>
@@ -27,6 +66,6 @@
 	<p>Game By: {{game.developer}}  &nbsp; | &nbsp;  <i class="far fa-clock"></i> Added on {{game.date}}</p>
 </div>
 
-<!-- VIEW FOR GAME NOT IN USER INVENTORY -->
+{% endif %}
 
 {% endblock %}

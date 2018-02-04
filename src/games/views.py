@@ -9,13 +9,6 @@ class IndexView(generic.ListView):
 	def get_queryset(self):
 		return Game.objects.all()
 
-# class UserDetailView(generic.ListView):
-# 	template_name = 'games/index.html'
-# 	context_object_name = 'user_games'
-
-# 	def get_queryset(self):
-# 		return request.user.games
-
 # functio versiot benchmarkiksi
 
 #def index(request):
@@ -35,3 +28,7 @@ class DetailView(generic.DetailView):
 #	except Game.DoesNotExist:
 #		raise Http404("Game Not Found")
 #	return render(request, "games/singlegame.html", {'game': game})
+
+# def orders(request):
+#     return render(request, "games/orders.html")
+#     # template_name = 'games/orders.html'
