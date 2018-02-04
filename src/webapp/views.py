@@ -5,18 +5,13 @@ from webapp.templates.forms import SignUpForm, NewGameForm, UserLoginForm
 from django.views.generic import View
 from django.views.generic.edit import FormView
 from webapp.models import Game, Profile
-
+from django.contrib.auth.models import User
 
 
 
 # Create your views here.
 def index(request):
-    userobj = Profile.objects.get(pk=request.user.id)
-    all_games = userobj.developed_games.all()
-    for game in all_games:
-        print game.name
-
-    return render(request, "webapp/index.html", {'all_games': all_games})
+    return render(request, "webapp/index.html", {})
 
 class UserFormView(FormView):
 
