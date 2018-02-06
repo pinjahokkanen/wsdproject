@@ -10,7 +10,7 @@
 
 <h2 class="gallery">Game Listing</h3>
 
-<h3 class="gallery">My library</h3>
+<h3 class="gallery">My bought games</h3>
 
 <ul class="gallery">
 	{% for game in request.user.profile.games.all %}
@@ -20,6 +20,20 @@
 			<p>Developer: {{game.developer}}</p>
 		</li>
 		{% endfor %}
+</ul>
+
+<h3 class="gallery">My developed games</h3>
+
+<ul class="gallery">
+	{% for game in all_games %}
+		{% if game.developer.pk == request.user.pk%}
+		<li>
+			<img src="{% static "img/NaN.png" %}" alt="Image not found"/>
+			<h4><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
+			<p>Developer: {{game.developer}}</p>
+		</li>
+		{% endif %}
+	{% endfor %}
 </ul>
 
 

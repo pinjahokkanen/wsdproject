@@ -39,10 +39,10 @@ class Game(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2) #Changed the float to decimal due to rounding issues
     developer = models.ForeignKey('Profile', null=True, on_delete=models.SET_NULL)
 #    highscores = models.ManyToManyField('Profile', related_name='highscores', related_query_name='scores')
-    
+
     pubDate = models.DateTimeField(auto_now_add=True)
 #   img = models.URLField(default="http://www.google.com") ##Game logo to be displayed
-    
+
     #category = models.ForeignKey('Category', null=False, on_delete=models.CASCADE)
 
 
@@ -95,22 +95,16 @@ class Game(models.Model):
 class Order(models.Model):
     # Order Id
     id = models.AutoField(primary_key=True)
-
     # Buyer
     player = models.ForeignKey('Profile', null=False, on_delete=models.DO_NOTHING,)
-
     # Order content
     games = models.ManyToManyField('Game', default=None, blank=True)
-
     # Total sum of the order
     total = models.DecimalField(max_digits=10, decimal_places=2)
-
     # Order date and time
     orderDate = models.DateTimeField(default=timezone.now, null=False)
-
     # Payment date and time
     paymentDate = models.DateTimeField(default=None, null=True)
-
     # Order status
     status = models.CharField(max_length=10, null=False, default="pending")
 
