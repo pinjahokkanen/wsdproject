@@ -25,14 +25,12 @@
 <h3 class="gallery">My developed games</h3>
 
 <ul class="gallery">
-	{% for game in all_games %}
-		{% if game.developer.pk == request.user.pk%}
+	{% for game in request.user.profile.developed_games.all %}
 		<li>
 			<img src="{% static "img/NaN.png" %}" alt="Image not found"/>
 			<h4><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
 			<p>Developer: {{game.developer}}</p>
 		</li>
-		{% endif %}
 	{% endfor %}
 </ul>
 

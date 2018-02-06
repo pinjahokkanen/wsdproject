@@ -12,7 +12,33 @@
 
    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
      {% block stylesheet %}{% endblock %}  <!-- APPLY -->
-   
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+   <script>
+
+     /* global $ */
+     $(document).ready(function() {
+       'use strict';
+       $(window).on('message', function(evt) {
+         //Note that messages from all origins are accepted
+   			//Get data from sent message
+         var data = evt.originalEvent.data;
+   			if (data.messageType == "SAVE"){
+   				alert("Save");
+   			} else if(data.messageType == "SCORE") {
+   				alert("Score");
+   			} else if(data.messageType == "LOAD_REQUEST") {
+   				alert("Load request");
+   			} else if(data.messageType == "LOAD") {
+   				alert("Load");
+   			} else if(data.messageType == "ERROR") {
+   				alert("error");
+   			} else if(data.messageType == "SETTING") {
+   				alert("Setting");
+   			}
+       });
+     });
+
+   </script>
 
   </head>
   <body>
@@ -24,14 +50,14 @@
           <a class="navbar-brand" href="{% url 'signup' %}">Signup</a>
           {% if user.is_active %}
           <a class="navbar-brand" href="{% url 'addgame' %}">Add Game</a>
-          <a class="navbar-brand" href="/games">Games</a>       
+          <a class="navbar-brand" href="/games">Games</a>
           <a class="navbar-brand" href="/logout">Logout</a>
           <p class="navbar-brand">Hi {% firstof user.get_short_name user.get_username %}!</p>
           {% else %}
             <a class="navbar-brand" href="{% url 'login' %}">Login</a>
           {% endif %}
         </div>
-        
+
 
       </nav>
       <div class="container">

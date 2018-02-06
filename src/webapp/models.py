@@ -11,7 +11,6 @@ class Profile(models.Model):
     bio = models.TextField(max_length=500, blank=True)
     developer = models.BooleanField(default=False) #false = player, True=developer
     games = models.ManyToManyField('Game', related_name='+')
-#    developed_games = models.ManyToManyField('Game')
 
     def __unicode__(self):
         return str(self.user.username) #How viewed in django admin, same as __str__ in python2
@@ -37,7 +36,7 @@ class Game(models.Model):
     description = models.TextField(max_length=2500)
     url = models.URLField()
     price = models.DecimalField(max_digits=10, decimal_places=2) #Changed the float to decimal due to rounding issues
-    developer = models.ForeignKey('Profile', null=True, on_delete=models.SET_NULL)
+    developer = models.ForeignKey('Profile', related_name='developed_games', null=True, on_delete=models.SET_NULL)
 #    highscores = models.ManyToManyField('Profile', related_name='highscores', related_query_name='scores')
 
     pubDate = models.DateTimeField(auto_now_add=True)

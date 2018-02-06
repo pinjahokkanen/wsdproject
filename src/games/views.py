@@ -1,6 +1,7 @@
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from webapp.models import Game
 from django.views import generic
+import json
 
 class IndexView(generic.ListView):
 	template_name = 'games/index.html'
@@ -19,6 +20,8 @@ class IndexView(generic.ListView):
 class DetailView(generic.DetailView):
 	model = Game
 	template_name = 'games/singlegame.html'
+
+#	def renderHighScore(request):
 
 
 
