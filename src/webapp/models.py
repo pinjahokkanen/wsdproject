@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
+from django.utils import timezone
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -32,12 +33,18 @@ def save_user_profile(sender, instance, **kwargs):
 # Highcores defined as a ManyToMany - relationship (a game has several highscores from different players (always player's highest score)). No need for a seperate model, since highscores referenced with players_highscores from the User model.
 class Game(models.Model):
     name = models.CharField(max_length=255, unique=True)
+    id = models.AutoField(primary_key=True)
     description = models.TextField(max_length=2500)
-    #states = models.IntegerField() #WHAT IS THIS?!?!?!?!
     url = models.URLField()
     price = models.DecimalField(max_digits=10, decimal_places=2) #Changed the float to decimal due to rounding issues
-    developer = models.ForeignKey('Profile', related_name='developed_games', null=True, on_delete=models.SET_NULL)
+    developer = models.ForeignKey('Profile', null=True, on_delete=models.SET_NULL)
 #    highscores = models.ManyToManyField('Profile', related_name='highscores', related_query_name='scores')
+    
+    pubDate = models.DateTimeField(auto_now_add=True)
+#   img = models.URLField(default="http://www.google.com") ##Game logo to be displayed
+    
+    #category = models.ForeignKey('Category', null=False, on_delete=models.CASCADE)
+
 
     def get_absolute_url(self):
         return reverse()
@@ -48,6 +55,67 @@ class Game(models.Model):
     def __str__(self):
         return self.name
 
+    def to_json_dict(self, user=None):
+        result = {
+            'name': self.name,
+            'id': self.id,
+            'description': self.description,
+            'url': self.url,
+            'price': self.price,
+            'developer': self.developer.user.username,
+            #'category': self.category.name,
+            #'category_id': self.category.id,
+        }
+
+        # Check user ownership of game
+        if user is not None and isinstance(user, User) and user.is_authenticated():
+            owned = False
+            o = user.profile.games.filter(id=self.id)
+            if o.count() > 0:
+                result['owned'] = True
+            else:
+                result['owned'] = False
+
+        return result
+
+
+# class Category(models.Model):
+#     name = models.CharField(max_length=30, unique= True)
+#     id = models.AutoField(primary_key=True)
+
+#     def to_json_dict(self):
+#         result = {
+#             'name': self.name,
+#             'id': self.id
+#         }
+#         return result
+#     def __str__(self):
+#         return str(self.name)
+
+class Order(models.Model):
+    # Order Id
+    id = models.AutoField(primary_key=True)
+
+    # Buyer
+    player = models.ForeignKey('Profile', null=False, on_delete=models.DO_NOTHING,)
+
+    # Order content
+    games = models.ManyToManyField('Game', default=None, blank=True)
+
+    # Total sum of the order
+    total = models.DecimalField(max_digits=10, decimal_places=2)
+
+    # Order date and time
+    orderDate = models.DateTimeField(default=timezone.now, null=False)
+
+    # Payment date and time
+    paymentDate = models.DateTimeField(default=None, null=True)
+
+    # Order status
+    status = models.CharField(max_length=10, null=False, default="pending")
+
+    def __str__(self):
+        return str(self.id)
 
 class Highscores(models.Model):
     game = models.ForeignKey('Game', on_delete=models.CASCADE)

@@ -2,10 +2,12 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect, get_object_or_404
 from webapp.templates.forms import SignUpForm, NewGameForm, UserLoginForm
+from django.forms.fields import DateTimeField
 from django.views.generic import View
 from django.views.generic.edit import FormView
 from webapp.models import Game, Profile
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 
@@ -72,7 +74,11 @@ def addgame(request):
             description = form.cleaned_data.get('description')
             url = form.cleaned_data.get('url')
             price = form.cleaned_data.get('price')
-            #game.developer = request.user TO BE ADDED
+            developer = request.user
+
+            # now = datetime.now()
+            # pubDate = models.DateTimeField(now)
+            #category = 
 
             form.save()
             return redirect('/games/')
