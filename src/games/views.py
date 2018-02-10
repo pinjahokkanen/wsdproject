@@ -1,5 +1,6 @@
 from django.http import Http404, HttpResponse
 from webapp.models import Game, Profile, Highscore
+from django.contrib.auth.models import User
 from django.views import generic
 import json
 
@@ -21,6 +22,10 @@ class DetailView(generic.DetailView):
 	model = Game
 	template_name = 'games/singlegame.html'
 
+	def highscore(self):
+		return Highscore.objects.get(game=self.object, user=self.request.user.profile);
+
+
 def renderHighScore(request,game_id):
 
 #	highscore = Highscore(game=currentgame, user=profile)
@@ -28,9 +33,9 @@ def renderHighScore(request,game_id):
 	return render(request, "games/highscore.html", {'highscore': highscore})
 
 def savescore(request,game_id):
-	#currentgame = Game.objects.get(id=game_id)
-	#profile = request.user.profile
-#	highscore = Highscore(game=currentgame, user=profile)
+	currentgame = Game.objects.get(id=game_id)
+	profile = request.user.profile
+	highscore = Highscore(game=currentgame, user=profile)
 	highscore = 0
 	return render(request, "games/highscore.html", {'highscore': highscore})
 

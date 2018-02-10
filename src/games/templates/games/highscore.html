@@ -1,8 +1,0 @@
-{% block content %}
-{% if highscore %}
-  <p>Your own highscore: {{highscore}}</p>
-{% else %}
-<p>You haven't scored yet</p>
-{% endif %}
-<p>Anyways, your score is: {{request.user.profile.highscore_set.all}}
-{% endblock %}
