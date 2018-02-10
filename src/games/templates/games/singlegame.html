@@ -10,7 +10,10 @@
 <!-- VIEW FOR GAME NOT IN USER INVENTORY -->
 
 <a href="../">Back</a>
+<input type="hidden" id="gameobject" name="gameobject" value="{{game}}"/>
+<input type="hidden" id="profileobject" name="profileobject" value="{{user.profile}}"/>
 <div class="game">
+
 	<h3><a href="{{game.url}}">{{ game }}</a></h3>
 	<hr>
 	<iframe src="{% static "img/NoAccess.png" %}" height="500" width="700" style="border:none;"></iframe>

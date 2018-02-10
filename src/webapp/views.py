@@ -5,7 +5,7 @@ from webapp.templates.forms import SignUpForm, NewGameForm, UserLoginForm
 from django.forms.fields import DateTimeField
 from django.views.generic import View
 from django.views.generic.edit import FormView
-from webapp.models import Game, Profile
+from webapp.models import Game, Profile, Highscore
 from django.contrib.auth.models import User
 from django.utils import timezone
 
@@ -78,7 +78,7 @@ def addgame(request):
 
             # now = datetime.now()
             # pubDate = models.DateTimeField(now)
-            #category = 
+            #category =
 
             form.save()
             return redirect('/games/')
