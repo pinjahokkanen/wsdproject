@@ -6,12 +6,11 @@
 
 {% if game not in request.user.profile.games.all and game.price != 0 %}
 
-
+<input type="hidden" id="gameobject" name="gameobject" value="{{game}}"/>
+<input type="hidden" id="profileobject" name="profileobject" value="{{user.profile}}"/>
 <!-- VIEW FOR GAME NOT IN USER INVENTORY -->
 
 <a href="../">Back</a>
-<input type="hidden" id="gameobject" name="gameobject" value="{{game}}"/>
-<input type="hidden" id="profileobject" name="profileobject" value="{{user.profile}}"/>
 <div class="game">
 
 	<h3><a href="{{game.url}}">{{ game }}</a></h3>

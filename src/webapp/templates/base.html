@@ -25,7 +25,14 @@
    			if (data.messageType == "SAVE"){
    				alert("Save");
    			} else if(data.messageType == "SCORE") {
-   				alert("Score");
+          $.ajax({
+            type : "POST",
+            url : "savescore",
+            data : { 'score': data.score},
+            success : function(data) {
+              alert("Game score svaed succesfully")
+            }
+          })
    			} else if(data.messageType == "LOAD_REQUEST") {
    				alert("Load request");
    			} else if(data.messageType == "LOAD") {
