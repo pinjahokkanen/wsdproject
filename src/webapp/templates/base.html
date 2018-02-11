@@ -68,10 +68,10 @@
           {% if user.is_active %}
           <a class="navbar-brand" href="{% url 'addgame' %}">Add Game</a>
           <a class="navbar-brand" href="/games">Games</a>
-          <a class="navbar-brand" href="/logout">Logout</a>
+          <a class="navbar-brand" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
           <p class="navbar-brand">Hi {% firstof user.get_short_name user.get_username %}!</p>
           {% else %}
-            <a class="navbar-brand" href="{% url 'login' %}">Login</a>
+            <a class="navbar-brand" href="{% url 'login'%}?next={{request.path}}">Login</a>
           {% endif %}
         </div>
 

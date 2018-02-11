@@ -4,13 +4,16 @@ from django.template import RequestContext
 from webapp.models import Game, Profile, Highscore
 from django.contrib.auth.models import User
 from django.views import generic
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django.shortcuts import render
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt #TEMPORARELY
 
 
-class IndexView(generic.ListView):
+class IndexView(LoginRequiredMixin, generic.ListView):
 	template_name = 'games/index.html'
 	context_object_name = 'all_games'
 
@@ -24,12 +27,16 @@ class IndexView(generic.ListView):
 #	return render(request, "games/index.html", {'all_games': all_games})
 
 
-class DetailView(generic.DetailView):
+class DetailView(LoginRequiredMixin, generic.DetailView):
 	model = Game
 	template_name = 'games/singlegame.html'
 
+
 	def highscore(self):
+		user = self.request.user	
 		return Highscore.objects.get(game=self.object, user=self.request.user.profile);
+
+
 
 
 def renderHighScore(request,game_id):
