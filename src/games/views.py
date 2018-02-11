@@ -3,10 +3,13 @@ from webapp.models import Game, Profile, Highscore
 from django.contrib.auth.models import User
 from django.views import generic
 from django.shortcuts import render
+from .forms import CartForm
+from .models import Game, Order
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt #TEMPORARELY
-
+from common.utils import user_is_developer, user_is_player
+from django.contrib.auth.decorators import user_passes_test
 
 class IndexView(generic.ListView):
 	template_name = 'games/index.html'
@@ -54,13 +57,71 @@ def savescore(request, pk):
 	#return render(request, "games/highscores.html", {'highscore': highscore})
 	#return render(request, "games/highscore.html", {'highscore': highscore})
 
-#def singlegame(request, game_id):
-#	try:
-#		game = Game.objects.get(id=game_id)
-#	except Game.DoesNotExist:
-#		raise Http404("Game Not Found")
-#	return render(request, "games/singlegame.html", {'game': game})
 
-# def orders(request):
-#     return render(request, "games/orders.html")
-#     # template_name = 'games/orders.html'
+@login_required(login_url='login')
+
+def cart(request):
+	## Handle case not logged in
+	
+
+	## Handle GET
+	if request.method == 'GET':
+		game_ids = request.session.get('cart_items',[])
+		return render(request, 'store/cart.html', {'user':request.user, 'cart': to_cart(game_ids)})
+
+	## Handle POST
+
+	elif request.method == 'POST':
+
+		if not request.is_ajax():
+			messages.error(request, "Only Ajax calls permitted")
+			return HttpResponseRedirect(reverse("cart"))
+
+		## For handling all the error cases
+		jsondata = {'error': None}
+
+		## TO DO:
+		## [ ] CLIENT NOT USER
+		## [ ] CASE FORM VALID
+		## [ ] CASE NOT AJAX
+		## [x] DUPLICATES 
+		## [ ] GAME ALREADY OWNED BY USER
+
+		form = CartForm(request.POST)
+
+		if not form.is_valid():
+			jsondata['error'] = form.errors
+			return JsonResponse(status=400, data=jsondata)
+
+		if form.cleaned_data['action'] == 'add':
+
+			sessioncart = request.session.get('cart_items',[])
+
+			if form.cleaned_data['game'].id in curcart:
+				jsondata['error'] = "Cart alredy contains this game"
+
+			if jsondata['error'] is None:
+				sessioncart.append(form.cleaned_data['game'].id)
+				request.session['cart_items'] = sessioncart
+
+
+
+def to_cart(
+	game_ids, 
+	user= None
+
+):
+
+	result = {}
+	result['games'] = []
+	result['total'] = 0
+
+	for id in game_ids:
+		try:
+			game = Game.objects.get(id=id)
+			result['games'].append(game.to_json_dict(user=user))
+			result['total'] += game.price
+		except ObjectDoesNotExist:
+			messages.error("Cart elemt was invalid")
+			continue
+	return result
