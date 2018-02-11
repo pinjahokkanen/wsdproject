@@ -16,8 +16,9 @@
         {% endfor %}
         <div style="padding-top: 10px;clear: both;">
             <hr/>
+            <form action="{% url 'games:orders' %}" method="POST">
                 {% csrf_token %}
-            <input type="submit" class="btn btn-success" value="Send Order" id="confirmButton">
+            <input type="submit" class="btn btn-success" value="Send Order">
             </form>
         </div>
     </div>

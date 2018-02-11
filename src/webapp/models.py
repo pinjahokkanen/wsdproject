@@ -66,14 +66,14 @@ class Game(models.Model):
             #'category_id': self.category.id,
         }
 
-        # # Check user ownership of game
-        # if user is not None and isinstance(user, User) and user.is_authenticated():
-        #     owned = False
-        #     o = user.profile.games.filter(id=self.id)
-        #     if o.count() > 0:
-        #         result['owned'] = True
-        #     else:
-        #         result['owned'] = False
+        # Check user ownership of game
+        if user is not None and isinstance(user, User) and user.is_authenticated():
+            owned = False
+            o = user.profile.games.filter(id=self.id)
+            if o.count() > 0:
+                result['owned'] = True
+            else:
+                result['owned'] = False
 
         return result
 
@@ -102,6 +102,8 @@ class Order(models.Model):
     total = models.DecimalField(max_digits=10, decimal_places=2)
     # Order date and time
     orderDate = models.DateTimeField(default=timezone.now, null=False)
+    # Payment reference
+    paymentReference = models.IntegerField(null=True, default=0)
     # Payment date and time
     paymentDate = models.DateTimeField(default=None, null=True)
     # Order status

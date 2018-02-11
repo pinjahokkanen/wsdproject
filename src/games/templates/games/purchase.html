@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Purchase{% endblock %}
+
+{% block content %}
+
+    <div class=""  style="max-width: 700px;">
+        <h1 >Order</h1>
+        {% for game in cart.games %}
+                    <p class="lead gameName">{{ game.name }} <span>{{ game.price }}</span></p>
+        {% endfor %}
+
+
+        <form action="{{ action }}" method="POST" id="purchaseForm">
+            <input type="hidden" name="pid" value="{{ pid }}" />
+            <input type="hidden" name="sid" value="{{ sid }}" />
+            <input type="hidden" name="success_url"
+                    value="{{ success_url }}" />
+            <input type="hidden" name="cancel_url"
+                    value="{{ cancel_url }}" />
+            <input type="hidden" name="error_url"
+                    value="{{ error_url }}" />
+            <input type="hidden" name="checksum"
+                    value="{{ checksum }}" />
+
+
+            <input type="text" id="id_amount" name="amount" value="{{ amount }}"/>
+            <label for="id_amount" class="alignRight">Amount</label>
+            <br/>
+            <br/>
+            <input type="submit" class="btn btn-lg btn-primary btn-block" value="Pay"/>
+        </form>
+
+
+    </div>
+
+{% endblock %}
