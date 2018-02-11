@@ -8,6 +8,10 @@ from django.views.generic.edit import FormView
 from webapp.models import Game, Profile, Highscore
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+
+
 
 
 
@@ -63,6 +67,7 @@ def signup(request):
     return render(request, 'signup.html', {'form': form})
 '''
 
+@login_required
 def addgame(request):
     if request.method == 'POST':
         form = NewGameForm(request.POST)
