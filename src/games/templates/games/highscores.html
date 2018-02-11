@@ -1,0 +1,9 @@
+{% block content %}
+
+{% if view.highscore %}
+  <p>Your own highscore: {{view.highscore.score}}</p>
+{% else %}
+<p>You haven't scored yet</p>
+{% endif %}
+
+{% endblock %}

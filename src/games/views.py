@@ -2,8 +2,14 @@ from django.http import Http404, HttpResponse
 from webapp.models import Game, Profile, Highscore
 from django.contrib.auth.models import User
 from django.views import generic
+
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+from django.shortcuts import render
 import json
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt #TEMPORARELY
+
 
 class IndexView(LoginRequiredMixin, generic.ListView):
 	template_name = 'games/index.html'
@@ -37,12 +43,23 @@ def renderHighScore(request,game_id):
 	highscore = 0
 	return render(request, "games/highscore.html", {'highscore': highscore})
 
-def savescore(request,game_id):
-	currentgame = Game.objects.get(id=game_id)
-	profile = request.user.profile
-	highscore = Highscore(game=currentgame, user=profile)
-	highscore = 0
-	return render(request, "games/highscore.html", {'highscore': highscore})
+@csrf_exempt
+def savescore(request, pk):
+	model = Game
+	#currentgame = game=self.object
+	#profile = self.request.user.profile
+	#highscore = request.GET.get('score', None)
+	data = json.loads(request.POST.get('jsondata', None))
+	highscore = data['score']
+	#data = {
+    #    'scored score': highscore.score
+    #}
+	scoreobj = Highscore.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
+	scoreobj.score = highscore
+	scoreobj.save()
+	return HttpResponse(highscore, content_type="application/json")
+	#return render(request, "games/highscores.html", {'highscore': highscore})
+	#return render(request, "games/highscore.html", {'highscore': highscore})
 
 #def singlegame(request, game_id):
 #	try:
