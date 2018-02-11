@@ -1,7 +1,12 @@
 from django.http import Http404, HttpResponse
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 from webapp.models import Game, Profile, Highscore
 from django.contrib.auth.models import User
 from django.views import generic
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django.shortcuts import render
 from .forms import CartForm
 from .models import Game, Order
@@ -11,7 +16,7 @@ from django.views.decorators.csrf import csrf_exempt #TEMPORARELY
 from common.utils import user_is_developer, user_is_player
 from django.contrib.auth.decorators import user_passes_test
 
-class IndexView(generic.ListView):
+class IndexView(LoginRequiredMixin, generic.ListView):
 	template_name = 'games/index.html'
 	context_object_name = 'all_games'
 
@@ -25,12 +30,16 @@ class IndexView(generic.ListView):
 #	return render(request, "games/index.html", {'all_games': all_games})
 
 
-class DetailView(generic.DetailView):
+class DetailView(LoginRequiredMixin, generic.DetailView):
 	model = Game
 	template_name = 'games/singlegame.html'
 
+
 	def highscore(self):
+		user = self.request.user	
 		return Highscore.objects.get(game=self.object, user=self.request.user.profile);
+
+
 
 
 def renderHighScore(request,game_id):
@@ -41,21 +50,20 @@ def renderHighScore(request,game_id):
 
 @csrf_exempt
 def savescore(request, pk):
-	model = Game
-	#currentgame = game=self.object
-	#profile = self.request.user.profile
 	#highscore = request.GET.get('score', None)
 	data = json.loads(request.POST.get('jsondata', None))
 	highscore = data['score']
-	#data = {
-    #    'scored score': highscore.score
-    #}
+	#Alternative?: data = { 'scored score': highscore.score }
+
 	scoreobj = Highscore.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
-	scoreobj.score = highscore
-	scoreobj.save()
-	return HttpResponse(highscore, content_type="application/json")
+	if scoreobj.score < highscore:
+		scoreobj.score = highscore
+		scoreobj.save()
+		return HttpResponse(highscore)
+	else:
+	#	highscore = scoreobj.score
+		return Http404("You didn't score high enough")
 	#return render(request, "games/highscores.html", {'highscore': highscore})
-	#return render(request, "games/highscore.html", {'highscore': highscore})
 
 
 @login_required(login_url='login')

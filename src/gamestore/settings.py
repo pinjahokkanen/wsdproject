@@ -131,6 +131,8 @@ STATICFILES_DIRS = [
 
 LOGIN_REDIRECT_URL = '/'
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # Only when running in Heroku
 if "DYNO" in os.environ:
     STATIC_ROOT = 'staticfiles'
