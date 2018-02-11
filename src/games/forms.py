@@ -1,6 +1,5 @@
 from django import forms
-from Users.models import Profile
-from .models import Game
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import Group
 
@@ -13,4 +12,4 @@ class CartForm(forms.Form):
 
 	def __init__(self, *args, **kwargs):
 		super(CartForm, self).__init__(*args, **kwargs)
-			self.fields['game'].queryset = Game.objects.all()
+		self.fields['game'].queryset = Game.objects.all()

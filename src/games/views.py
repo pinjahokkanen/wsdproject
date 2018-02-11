@@ -9,11 +9,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.shortcuts import render
 from .forms import CartForm
-from .models import Game, Order
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt #TEMPORARELY
-from common.utils import user_is_developer, user_is_player
+# from common.utils import user_is_developer, user_is_player
 from django.contrib.auth.decorators import user_passes_test
 
 class IndexView(LoginRequiredMixin, generic.ListView):
@@ -65,8 +64,6 @@ def savescore(request, pk):
 		return Http404("You didn't score high enough")
 	#return render(request, "games/highscores.html", {'highscore': highscore})
 
-
-@login_required(login_url='login')
 
 def cart(request):
 	## Handle case not logged in
