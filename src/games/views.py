@@ -1,4 +1,6 @@
 from django.http import Http404, HttpResponse
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 from webapp.models import Game, Profile, Highscore
 from django.contrib.auth.models import User
 from django.views import generic
@@ -38,21 +40,20 @@ def renderHighScore(request,game_id):
 
 @csrf_exempt
 def savescore(request, pk):
-	model = Game
-	#currentgame = game=self.object
-	#profile = self.request.user.profile
 	#highscore = request.GET.get('score', None)
 	data = json.loads(request.POST.get('jsondata', None))
 	highscore = data['score']
-	#data = {
-    #    'scored score': highscore.score
-    #}
+	#Alternative?: data = { 'scored score': highscore.score }
+
 	scoreobj = Highscore.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
-	scoreobj.score = highscore
-	scoreobj.save()
-	return HttpResponse(highscore, content_type="application/json")
+	if scoreobj.score < highscore:
+		scoreobj.score = highscore
+		scoreobj.save()
+		return HttpResponse(highscore)
+	else:
+	#	highscore = scoreobj.score
+		return Http404("You didn't score high enough")
 	#return render(request, "games/highscores.html", {'highscore': highscore})
-	#return render(request, "games/highscore.html", {'highscore': highscore})
 
 #def singlegame(request, game_id):
 #	try:
