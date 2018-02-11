@@ -6,6 +6,44 @@
 
 {% if game not in request.user.profile.games.all and game.price != 0 %}
 
+<script type="text/javascript">
+
+	function game_to_cart(gameid) {
+		$.ajax({
+			method: 'POST',
+			url: "{% url 'games:cart' %}",
+			data: {
+				csrfmiddlewaretoken: "{{ csrf_token  }}",
+                game: gameid,
+                action:'add'
+			},
+
+			success:function(data) {
+				if (data.error){
+					alert("An error occurred.");
+				// } else {
+				// 	alert("The game was added to the cart.");
+				}
+			},
+
+			error: function(data) {
+				if (data.responseJSON && data.responseJSON.error) {
+					alert(data.responseJSON.error);
+				}else if (data.status = 403) {
+					alert("You are not allowed to purchase this game.");
+				}else if (data.status == 400) {
+					alert("Game already in the cart.");
+				}else{
+					alert("Unexcpected error occurred. Please refresh page and try again.");
+				}
+			},
+		})
+	}
+	
+
+
+</script>
+
 <input type="hidden" id="gameobject" name="gameobject" value="{{game}}"/>
 <input type="hidden" id="profileobject" name="profileobject" value="{{user.profile}}"/>
 <!-- VIEW FOR GAME NOT IN USER INVENTORY -->
@@ -23,8 +61,7 @@
 		<div class="snippet">
 			<div>
 				<span id="price">{{game.price}} €</span>
-				<button type="button" class="btn-success"><a href="../"> <i class="fas fa-cart-plus"></i></a></button>
-				<button type="button" class="btn-success"><a href="../">PURCHASE</a></button>
+				<button type="button" class="btn-success" onclick="game_to_cart({{game.id}})"><a href="{% url 'games:cart' %}"> <i class="fas fa-cart-plus"> </i></a> PURCHASE</button>
 			</div>
 
 		</div>
@@ -43,43 +80,6 @@
 	<p>Game By: {{game.developer}}  &nbsp; | &nbsp;  <i class="far fa-clock"></i> Added on {{game.pubDate}}</p>
 </div>
 
-
-{% elif game.price == 0.0 %}
-<a href="../">Back</a>
-<div class="game">
-	<h3><a href="{{game.url}}">{{ game }}</a></h3>
-	<hr>
-	<iframe src="{{game.url}}" height="500" width="700" style="border:none;"></iframe>
-
-	<section>
-		<p id="sec-header"> <i class="fas fa-caret-down"></i> Description</p>
-		<div class="snippet">
-			<p>{{game.description}}</p>
-		</div>
-
-	<p id="sec-header"> <i class="fas fa-caret-down"></i> Highscores</p>
-	<div class="snippet">
-
-		<div class="link" id="highscores">
-			{% include "games/highscores.html" %}
-		<!--	{% if view.highscore %}
-  			<p>Your own highscore: {{view.highscore.score}}</p>
-			{% else %}
-			<p>You haven't scored yet</p>
-			{% endif %}-->
-		</div>
-
-		<ul id="actions">
-
-		</ul>
-	</div>
-	</section>
- </div>
-
-<div class="gamedetails">
-	<h4>{{game.name}}</h4>
-	<p>Game By: {{game.developer}}  &nbsp; | &nbsp;  <i class="far fa-clock"></i> Added on {{game.pubDate}}</p>
-</div>
 
 <!-- VIEW IF GAME IS IN INVENTORY -->
 {% else %}
@@ -118,5 +118,6 @@
 	<p>Game By: {{game.developer}}  &nbsp; | &nbsp;  <i class="far fa-clock"></i> Added on {{game.pubDate}}</p>
 </div>
 {% endif %}
+
 
 {% endblock %}

@@ -128,3 +128,14 @@ div.gamedetails h4 {
 	padding-top: 1.5%;
 	margin-left: 30px;
 }
+
+
+/*STORE*/
+
+.done{
+    color: green;
+}
+
+.error{
+    color: red;
+}

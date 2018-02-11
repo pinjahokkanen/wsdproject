@@ -8,7 +8,7 @@ from webapp.models import Game
 ## For adding and removing games ## 
 
 class CartForm(forms.Form):
-	action = forms.ChoiceField(choices=[('add', 'Add'), ('remove', 'Remove')], required=True)
+	actions = forms.ChoiceField(choices=[('add', 'Add Game'), ('remove', 'Remove Game')], required=True)
 	game = forms.ModelChoiceField(required=True, queryset=None)
 
 	def __init__(self, *args, **kwargs):

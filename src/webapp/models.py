@@ -61,19 +61,19 @@ class Game(models.Model):
             'description': self.description,
             'url': self.url,
             'price': self.price,
-            'developer': self.developer.user.username,
+            # 'developer': self.developer.user.username,
             #'category': self.category.name,
             #'category_id': self.category.id,
         }
 
-        # Check user ownership of game
-        if user is not None and isinstance(user, User) and user.is_authenticated():
-            owned = False
-            o = user.profile.games.filter(id=self.id)
-            if o.count() > 0:
-                result['owned'] = True
-            else:
-                result['owned'] = False
+        # # Check user ownership of game
+        # if user is not None and isinstance(user, User) and user.is_authenticated():
+        #     owned = False
+        #     o = user.profile.games.filter(id=self.id)
+        #     if o.count() > 0:
+        #         result['owned'] = True
+        #     else:
+        #         result['owned'] = False
 
         return result
 

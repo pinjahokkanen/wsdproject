@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html>
   <head>
-  	{% load static %}
-  	<meta charset="utf-8">
+    {% load static %}
+    <meta charset="utf-8">
 
-  	<title>{% block title %}Game Store{% endblock %}</title>
-  	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-  	<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    <title>{% block title %}Game Store{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.min.js"></script>
+    
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
 
    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
      {% block stylesheet %}{% endblock %}  <!-- APPLY -->
-   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
    <script>
      /* global $ */
      $(document).ready(function() {
@@ -24,10 +31,10 @@
          //data from the message
          var data = evt.originalEvent.data;
 
-   			if (data.messageType == "SAVE"){
-   				alert("Save");
+        if (data.messageType == "SAVE"){
+          alert("Save");
 
-   			} else if(data.messageType == "SCORE") {
+        } else if(data.messageType == "SCORE") {
 
           //Sending the ajax post to the server, directing to the "savescore" url => directed to savescore view.
           $.ajax({
@@ -43,15 +50,15 @@
               console.log("SCORE: An error occurred!")
             }
           })
-   			} else if(data.messageType == "LOAD_REQUEST") {
-   				alert("Load request");
-   			} else if(data.messageType == "LOAD") {
-   				alert("Load");
-   			} else if(data.messageType == "ERROR") {
-   				alert("error");
-   			} else if(data.messageType == "SETTING") {
-   				alert("Setting");
-   			}
+        } else if(data.messageType == "LOAD_REQUEST") {
+          alert("Load request");
+        } else if(data.messageType == "LOAD") {
+          alert("Load");
+        } else if(data.messageType == "ERROR") {
+          alert("error");
+        } else if(data.messageType == "SETTING") {
+          alert("Setting");
+        }
        });
      });
 
@@ -63,11 +70,11 @@
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
           <a class="navbar-brand" href="{% url 'index' %}">Home page</a>
-         <!-- <a class="navbar-brand" href="{% url 'login' %}">Login</a> -->
           <a class="navbar-brand" href="{% url 'signup' %}">Signup</a>
           {% if user.is_active %}
           <a class="navbar-brand" href="{% url 'addgame' %}">Add Game</a>
           <a class="navbar-brand" href="/games">Games</a>
+          <a class="navbar-brand" href="{% url 'games:cart' %}">Cart</a>
           <a class="navbar-brand" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
           <p class="navbar-brand">Hi {% firstof user.get_short_name user.get_username %}!</p>
           {% else %}

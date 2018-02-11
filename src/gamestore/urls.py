@@ -35,6 +35,6 @@ urlpatterns = [
     re_path(r'^addgame/$', views.addgame, name='addgame'),
     re_path(r'^games/', include('games.urls'), name='games'),
     re_path(r'^savescore/$', include('games.urls'), name='savescore'),
-    # re_path(r'^cart/', include('games.urls'), name='cart'),
+    re_path(r'^cart/', include('games.urls'), name='cart'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -4,22 +4,18 @@
 
 {% block content %}
 
-    <div class=""  style="max-width: 500px;">
-        <h1 class=""> Cart</h1>
+    <div class="form-signin"  style="max-width: 500px;">
+        <h1 class="form-signin-heading" id="local-title">Cart</h1>
         {% for game in cart.games %}
-            <div id="div-{{ game.id }}">
-                <div class="infoDiv">
-                    <p>{{ game.name }}</p>
-                    <p><span>Price: {{ game.price }}</span><span 
+                <div class="cartItem">
+                    <p class="lead gameName">{{ game.name }}</p>
+                    <p class="gamePrice"><span>Price: {{game.price}}</span>
 
-                        class="btn btn-danger gameRemove" onclick="removeList({{ game.id }})">REMOVE</span></p>
+                        <span class="btn btn-danger gameRemove" onclick="removeList({{ game.id }})">REMOVE</span></p>
                 </div>
-            </div>
         {% endfor %}
-        
         <div style="padding-top: 10px;clear: both;">
             <hr/>
-            <form action="{% url 'orders' %}" method="POST">
                 {% csrf_token %}
             <input type="submit" class="btn btn-success" value="Send Order" id="confirmButton">
             </form>
@@ -41,7 +37,7 @@
          function removeList(gameid) {
             $.ajax({
                 method:'POST',
-                url: "{% url 'cart' %}",
+                url: "{% url 'games:cart' %}",
                 data: {
                     csrfmiddlewaretoken: "{{ csrf_token  }}",
                     game:gameid,
