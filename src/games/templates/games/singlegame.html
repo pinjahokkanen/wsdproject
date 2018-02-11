@@ -60,12 +60,13 @@
 	<p id="sec-header"> <i class="fas fa-caret-down"></i> Highscores</p>
 	<div class="snippet">
 
-		<div class="link">
-			{% if view.highscore %}
+		<div class="link" id="highscores">
+			{% include "games/highscores.html" %}
+		<!--	{% if view.highscore %}
   			<p>Your own highscore: {{view.highscore.score}}</p>
 			{% else %}
 			<p>You haven't scored yet</p>
-			{% endif %}
+			{% endif %}-->
 		</div>
 
 		<ul id="actions">

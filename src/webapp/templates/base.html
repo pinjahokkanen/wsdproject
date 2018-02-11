@@ -25,12 +25,18 @@
    			if (data.messageType == "SAVE"){
    				alert("Save");
    			} else if(data.messageType == "SCORE") {
+          alert("score");
           $.ajax({
             type : "POST",
             url : "savescore",
-            data : { 'score': data.score},
+            data : { 'jsondata' : JSON.stringify(data)},
+  //          data : { 'score': data.score},
+            dataType: 'json',
             success : function(data) {
               alert("Game score svaed succesfully")
+            },
+            error : function() {
+              alert("Game not saved!")
             }
           })
    			} else if(data.messageType == "LOAD_REQUEST") {
