@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block title %}Play {{game.name}}{% endblock %}
 
 {% block content %}
+ {% load static %}
 
 <!-- User does not own the game -->
 {% if game not in request.user.profile.games.all and game.price != 0 %}
