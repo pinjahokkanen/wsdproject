@@ -62,10 +62,14 @@
      //       data : { 'score': data.score},
             dataType: 'json',
             success : function(data) {
-              alert("Game score svaed succesfully")
+              $('#score').html(data);
+              console.log(data);
+              console.log($('#score'))
+
+              console.log("Game score svaed succesfully");
             },
             error : function() {
-              alert("Game not saved!")
+              console.log("Game not saved!")
             }
           })
         } else if(data.messageType == "LOAD_REQUEST") {

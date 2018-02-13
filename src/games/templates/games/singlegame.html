@@ -100,11 +100,12 @@
 	<div class="snippet">
 
 		<div class="link">
-			{% if view.highscore %}
+			{% include "games/highscores.html" %}
+			<!--{% if view.highscore %}
   			<p>Your own highscore: {{view.highscore.score}}</p>
 			{% else %}
 			<p>You haven't scored yet</p>
-			{% endif %}
+			{% endif %}-->
 		</div>
 
 		<ul id="actions">
