@@ -1,19 +1,25 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Show cart{% endblock %}
 
 {% block content %}
 
+
     <div class="form-signin"  style="max-width: 500px;">
-        <h1 class="form-signin-heading" id="local-title">Cart</h1>
-        
+        <h1 class="cart-header" id="local-title">Cart</h1>
+
+
         {% for game in cart.games %}
-                <div class="cartItem" id="game-{{game.id}}">
-                    <p class="lead gameName">{{ game.name }}</p>
-                    <p class="gamePrice"><span>Price: {{game.price}}</span>
+            <div card="card">
+                <div class="card-block" id="game-{{game.id}}">
+                    <p>{{ game.name }}</p>
+                    <p><span>Price: {{game.price}}</span>
 
                         <span class="btn btn-danger gameRemove" onclick="removeList({{ game.id }})">REMOVE</span></p>
                 </div>
+            </div>
+                
         {% endfor %}
 
         <div style="padding-top: 10px;clear: both;">

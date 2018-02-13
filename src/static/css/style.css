@@ -139,3 +139,10 @@ div.gamedetails h4 {
 .error{
     color: red;
 }
+
+/*CART*/
+
+.card {
+	margin: 25px 0;
+
+}

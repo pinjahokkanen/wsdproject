@@ -3,22 +3,33 @@
   <head>
     {% load static %}
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>{% block title %}Game Store{% endblock %}</title>
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.min.js"></script>
+    <!-- Bootstrap -->
+
+        
+    <link href="{% static 'css/bootstrap.css' %} " rel="stylesheet" media="all">
+    <link href="{% static 'css/bootstrap.min.css' %} " rel="stylesheet" media="all">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}">
+
+    <!-- jQuery first then JS-->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.js"></script>
+
     
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+
+    <!-- Our own stylesheet  -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     
 
    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-     {% block stylesheet %}{% endblock %}  <!-- APPLY -->
+   {% block stylesheet %}{% endblock %}  <!-- APPLY -->
 
    <script>
      /* global $ */
