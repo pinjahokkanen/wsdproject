@@ -1,20 +1,38 @@
 <!DOCTYPE html>
 <html>
   <head>
-  	{% load static %}
-  	<meta charset="utf-8">
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  	<title>{% block title %}Game Store{% endblock %}</title>
-  	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-  	<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    <title>{% block title %}Game Store{% endblock %}</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <!-- Bootstrap -->
+
+        
+    <link href="{% static 'css/bootstrap.css' %} " rel="stylesheet" media="all">
+    <link href="{% static 'css/bootstrap.min.css' %} " rel="stylesheet" media="all">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}">
+
+    <!-- jQuery first then JS-->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.js"></script>
+
+    
+
+    <!-- Our own stylesheet  -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
 
     <script href="{% static 'js/scripts.js' %}"></script>
 
    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-     {% block stylesheet %}{% endblock %}  <!-- APPLY -->
-   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+   {% block stylesheet %}{% endblock %}  <!-- APPLY -->
+
    <script>
 
      /* global $ */
@@ -24,10 +42,14 @@
          //Note that messages from all origins are accepted
    			//Get data from sent message
          var data = evt.originalEvent.data;
-   			if (data.messageType == "SAVE"){
-   				alert("Save");
-   			} else if(data.messageType == "SCORE") {
-          alert("score");
+
+
+        if (data.messageType == "SAVE"){
+          alert("Save");
+
+        } else if(data.messageType == "SCORE") {
+
+          //Sending the ajax post to the server, directing to the "savescore" url => directed to savescore view.
           $.ajax({
             type : "POST",
             url : "savescore",
@@ -41,15 +63,15 @@
               alert("Game not saved!")
             }
           })
-   			} else if(data.messageType == "LOAD_REQUEST") {
-   				alert("Load request");
-   			} else if(data.messageType == "LOAD") {
-   				alert("Load");
-   			} else if(data.messageType == "ERROR") {
-   				alert("error");
-   			} else if(data.messageType == "SETTING") {
-   				alert("Setting");
-   			}
+        } else if(data.messageType == "LOAD_REQUEST") {
+          alert("Load request");
+        } else if(data.messageType == "LOAD") {
+          alert("Load");
+        } else if(data.messageType == "ERROR") {
+          alert("error");
+        } else if(data.messageType == "SETTING") {
+          alert("Setting");
+        }
        });
      });
 
@@ -59,24 +81,22 @@
   <body>
      {% block body %}  <!-- HERE -->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <p>{{ perms.webapp }}</p>
+        <!--<p>{{ perms.webapp }}</p>-->
         <div class="container">
           <a class="navbar-brand" href="{% url 'index' %}">Home page</a>
-         <!-- <a class="navbar-brand" href="{% url 'login' %}">Login</a> -->
           <a class="navbar-brand" href="{% url 'signup' %}">Signup</a>
           {% if user.is_active %}
             {% if perms.webapp.add_game %}
           <a class="navbar-brand" href="{% url 'addgame' %}">Add Game</a>
             {% endif %}
           <a class="navbar-brand" href="/games">Games</a>
+          <a class="navbar-brand" href="{% url 'games:cart' %}">Cart</a>
           <a class="navbar-brand" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
           <p class="navbar-brand">Hi {% firstof user.get_short_name user.get_username %}!</p>
           {% else %}
             <a class="navbar-brand" href="{% url 'login'%}?next={{request.path}}">Login</a>
           {% endif %}
         </div>
-
-
       </nav>
       <div class="container">
        <!-- ei toimi <ol class="breadcrumb my-4">

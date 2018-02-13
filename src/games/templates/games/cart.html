@@ -1,29 +1,35 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Show cart{% endblock %}
 
 {% block content %}
 
-    <div class=""  style="max-width: 500px;">
-        <h1 class=""> Cart</h1>
-        {% for game in cart.games %}
-            <div id="div-{{ game.id }}">
-                <div class="infoDiv">
-                    <p>{{ game.name }}</p>
-                    <p><span>Price: {{ game.price }}</span><span 
 
-                        class="btn btn-danger gameRemove" onclick="removeList({{ game.id }})">REMOVE</span></p>
+    <div class="form-signin"  style="max-width: 500px;">
+        <h1 class="cart-header" id="local-title">Cart</h1>
+
+
+        {% for game in cart.games %}
+            <div card="card">
+                <div class="card-block" id="game-{{game.id}}">
+                    <p>{{ game.name }}</p>
+                    <p><span>Price: {{game.price}}</span>
+
+                        <span class="btn btn-danger gameRemove" onclick="removeList({{ game.id }})">REMOVE</span></p>
                 </div>
             </div>
+                
         {% endfor %}
-        
+
         <div style="padding-top: 10px;clear: both;">
             <hr/>
-            <form action="{% url 'orders' %}" method="POST">
+            <form action="{% url 'games:orders' %}" method="POST">
                 {% csrf_token %}
-            <input type="submit" class="btn btn-success" value="Send Order" id="confirmButton">
+            <input type="submit" class="btn btn-success" value="Send Order">
             </form>
         </div>
+
     </div>
 
      <script type="text/javascript">
@@ -41,7 +47,7 @@
          function removeList(gameid) {
             $.ajax({
                 method:'POST',
-                url: "{% url 'cart' %}",
+                url: "{% url 'games:cart' %}",
                 data: {
                     csrfmiddlewaretoken: "{{ csrf_token  }}",
                     game:gameid,
@@ -52,7 +58,7 @@
                         alert("Error: " + data.error);
                     }
                     else{
-                        $('#div-'+gameid).fadeOut(400,function(){this.remove()});
+                        $('#game-'+gameid).fadeOut(400,function(){this.remove()});
                     }
                 },
                 error: function (data) {
@@ -63,15 +69,5 @@
             })
         }
      </script>
-
-{% endblock %}
-
-{% block sidebar %}
-
-    <div id="sidebarContent">
-        <p class="lead">Your cart.</p>
-        <p>Take a look at the game in your cart and remove them if you want.</p>
-        <p>Or proceed with the purcase.</p>
-    </div>
 
 {% endblock %}

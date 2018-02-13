@@ -14,13 +14,8 @@ class Profile(models.Model):
     developer = models.BooleanField(default=False) #false = player, True=developer
     games = models.ManyToManyField('Game', related_name='+')
 
-  #  def addDeveloper(self):
-    #    user = get_object_or_404(User, pk=self.user.id)
-     #   print(user)
-      #  if user.developer:
-      #      user.has_perm('webapp.add_game')
-       #     user.has_perm('change_game')
-        #    user.has_perm('add_game')
+  
+            
 
 
     def __unicode__(self):
@@ -64,7 +59,6 @@ class Game(models.Model):
 
     def __str__(self):
         return self.name
-
     def to_json_dict(self, user=None):
         result = {
             'name': self.name,
@@ -72,7 +66,7 @@ class Game(models.Model):
             'description': self.description,
             'url': self.url,
             'price': self.price,
-            'developer': self.developer.user.username,
+            # 'developer': self.developer.user.username,
             #'category': self.category.name,
             #'category_id': self.category.id,
         }
@@ -113,6 +107,8 @@ class Order(models.Model):
     total = models.DecimalField(max_digits=10, decimal_places=2)
     # Order date and time
     orderDate = models.DateTimeField(default=timezone.now, null=False)
+    # Payment reference
+    paymentReference = models.IntegerField(null=True, default=0)
     # Payment date and time
     paymentDate = models.DateTimeField(default=None, null=True)
     # Order status

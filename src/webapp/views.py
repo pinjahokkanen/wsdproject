@@ -40,21 +40,31 @@ class UserFormView(View):
             #get the data
             username = form.cleaned_data['username']
             raw_password = form.cleaned_data['password']
-            developer = request.POST.get('developer')
+            developer = form.cleaned_data.get('developer')
             email = form.cleaned_data.get('email')
             print(developer)
             #save password
             user.set_password(raw_password)
 
-
             user.save()
+            if developer:
+                profile = user.profile
+                profile.developer = True
+                profile.save()
+                user.user_permissions.add(webapp.add_game, webapp.change_game, webapp.delete_game)
+                    
+                '''user.has_perm('webapp.add_game')
+                user.has_perm('change_game')
+                user.has_perm('add_game')'''
+
+
+
+            
+
+
             user = authenticate(username=username, password=raw_password)
 
-            if user is not None:
-                if developer:
-                    profile = user.profile
-                    profile.developer = True
-                    profile.save()
+                
 
             if user.is_active:
                 login(request, user)
