@@ -10,37 +10,35 @@
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
+    <script href="{% static 'js/scripts.js' %}"></script>
+
    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
      {% block stylesheet %}{% endblock %}  <!-- APPLY -->
    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
    <script>
+
      /* global $ */
      $(document).ready(function() {
        'use strict';
        $(window).on('message', function(evt) {
-         //Messages from all origins are accepted
-         //NOTE TODO! CSRF tokens not implemented yet, no extempt in view
-
-         //data from the message
+         //Note that messages from all origins are accepted
+   			//Get data from sent message
          var data = evt.originalEvent.data;
-
    			if (data.messageType == "SAVE"){
    				alert("Save");
-
    			} else if(data.messageType == "SCORE") {
-
-          //Sending the ajax post to the server, directing to the "savescore" url => directed to savescore view.
+          alert("score");
           $.ajax({
             type : "POST",
             url : "savescore",
-            data : { 'jsondata' : JSON.stringify(data)}, //Alternative? => data : { 'score': data.score},
+            data : { 'jsondata' : JSON.stringify(data)},
+  //          data : { 'score': data.score},
             dataType: 'json',
             success : function(data) {
-                $('#score').html(data); //Changes the content of a #score span in highscores.html
-                alert("Game score saved succesfully!");
+              alert("Game score svaed succesfully")
             },
             error : function() {
-              console.log("SCORE: An error occurred!")
+              alert("Game not saved!")
             }
           })
    			} else if(data.messageType == "LOAD_REQUEST") {
@@ -61,12 +59,15 @@
   <body>
      {% block body %}  <!-- HERE -->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <p>{{ perms.webapp }}</p>
         <div class="container">
           <a class="navbar-brand" href="{% url 'index' %}">Home page</a>
          <!-- <a class="navbar-brand" href="{% url 'login' %}">Login</a> -->
           <a class="navbar-brand" href="{% url 'signup' %}">Signup</a>
           {% if user.is_active %}
+            {% if perms.webapp.add_game %}
           <a class="navbar-brand" href="{% url 'addgame' %}">Add Game</a>
+            {% endif %}
           <a class="navbar-brand" href="/games">Games</a>
           <a class="navbar-brand" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
           <p class="navbar-brand">Hi {% firstof user.get_short_name user.get_username %}!</p>

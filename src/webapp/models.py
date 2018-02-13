@@ -5,6 +5,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
 from django.utils import timezone
+from django.shortcuts import get_object_or_404
+
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -12,19 +14,28 @@ class Profile(models.Model):
     developer = models.BooleanField(default=False) #false = player, True=developer
     games = models.ManyToManyField('Game', related_name='+')
 
+  #  def addDeveloper(self):
+    #    user = get_object_or_404(User, pk=self.user.id)
+     #   print(user)
+      #  if user.developer:
+      #      user.has_perm('webapp.add_game')
+       #     user.has_perm('change_game')
+        #    user.has_perm('add_game')
+
+
     def __unicode__(self):
         return str(self.user.username) #How viewed in django admin, same as __str__ in python2
     def __str__(self):
         return self.user.username #These still needed, don't know why
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()
 
 # Setting the name and description of the game. All the names are unique, and primary key (game id, referenced pk) is created automatically by django.
 # States - don't know what this does? Was in the project plan.

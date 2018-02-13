@@ -9,7 +9,8 @@ from webapp.models import Game, Profile, Highscore
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
+
 
 
 
@@ -19,24 +20,65 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     return render(request, "webapp/index.html", {})
 
-class UserFormView(FormView):
+class UserFormView(View):
 
-    form_class = UserCreationForm
+    form_class = SignUpForm
     template_name = 'signup.html'
 
     def get(self, request):
-        form = SignUpForm()
-        return render(request, 'signup.html', {'form': form})
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request):
-        form = UserCreationForm(request.POST)
+        form = self.form_class(request.POST)
+
         if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
+
+            user = form.save(commit=False)
+            #user.refresh_from_db()
+
+            #get the data
+            username = form.cleaned_data['username']
+            raw_password = form.cleaned_data['password']
+            developer = request.POST.get('developer')
+            email = form.cleaned_data.get('email')
+            print(developer)
+            #save password
+            user.set_password(raw_password)
+
+
+            user.save()
             user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('/games/')
+
+            if user is not None:
+                if developer:
+                    profile = user.profile
+                    profile.developer = True
+                    profile.save()
+
+            if user.is_active:
+                login(request, user)
+                return redirect('/games/')
+
+            #profile = user.profile TESTAA TÄLLÄ
+            #profile.refresh_from_db()
+            #print(user.profile)
+            
+            #print(developerStatus)
+            #print(profile.user)
+            #print(profile.developer) oikein False
+            #print(form.cleaned_data.get('username')) nimi
+            #print(form.cleaned_data['username'])
+            #profile.save()
+            
+            #email = form.cleaned_data.get('email')
+
+            
+            #if user.profile.developer:
+             #   print('its developer')
+
+
+            
         return render(request, 'signup.html', {'form': form})
 
 class LoginView(FormView):
@@ -67,7 +109,7 @@ def signup(request):
     return render(request, 'signup.html', {'form': form})
 '''
 
-@login_required
+@permission_required('webapp.addgame')
 def addgame(request):
     if request.method == 'POST':
         form = NewGameForm(request.POST)
