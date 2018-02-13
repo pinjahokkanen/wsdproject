@@ -6,14 +6,16 @@
 
     <div class="form-signin"  style="max-width: 500px;">
         <h1 class="form-signin-heading" id="local-title">Cart</h1>
+        
         {% for game in cart.games %}
-                <div class="cartItem">
+                <div class="cartItem" id="game-{{game.id}}">
                     <p class="lead gameName">{{ game.name }}</p>
                     <p class="gamePrice"><span>Price: {{game.price}}</span>
 
                         <span class="btn btn-danger gameRemove" onclick="removeList({{ game.id }})">REMOVE</span></p>
                 </div>
         {% endfor %}
+
         <div style="padding-top: 10px;clear: both;">
             <hr/>
             <form action="{% url 'games:orders' %}" method="POST">
@@ -21,6 +23,7 @@
             <input type="submit" class="btn btn-success" value="Send Order">
             </form>
         </div>
+
     </div>
 
      <script type="text/javascript">
@@ -49,7 +52,7 @@
                         alert("Error: " + data.error);
                     }
                     else{
-                        $('#div-'+gameid).fadeOut(400,function(){this.remove()});
+                        $('#game-'+gameid).fadeOut(400,function(){this.remove()});
                     }
                 },
                 error: function (data) {
@@ -60,15 +63,5 @@
             })
         }
      </script>
-
-{% endblock %}
-
-{% block sidebar %}
-
-    <div id="sidebarContent">
-        <p class="lead">Your cart.</p>
-        <p>Take a look at the game in your cart and remove them if you want.</p>
-        <p>Or proceed with the purcase.</p>
-    </div>
 
 {% endblock %}

@@ -6,6 +6,8 @@ from django.template import RequestContext
 from webapp.models import Game, Profile, Highscore, Order
 from django.views import generic
 
+from django.shortcuts import redirect
+
 from django.db.models import Count
 from django.contrib import messages
 from decimal import Decimal
@@ -65,7 +67,6 @@ def savescore(request, pk):
         return Http404("You didn't score high enough")
     #return render(request, "games/highscores.html", {'highscore': highscore})
 
-
 def cart(request):
     ## Handle case not logged in
 
@@ -102,18 +103,21 @@ def cart(request):
             jsondata['error'] = form.errors
             return JsonResponse(status=400, data=jsondata)
 
+        ## For adding games to cart ##
         if form.cleaned_data['action'] == 'add':
 
             sessioncart = request.session.get('cart_items',[])
 
             if form.cleaned_data['game'].id in sessioncart:
                 jsondata['error'] = "Cart already contains this game"
+
             #Succesful request
             if jsondata['error'] is None:
                 sessioncart.append(form.cleaned_data['game'].id)
                 request.session['cart_items'] = sessioncart
-                HttpResponseRedirect(reverse('games:cart'))
+                # redirect("games:cart")
 
+        ## For removing games from cart ##
         elif form.cleaned_data['action'] == 'remove':
             items = request.session.get('cart_items', [])
             if form.cleaned_data['game'].id in items:
