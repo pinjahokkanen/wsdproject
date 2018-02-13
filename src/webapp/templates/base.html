@@ -17,10 +17,10 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}">
 
     <!-- jQuery first then JS-->
-    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
 
-    <script type="text/javascript" src="js/bootstrap.js"></script>
-    <script type="text/javascript" src="js/bootstrap.bundle.js"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.bundle.js' %}"></script>
 
     
 
@@ -34,6 +34,7 @@
    {% block stylesheet %}{% endblock %}  <!-- APPLY -->
 
    <script>
+
 
      /* global $ */
      $(document).ready(function() {
@@ -49,12 +50,16 @@
 
         } else if(data.messageType == "SCORE") {
 
+          console.log(typeof data);
+          console.log(typeof JSON.stringify(data));
+
+
           //Sending the ajax post to the server, directing to the "savescore" url => directed to savescore view.
           $.ajax({
             type : "POST",
             url : "savescore",
             data : { 'jsondata' : JSON.stringify(data)},
-  //          data : { 'score': data.score},
+     //       data : { 'score': data.score},
             dataType: 'json',
             success : function(data) {
               alert("Game score svaed succesfully")
