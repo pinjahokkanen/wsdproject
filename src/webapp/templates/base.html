@@ -17,46 +17,66 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}">
 
     <!-- jQuery first then JS-->
+<<<<<<< HEAD
     <script type="text/javascript" src=" {% static 'js/jquery-3.3.1.min.js' %}"></script>
 
     <script type="text/javascript" src=" {% static 'js/bootstrap.js' %}"></script>
     <script type="text/javascript" src=" {% static 'js/bootstrap.min.js' %}"></script>    
+=======
+    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.bundle.js' %}"></script>
+
+    
+>>>>>>> 244c255c4969b1a60709735bbfcfd002178a7ef2
 
     <!-- Our own stylesheet  -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     
 
+    <script href="{% static 'js/scripts.js' %}"></script>
+
    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
    {% block stylesheet %}{% endblock %}  <!-- APPLY -->
 
    <script>
+
+
      /* global $ */
      $(document).ready(function() {
        'use strict';
        $(window).on('message', function(evt) {
-         //Messages from all origins are accepted
-         //NOTE TODO! CSRF tokens not implemented yet, no extempt in view
-
-         //data from the message
+         //Note that messages from all origins are accepted
+   			//Get data from sent message
          var data = evt.originalEvent.data;
+
 
         if (data.messageType == "SAVE"){
           alert("Save");
 
         } else if(data.messageType == "SCORE") {
 
+          console.log(typeof data);
+          console.log(typeof JSON.stringify(data));
+
+
           //Sending the ajax post to the server, directing to the "savescore" url => directed to savescore view.
           $.ajax({
             type : "POST",
             url : "savescore",
-            data : { 'jsondata' : JSON.stringify(data)}, //Alternative? => data : { 'score': data.score},
+            data : { 'jsondata' : JSON.stringify(data)},
+     //       data : { 'score': data.score},
             dataType: 'json',
             success : function(data) {
-                $('#score').html(data); //Changes the content of a #score span in highscores.html
-                alert("Game score saved succesfully!");
+              $('#score').html(data);
+              console.log(data);
+              console.log($('#score'))
+
+              console.log("Game score svaed succesfully");
             },
             error : function() {
-              console.log("SCORE: An error occurred!")
+              console.log("Game not saved!")
             }
           })
         } else if(data.messageType == "LOAD_REQUEST") {
@@ -77,11 +97,14 @@
   <body>
      {% block body %}  <!-- HERE -->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <!--<p>{{ perms.webapp }}</p>-->
         <div class="container">
           <a class="navbar-brand" href="{% url 'index' %}">Home page</a>
           <a class="navbar-brand" href="{% url 'signup' %}">Signup</a>
           {% if user.is_active %}
+            {% if perms.webapp.add_game %}
           <a class="navbar-brand" href="{% url 'addgame' %}">Add Game</a>
+            {% endif %}
           <a class="navbar-brand" href="/games">Games</a>
           <a class="navbar-brand" href="{% url 'games:cart' %}">Cart</a>
           <a class="navbar-brand" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
@@ -90,8 +113,6 @@
             <a class="navbar-brand" href="{% url 'login'%}?next={{request.path}}">Login</a>
           {% endif %}
         </div>
-
-
       </nav>
       <div class="container">
        <!-- ei toimi <ol class="breadcrumb my-4">

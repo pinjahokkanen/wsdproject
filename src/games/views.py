@@ -54,17 +54,20 @@ def renderHighScore(request,game_id):
 def savescore(request, pk):
     #highscore = request.GET.get('score', None)
     data = json.loads(request.POST.get('jsondata', None))
+    print(type(data))
     highscore = data['score']
     #Alternative?: data = { 'scored score': highscore.score }
+    print(highscore)
 
     scoreobj = Highscore.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
+    print(scoreobj)
     if scoreobj.score < highscore:
         scoreobj.score = highscore
         scoreobj.save()
         return HttpResponse(highscore)
     else:
     #   highscore = scoreobj.score
-        return Http404("You didn't score high enough")
+        raise Http404("You didn't score high enough")
     #return render(request, "games/highscores.html", {'highscore': highscore})
 
 def cart(request):

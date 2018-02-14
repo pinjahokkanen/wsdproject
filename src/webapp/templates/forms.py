@@ -5,14 +5,31 @@ from django.contrib.auth import login, authenticate
 
 from ..models import Game
 
+'''
 class SignUpForm(UserCreationForm):
-    first_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
-    last_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
     email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
+    developer = forms.BooleanField()
+    #print(developer)
+    #print('develoewcper 1')
+    #if developer:
+    #	user.has_perm('webapp.add_game')
+    #	user.has_perm('change_game')
+    #	user.has_perm('add_game')	
 
     class Meta:
         model = User
-        fields = ('username', 'password1', 'password2',)
+        fields = ('username', 'password1', 'password2', 'developer', 'email')
+'''
+   
+class SignUpForm(forms.ModelForm):
+ 	password = forms.CharField(widget=forms.PasswordInput)
+ 	developer = forms.BooleanField(required=False)
+
+ 	class Meta:
+ 		model = User
+ 		fields = ['username', 'password', 'developer', 'email']
+
+
 
 class NewGameForm(forms.ModelForm):
 
@@ -30,8 +47,11 @@ class UserLoginForm(forms.Form):
 		password = form.cleaned_data.get('password1')
 		user = authenticate(username=username, password=raw_password)
 
+
 		if username and password:
+			
 			user = authenticate(username=username, password=raw_password)
+			
 			if not user:
 				raise forms.ValidationError("This user does not exist")
 
