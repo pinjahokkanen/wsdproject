@@ -18,7 +18,7 @@ h3.gallery {
     display: inline;
     list-style: none;
     width: 195px;
-    height: 220px;
+    height: 265px;
     float: left;
     margin: 0 10px 10px 0;
     text-align: left;
@@ -26,7 +26,42 @@ h3.gallery {
     border-style: solid;
     border-width: 1px;
     border-color: #dddddd;
+
 }
+
+.ellipsis {
+    overflow: hidden;
+    height: 3em;
+    line-height: 1.5em;
+    font-size: 16px;
+}
+.ellipsis:before {
+    content:"";
+    float: left;
+    width: 5px;
+    height: 3em;
+}
+.ellipsis > *:first-child {
+    float: right;
+    width: 100%;
+    margin-left: -5px;
+}
+.ellipsis:after {
+    content:"\02026";
+    box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    float: right;
+    position: relative;
+    top: -25px;
+    left: 100%;
+    width: 3em;
+    margin-left: -3em;
+    padding-right: 5px;
+    text-align: right;
+}
+
+
 
 .gallery li img{
 	border-color: #cccccc;
@@ -78,8 +113,8 @@ div.game section {
 	background-color: lightgrey;
 	float:right;
 
-	margin: 20px 15px 0 0;
-	width: 390px;
+	margin: 20px 2.5% 0 0;
+	width: 30%;
 	height: 500px;
 }
 

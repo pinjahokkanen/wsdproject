@@ -3,33 +3,32 @@
 {% block title %}Game Store{% endblock %}
 
 {% block content %}
- {% load static %}
+{% load static %}
 
-<a href="../">Back</a>
+
 {% if all_games %}
 
-<h2 class="gallery">Game Listing</h3>
+<h2 class="gallery card-block">Game Listing</h3>
 
 <h3 class="gallery">My bought games</h3>
 
 <ul class="gallery">
 	{% for game in request.user.profile.games.all %}
-		<li id="library">
-			<img src="{% static "img/NaN.png" %}" alt="Image not found"/>
-			<h4><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
-			<p>Developer: {{game.developer}}</p>
+		<li class="card bg-dark">
+			<img class="card-image-top" src="{% static "img/NaN.png" %}" alt="Image not found"/>
+			<h4 class=" text-white ellipsis"><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
+			<p class="text-white foot">Developer: <span class="badge badge-pill badge-secondary">{{game.developer}}</span></p>
 		</li>
 		{% endfor %}
 </ul>
 
 <h3 class="gallery">My developed games</h3>
-
 <ul class="gallery">
 	{% for game in request.user.profile.developed_games.all %}
-		<li>
-			<img src="{% static "img/NaN.png" %}" alt="Image not found"/>
-			<h4><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
-			<p>Developer: {{game.developer}}</p>
+		<li class="card bg-dark">
+			<img class="card-image-top" src="{% static "img/NaN.png" %}" alt="Image not found"/>
+			<h4 class=" text-white"><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
+			<p class="text-white">Developer: <span class="badge badge-pill badge-secondary">{{game.developer}}</span></p>
 		</li>
 	{% endfor %}
 </ul>
@@ -40,10 +39,10 @@
 <ul class="gallery">
 	{% for game in all_games %}
 	 {% if game not in request.user.profile.games.all%}
-		<li>
-			<img src="{% static "img/NaN.png" %}" alt="Image not found"/>
-			<h4><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
-			<p>Developer: {{game.developer}}</p>
+		<li class="card bg-faded">
+			<img class="card-image-top" src="{% static "img/NaN.png" %}" alt="Image not found"/>
+			<h4 class=" text-white"><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
+			<p class="text-white">Developer: <span class="badge badge-pill badge-secondary">{{game.developer}}</span></p>
 		</li>
 		{% endif %}
 		{% endfor %}
