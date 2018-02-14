@@ -86,7 +86,8 @@ h3.gallery {
 
 div.game {
 	background-color: grey;
-	width: 100%
+	width: 100%;
+	min-height: 600px;
 }
 
 div.game h3 {
@@ -142,7 +143,7 @@ div.game section {
 
 .snippet a {
 	text-decoration: none;
-	color: white; 
+	color: white;
 }
 
 #sec-header {

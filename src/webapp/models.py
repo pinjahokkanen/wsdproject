@@ -14,10 +14,6 @@ class Profile(models.Model):
     developer = models.BooleanField(default=False) #false = player, True=developer
     games = models.ManyToManyField('Game', related_name='+')
 
-  
-            
-
-
     def __unicode__(self):
         return str(self.user.username) #How viewed in django admin, same as __str__ in python2
     def __str__(self):
