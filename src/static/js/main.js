@@ -11,6 +11,7 @@ $(document).ready(function() {
       document.getElementById('gameframe').contentWindow.postMessage(message, "*");
     }
 
+//NOTE! Doesn't save gamestates if no game state has been created. ==> Has to be created when the game is bought
   $(window).on('message', function(evt) {
     //Note that messages from all origins are accepted
    //Get data from sent message
@@ -18,7 +19,22 @@ $(document).ready(function() {
 
 
    if (data.messageType == "SAVE"){
-     alert("Save");
+//     alert(JSON.stringify(data));
+     $.ajax({
+       type : "POST",
+       url : "savestate",
+       data : { 'jsondata' : JSON.stringify(data)},
+//      JSON.stringify(data) = {"messageType":"SAVE","gameState":{"playerItems":[],"score":0}}
+       dataType: 'json',
+       success : function(data) {
+         if (data.score) {
+           $('#score').html(data.score);
+         }
+       },
+       error : function() {
+         postError("Gamestate could not be saved!")
+       }
+     })
 
    } else if(data.messageType == "SCORE") {
 
