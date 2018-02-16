@@ -25,7 +25,7 @@ SECRET_KEY = 'hxmxwy11a$=5oi!w5d901)3e%=+ej27#-ary_8$bw_8=*ld6ed'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0']
 
 
 # Application definition
@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'gamestore.urls'
@@ -121,7 +122,7 @@ USE_TZ = True
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-STATIC_ROOT = ''
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
 
@@ -133,11 +134,14 @@ LOGIN_REDIRECT_URL = '/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+
 # Only when running in Heroku
 if "DYNO" in os.environ:
     STATIC_ROOT = 'staticfiles'
     import dj_database_url
-    DATABASES['default'] =  dj_database_url.config()
+    #DATABASES['default'] =  dj_database_url.config()
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES['default'].update(db_from_env)
 
     DEBUG = True # False, once service is succesfully deployed
     ALLOWED_HOSTS = ['*']
