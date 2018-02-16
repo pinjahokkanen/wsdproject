@@ -21,7 +21,6 @@ from django.contrib.auth.models import User
 from django.shortcuts import render
 from .forms import CartForm
 
-from django.views.decorators.csrf import csrf_exempt #TEMPORARELY
 from django.contrib.auth.decorators import user_passes_test
 
 
@@ -44,7 +43,6 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
 
 #NOTE! CSRF NEEDS TO BE IMPLEMENTED
 
-@csrf_exempt
 def savescore(request, pk):
     #highscore = request.GET.get('score', None)
     data = json.loads(request.POST.get('jsondata', None))
@@ -64,7 +62,7 @@ def savescore(request, pk):
         raise Http404("You didn't score high enough")
     #return render(request, "games/highscores.html", {'highscore': highscore})
 
-@csrf_exempt
+
 def savestate(request, pk):
 
     data = json.loads(request.POST.get('jsondata', None))
@@ -95,7 +93,6 @@ def savestate(request, pk):
     #    raise Http404("You didn't score high enough")
     #return render(request, "games/highscores.html", {'highscore': highscore})
 
-@csrf_exempt
 def loadstate(request, pk):
     if request.method=='POST' and request.is_ajax:
 
