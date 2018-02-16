@@ -42,14 +42,6 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
         return GameState.objects.get(game=self.object, user=self.request.user.profile);
 
 
-
-
-def renderHighScore(request,game_id):
-
-#   highscore = Highscore(game=currentgame, user=profile)
-    highscore = 0
-    return render(request, "games/highscore.html", {'highscore': highscore})
-
 #NOTE! CSRF NEEDS TO BE IMPLEMENTED
 
 @csrf_exempt
@@ -99,11 +91,24 @@ def savestate(request, pk):
     #stateobj.state = json.dumps(state)
     #stateobj.save()
     #return HttpResponse(status=200)
-
-
     #   highscore = scoreobj.score
     #    raise Http404("You didn't score high enough")
     #return render(request, "games/highscores.html", {'highscore': highscore})
+
+@csrf_exempt
+def loadstate(request, pk):
+    if request.method=='POST' and request.is_ajax:
+
+        data = json.loads(request.POST.get('jsondata', None)) #tarviiko edes?
+        stateobj = GameState.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
+
+        if stateobj.state != None:
+            return HttpResponse(stateobj.state, content_type='application/json')
+        else:
+            data['messageType'] = "NO_STATE"
+            data['errorText'] = "No previous gamestate saved."
+            return HttpResponse(data, content_type='application/json')
+
 
 def cart(request):
     ## Handle case not logged in

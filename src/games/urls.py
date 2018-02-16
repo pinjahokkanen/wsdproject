@@ -10,6 +10,7 @@ urlpatterns = [
 	re_path(r'^(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='singlegame'),
 	re_path(r'^(?P<pk>[0-9]+)/savescore', views.savescore, name='savescore'),
 	re_path(r'^(?P<pk>[0-9]+)/savestate', views.savestate, name='savestate'),
+	re_path(r'^(?P<pk>[0-9]+)/loadstate', views.loadstate, name='loadstate'),
 #	re_path(r'^renderHighScore/(?P<pk>[0-9]+)/$', views.renderHighScore, name='highscore'),
 	#re_path(r'^savescore/(?P<pk>[0-9]+)/$', views.savescore, name='savescore'),
 	re_path(r'^cart/', views.cart, name='cart'),
