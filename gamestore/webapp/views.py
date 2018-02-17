@@ -56,15 +56,6 @@ class UserFormView(View):
                 '''user.has_perm('webapp.add_game')
                 user.has_perm('change_game')
                 user.has_perm('add_game')'''
-
-<<<<<<< HEAD:src/webapp/views.py
-=======
-
-
-
-
-
->>>>>>> a84ce3a968f8315e8b2dc2b57bfb22c78e5d5f53:gamestore/webapp/views.py
             user = authenticate(username=username, password=raw_password)
 
 
