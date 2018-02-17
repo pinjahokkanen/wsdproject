@@ -14,7 +14,7 @@
 	{% for game in request.user.profile.games.all %}
 		<li class="card bg-dark">
 			<img class="card-image-top" src="{% static "img/NaN.png" %}" alt="Image not found"/>
-			<h4 class=" text-white ellipsis"><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
+			<h4 class="game-name text-white ellipsis"><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
 			<p class="text-white foot">Developer: <span class="badge badge-pill badge-secondary">{{game.developer}}</span></p>
 		</li>
 	{% endfor %}
@@ -26,10 +26,10 @@
 <ul class="gallery">
 	{% for game in all_games %}
 	 {% if game not in request.user.profile.games.all%}
-		<li class="card bg-faded">
+		<li class="card bg-secondary">
 			<img class="card-image-top" src="{% static "img/NaN.png" %}" alt="Image not found"/>
-			<h4 class=" text-white"><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
-			<p class="text-white">Developer: <span class="badge badge-pill badge-secondary">{{game.developer}}</span></p>
+			<h4 class="game-name ellipsis"><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
+			<p class="text-white">Developer: <span class="badge badge-pill badge-light">{{game.developer}}</span></p>
 		</li>
 		{% endif %}
 		{% endfor %}

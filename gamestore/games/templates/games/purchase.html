@@ -1,13 +1,22 @@
 {% extends "base.html" %}
 
-{% block title %}Purchase{% endblock %}
+{% block title %}Game order of {{user}}{% endblock %}
 
 {% block content %}
 
     <div class=""  style="max-width: 700px;">
-        <h1 >Order</h1>
+        <h1 class="cart-header" >Order</h1>
         {% for game in cart.games %}
-                    <p class="lead gameName">{{ game.name }} <span>{{ game.price }}</span></p>
+<!--         <p class="lead gameName">{{ game.name }} <span>{{ game.price }}</span></p> -->
+        <div id="game-{{game.id}}" class="card bg-light border-secondary mb-3 cart-item">
+
+            <div class="card-block ">
+                <h5 class="">{{ game.name }}</h5>
+                <span class="card-text"> By: {{game.developer}}</span>
+                <span class="price-tag">Price: {{game.price}}</span>
+            </div>
+
+            </div>
         {% endfor %}
 
 
@@ -23,11 +32,11 @@
             <input type="hidden" name="checksum"
                     value="{{ checksum }}" />
 
+            <div class="form-inline amount-tag">
+                <label for="id_amount" >Total amount: &nbsp;</label>
+                <input readonly type="text" id="id_amount" name="amount" value="{{ amount }}" class="amount-tag form-control mb-1 mr-sm-1"/ >
+            </div>
 
-            <input type="text" id="id_amount" name="amount" value="{{ amount }}"/>
-            <label for="id_amount" class="alignRight">Amount</label>
-            <br/>
-            <br/>
             <input type="submit" class="btn btn-lg btn-primary btn-block" value="Pay"/>
         </form>
 

@@ -6,18 +6,22 @@
 {% block content %}
 
 
-    <div class="form-signin"  style="max-width: 500px;">
+    <div class="" style="max-width: 700px;">
         <h1 class="cart-header" id="local-title">Cart</h1>
 
 
         {% for game in cart.games %}
-            <div card="card">
-                <div class="card-block" id="game-{{game.id}}">
-                    <p>{{ game.name }}</p>
-                    <p><span>Price: {{game.price}}</span>
+            <div id="game-{{game.id}}" class="card bg-light border-secondary mb-3 cart-item">
+                <div class="card-block ">
+                    <h5 class="">{{ game.name }}</h5>
+                    <span class="card-text"> By: {{game.developer}}</span>
+                    <span class="price-tag">Price: {{game.price}}</span>
 
-                        <span class="btn btn-danger gameRemove" onclick="removeList({{ game.id }})">REMOVE</span></p>
+                    <div class="d-flex justify-content-end"> 
+                        <span class="gameRemove badge badge-danger badge-button" onclick="removeList({{ game.id }})">REMOVE</span>
+                    </div>
                 </div>
+
             </div>
                 
         {% endfor %}
@@ -26,7 +30,7 @@
             <hr/>
             <form action="{% url 'games:orders' %}" method="POST">
                 {% csrf_token %}
-            <input type="submit" class="btn btn-success" value="Send Order">
+            <input type="submit" class="btn btn-success btn-block" value="Send Order">
             </form>
         </div>
 

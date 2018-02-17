@@ -15,6 +15,7 @@ from hashlib import md5
 import datetime
 import json
 
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 
@@ -106,7 +107,7 @@ def loadstate(request, pk):
             data['errorText'] = "No previous gamestate saved."
             return HttpResponse(data, content_type='application/json')
 
-
+@login_required(login_url='login')
 def cart(request):
     ## Handle case not logged in
 
@@ -133,9 +134,9 @@ def cart(request):
         ## CASES TO DO:
         ## [ ] CLIENT NOT USER
         ## [x] CASE FORM VALID
-        ## [ ] CASE NOT AJAX
+        ## [x] CASE NOT AJAX
         ## [x] DUPLICATES
-        ## [ ] GAME ALREADY OWNED BY USER
+        ## [x] GAME ALREADY OWNED BY USER
 
         form = CartForm(request.POST)
 
@@ -193,7 +194,7 @@ def to_cart(game_ids, user=None):
             continue
     return result
 
-
+@login_required(login_url='login')
 def orders(request):
     if request.method == 'GET':
 
@@ -230,9 +231,10 @@ def orders(request):
                                     paymentReference=None,
                                     status='pending')
 
+        # Same as; order.games = queryset.all()
         for obj in queryset:
             order.games.add(obj)
-        # order.games = queryset.all()
+        
 
         order.save()
 
@@ -243,6 +245,7 @@ def orders(request):
     else:
         return HttpResponse(status=405, content="Invalid method.")
 
+@login_required(login_url='login')
 def order_details(request, order_id):
     if request.method == 'GET':
 
@@ -298,6 +301,7 @@ def order_details(request, order_id):
     else:
         return HttpResponse(status=405, content="Invalid action.")
 
+@login_required(login_url='login')
 def purchase_result(request):
     if request.method == 'GET':
         pid = request.GET['pid']
@@ -324,6 +328,18 @@ def purchase_result(request):
             messages.error(request, "Invalid OrderId specified. Your payment is invalid.")
             return HttpResponseRedirect(redirect_to=reverse("cart"))
 
+        if order.status != "pending":
+            messages.error(request, "Your order is not in pending status. It may have been cancelled or completed already.")
+            return HttpResponseRedirect(redirect_to=reverse("cart"))
+
+        if result not in ["error", "cancel", "success"]:
+            messages.error(request, "Unknown order result.")
+            return HttpResponseRedirect(redirect_to=reverse("cart"))
+
+        if order.player != request.user.profile:
+            messages.error(request, "You are not authorized to make this order.")
+            return HttpResponseRedirect(redirect_to=reverse("cart"))
+
         ## CASES TO CHECK:
         ## [x ] CHECKSUM MATCHES
         ## [ ] STATUS CHECKS OUT
@@ -342,7 +358,17 @@ def purchase_result(request):
 
             request.session['cart_items'] = []
 
-            return HttpResponseRedirect(redirect_to=reverse("index"))
+            return HttpResponseRedirect(redirect_to=reverse("games:index"))
+
+        elif result == "cancel":
+            order.delete()
+            messages.info(request,"The order has been cancelled.")
+            return HttpResponseRedirect(redirect_to=reverse("cart"))
+
+        elif result == "error":
+            order.status = "error"
+            messages.error(request,"Order encountered error. Please try again.")
+            return HttpResponseRedirect(redirect_to=reverse("order_details", kwargs={'order_id': pid}))
 
         ## TO DO: CANCELLED AND ERROR ORDER STATUS
 
