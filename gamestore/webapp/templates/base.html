@@ -29,65 +29,12 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
-    <script href="{% static 'js/scripts.js' %}"></script> <!-- Turha? -->
+  <!--  <script href="{% static 'js/scripts.js' %}"></script>  Turha? -->
 
    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
    {% block stylesheet %}{% endblock %}  <!-- APPLY -->
-
-   <script>
-
-
-     /* global $ */
-     $(document).ready(function() {
-       'use strict';
-       $(window).on('message', function(evt) {
-         //Note that messages from all origins are accepted
-   			//Get data from sent message
-         var data = evt.originalEvent.data;
-
-
-        if (data.messageType == "SAVE"){
-          alert("Save");
-
-        } else if(data.messageType == "SCORE") {
-
-          console.log(typeof data);
-          console.log(typeof JSON.stringify(data));
-
-
-          //Sending the ajax post to the server, directing to the "savescore" url => directed to savescore view.
-          $.ajax({
-            type : "POST",
-            url : "savescore",
-            data : { 'jsondata' : JSON.stringify(data)},
-     //       data : { 'score': data.score},
-            dataType: 'json',
-            success : function(data) {
-              $('#score').html(data);
-              console.log(data);
-              console.log($('#score'))
-
-              console.log("Game score svaed succesfully");
-            },
-            error : function() {
-              console.log("Game not saved!")
-            }
-          })
-        } else if(data.messageType == "LOAD_REQUEST") {
-          alert("Load request");
-        } else if(data.messageType == "LOAD") {
-          alert("Load");
-        } else if(data.messageType == "ERROR") {
-          alert("error");
-        } else if(data.messageType == "SETTING") {
-          alert("Setting");
-        }
-       });
-     });
-
-   </script>
-
   </head>
+
   <body>
      {% block body %}  <!-- HERE -->
       <nav class="navbar navbar-dark bg-dark" id="site-nav">
@@ -98,23 +45,23 @@
           <a id="back-arrow" class="navbar-brand navbar-left" href="../"><i class="fas fa-arrow-left"></i></a>
           {%endif%}
 
-          
+
           <a id="cart" class="navbar-brand navbar-left" href="{% url 'games:cart' %}"><i class="fas fa-shopping-cart"></i></a>
-        
+
           <a class="navbar-brand navbar-left" href="{% url 'index' %}">Home page</a>
 
           {% if not user.is_active %}
           <a class="navbar-brand" href="{% url 'signup' %}">Signup</a>
           {% endif %}
 
-          
+
           <a class="navbar-brand" href="/games">Games</a>
 
           {% if user.is_active %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 
-              
+
               <p class="navbar-brand">
               Hi {% firstof user.get_short_name user.get_username %}!</p>
 
@@ -137,7 +84,7 @@
 
           {% else %}
               <a class="navbar-brand" href="{% url 'login'%}?next={{request.path}}">Login</a>
-              {% endif %} 
+              {% endif %}
             </a>
 
         </div>

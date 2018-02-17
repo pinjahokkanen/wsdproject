@@ -1,7 +1,11 @@
 {% block content %}
 
 {% if view.highscore %}
-  <p>Your own highscore: <span id="score">{{view.highscore.score}}</span></p>
+  {% if view.highscore == None %}
+    <p>You haven't scored yet</p>
+  {% else %}
+    <p>Your own highscore: <span id="score">{{view.highscore.score}}</span></p>
+  {% endif %}
 {% elif passedscore %}
   <p>Your own highscore is now: {{passedscore}}</p>
 {% else %}
