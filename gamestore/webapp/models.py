@@ -113,10 +113,11 @@ class Order(models.Model):
     def __str__(self):
         return str(self.id)
 
-class Highscore(models.Model):
+class GameState(models.Model):
     game = models.ForeignKey('Game', on_delete=models.CASCADE)
     user = models.ForeignKey('Profile', on_delete=models.CASCADE)
-    score = models.IntegerField(blank=True, null=True)
+    score = models.IntegerField(default=None, blank=True, null=True) #needs to be changed to highscore, since gamestate also saves score
+    state = models.TextField(blank=True, null=True)
     timestamp = models.DateTimeField()
 
     def __str__(self):

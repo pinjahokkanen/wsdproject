@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response, render, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.template import RequestContext
-from webapp.models import Game, Profile, Highscore, Order
+from webapp.models import Game, Profile, GameState, Order
 from django.views import generic
 
 from django.shortcuts import redirect
@@ -21,7 +21,6 @@ from django.contrib.auth.models import User
 from django.shortcuts import render
 from .forms import CartForm
 
-from django.views.decorators.csrf import csrf_exempt #TEMPORARELY
 from django.contrib.auth.decorators import user_passes_test
 
 
@@ -38,19 +37,12 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
 
 
     def highscore(self):
-        user = self.request.user    
-        return Highscore.objects.get(game=self.object, user=self.request.user.profile);
+        user = self.request.user
+        return GameState.objects.get(game=self.object, user=self.request.user.profile);
 
 
+#NOTE! CSRF NEEDS TO BE IMPLEMENTED
 
-
-def renderHighScore(request,game_id):
-
-#   highscore = Highscore(game=currentgame, user=profile)
-    highscore = 0
-    return render(request, "games/highscore.html", {'highscore': highscore})
-
-@csrf_exempt
 def savescore(request, pk):
     #highscore = request.GET.get('score', None)
     data = json.loads(request.POST.get('jsondata', None))
@@ -59,7 +51,7 @@ def savescore(request, pk):
     #Alternative?: data = { 'scored score': highscore.score }
     print(highscore)
 
-    scoreobj = Highscore.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
+    scoreobj = GameState.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
     print(scoreobj)
     if scoreobj.score < highscore:
         scoreobj.score = highscore
@@ -69,6 +61,51 @@ def savescore(request, pk):
     #   highscore = scoreobj.score
         raise Http404("You didn't score high enough")
     #return render(request, "games/highscores.html", {'highscore': highscore})
+
+
+def savestate(request, pk):
+
+    data = json.loads(request.POST.get('jsondata', None))
+    print(type(data))
+
+    state = data['gameState']
+    stateobj = GameState.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
+
+    stateobj.state = json.dumps(state)
+    stateobj.save()
+    print('GAMESTATE SAVED SUCCESSFULLY!')
+
+    score = data['gameState']['score']
+    if stateobj.score < score:
+        stateobj.score = score
+        stateobj.save()
+        print('vaihtoehto1')
+        return HttpResponse(json.dumps(state), content_type='application/json')
+    else:
+        del state['score']
+        print(state)
+        return HttpResponse(json.dumps(state), content_type='application/json')
+
+    #stateobj.state = json.dumps(state)
+    #stateobj.save()
+    #return HttpResponse(status=200)
+    #   highscore = scoreobj.score
+    #    raise Http404("You didn't score high enough")
+    #return render(request, "games/highscores.html", {'highscore': highscore})
+
+def loadstate(request, pk):
+    if request.method=='POST' and request.is_ajax:
+
+        data = json.loads(request.POST.get('jsondata', None)) #tarviiko edes?
+        stateobj = GameState.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
+
+        if stateobj.state != None:
+            return HttpResponse(stateobj.state, content_type='application/json')
+        else:
+            data['messageType'] = "NO_STATE"
+            data['errorText'] = "No previous gamestate saved."
+            return HttpResponse(data, content_type='application/json')
+
 
 def cart(request):
     ## Handle case not logged in
@@ -97,7 +134,7 @@ def cart(request):
         ## [ ] CLIENT NOT USER
         ## [x] CASE FORM VALID
         ## [ ] CASE NOT AJAX
-        ## [x] DUPLICATES 
+        ## [x] DUPLICATES
         ## [ ] GAME ALREADY OWNED BY USER
 
         form = CartForm(request.POST)
@@ -153,7 +190,7 @@ def to_cart(game_ids, user=None):
             result['games'].append(game.to_json_dict(user=user))
         except ObjectDoesNotExist:
             messages.error("Cart element was invalid")
-            continue 
+            continue
     return result
 
 
@@ -231,7 +268,7 @@ def order_details(request, order_id):
             return HttpResponseRedirect(reverse("cart"))
 
         # All good
-        action = "http://payments.webcourse.niksula.hut.fi/pay/" 
+        action = "http://payments.webcourse.niksula.hut.fi/pay/"
         amount = order.total
         sid = "slipsum"  # Fixme Todo: parametrize
         success_url = request.build_absolute_uri(reverse("games:purchase_result"))
@@ -279,7 +316,7 @@ def purchase_result(request):
             messages.error(request, "Invalid checksum. Payment not completed.")
             return HttpResponseRedirect(redirect_to=reverse("games:cart"))
 
-        
+
         order = None
         try:
             order = Order.objects.get(id=pid)

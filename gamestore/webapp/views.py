@@ -5,7 +5,7 @@ from webapp.templates.forms import SignUpForm, NewGameForm, UserLoginForm
 from django.forms.fields import DateTimeField
 from django.views.generic import View
 from django.views.generic.edit import FormView
-from webapp.models import Game, Profile, Highscore
+from webapp.models import Game, Profile, GameState
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -52,14 +52,22 @@ class UserFormView(View):
                 profile.developer = True
                 profile.save()
                 user.user_permissions.add(webapp.add_game, webapp.change_game, webapp.delete_game)
-                    
+
                 '''user.has_perm('webapp.add_game')
                 user.has_perm('change_game')
                 user.has_perm('add_game')'''
 
+<<<<<<< HEAD:src/webapp/views.py
+=======
+
+
+
+
+
+>>>>>>> a84ce3a968f8315e8b2dc2b57bfb22c78e5d5f53:gamestore/webapp/views.py
             user = authenticate(username=username, password=raw_password)
 
-                
+
 
             if user.is_active:
                 login(request, user)
@@ -68,22 +76,22 @@ class UserFormView(View):
             #profile = user.profile TESTAA TÄLLÄ
             #profile.refresh_from_db()
             #print(user.profile)
-            
+
             #print(developerStatus)
             #print(profile.user)
             #print(profile.developer) oikein False
             #print(form.cleaned_data.get('username')) nimi
             #print(form.cleaned_data['username'])
             #profile.save()
-            
+
             #email = form.cleaned_data.get('email')
 
-            
+
             #if user.profile.developer:
              #   print('its developer')
 
 
-            
+
         return render(request, 'signup.html', {'form': form})
 
 class LoginView(FormView):
