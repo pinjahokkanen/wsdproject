@@ -57,11 +57,6 @@ class UserFormView(View):
                 user.has_perm('change_game')
                 user.has_perm('add_game')'''
 
-
-
-            
-
-
             user = authenticate(username=username, password=raw_password)
 
                 
@@ -122,23 +117,26 @@ def signup(request):
 @permission_required('webapp.addgame')
 def addgame(request):
     if request.method == 'POST':
-        form = NewGameForm(request.POST)
+        form = NewGameForm(request.POST, initial={'developer': request.user})
+        print("Try to add game")
+        print(form)
         if form.is_valid():
+            print("Form is valid")
             game = form.save(commit=False)
-
-
             name = form.cleaned_data.get('name')
             description = form.cleaned_data.get('description')
             url = form.cleaned_data.get('url')
             price = form.cleaned_data.get('price')
-            developer = request.user
-
-            # now = datetime.now()
-            # pubDate = models.DateTimeField(now)
-            #category =
-
+            developer = form.cleaned_data.get('developer')
+            
             form.save()
+            request.user.profile.games.add(game)
             return redirect('/games/')
+        else:
+            print(form.errors.as_data())
+
     else:
+        # alert("Adding the game failed. Please try again.")
         form = NewGameForm()
+        print("Sanity check")
     return render(request, 'addgame.html', {'form': form})

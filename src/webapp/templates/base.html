@@ -87,36 +87,61 @@
 
    </script>
 
+
+
   </head>
   <body>
      {% block body %}  <!-- HERE -->
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav class="navbar navbar-dark bg-dark" id="site-nav">
         <!--<p>{{ perms.webapp }}</p>-->
         <div class="container">
+
           {% if not request.get_full_path == "/" %}
-          <a class="navbar-brand" href="../"><i class="fas fa-arrow-left"></i></a>
+          <a id="back-arrow" class="navbar-brand navbar-left" href="../"><i class="fas fa-arrow-left"></i></a>
           {%endif%}
-          <a class="navbar-brand" href="{% url 'index' %}">Home page</a>
+
+          
+          <a id="cart" class="navbar-brand navbar-left" href="{% url 'games:cart' %}"><i class="fas fa-shopping-cart"></i></a>
+        
+          <a class="navbar-brand navbar-left" href="{% url 'index' %}">Home page</a>
 
           {% if not user.is_active %}
           <a class="navbar-brand" href="{% url 'signup' %}">Signup</a>
           {% endif %}
 
-          {% if user.is_active %}
-            {% if perms.webapp.add_game %}
-          <a class="navbar-brand" href="{% url 'addgame' %}">Add Game</a>
-            {% endif %}
+          
           <a class="navbar-brand" href="/games">Games</a>
 
-          {% if cart.games|length > 0 %}
-          <a class="navbar-brand" href="{% url 'games:cart' %}">Cart</a>
-          {% endif %}
+          {% if user.is_active %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 
-          <a class="navbar-brand" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
-          <p class="navbar-brand">Hi {% firstof user.get_short_name user.get_username %}!</p>
+              
+              <p class="navbar-brand">
+              Hi {% firstof user.get_short_name user.get_username %}!</p>
+
+            <div class="dropdown-menu">
+
+              <a class="dropdown-item" href="{% url 'games:cart' %}">Cart</a>
+
+              {% if user.is_active %}
+                {% if perms.webapp.add_game %}
+                 <a class="dropdown-item" href="{% url 'addgame' %}">Add Game</a>
+                {% endif %}
+              {% endif %}
+              <a class="dropdown-item" href="#">Profile</a>
+              <div class="dropdown-divider"></div>
+
+              <a class="dropdown-item" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
+
+            </div>
+          </li>
+
           {% else %}
-            <a class="navbar-brand" href="{% url 'login'%}?next={{request.path}}">Login</a>
-          {% endif %}
+              <a class="navbar-brand" href="{% url 'login'%}?next={{request.path}}">Login</a>
+              {% endif %} 
+            </a>
+
         </div>
       </nav>
       <div class="container">

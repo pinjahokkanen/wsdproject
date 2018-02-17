@@ -8,9 +8,7 @@
 
 {% if all_games %}
 
-<h2 class="gallery card-block">Game Listing</h3>
-
-<h3 class="gallery">My bought games</h3>
+<h3 class="gallery" id="top">Your game library</h3>
 
 <ul class="gallery">
 	{% for game in request.user.profile.games.all %}
@@ -18,17 +16,6 @@
 			<img class="card-image-top" src="{% static "img/NaN.png" %}" alt="Image not found"/>
 			<h4 class=" text-white ellipsis"><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
 			<p class="text-white foot">Developer: <span class="badge badge-pill badge-secondary">{{game.developer}}</span></p>
-		</li>
-		{% endfor %}
-</ul>
-
-<h3 class="gallery">My developed games</h3>
-<ul class="gallery">
-	{% for game in request.user.profile.developed_games.all %}
-		<li class="card bg-dark">
-			<img class="card-image-top" src="{% static "img/NaN.png" %}" alt="Image not found"/>
-			<h4 class=" text-white"><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
-			<p class="text-white">Developer: <span class="badge badge-pill badge-secondary">{{game.developer}}</span></p>
 		</li>
 	{% endfor %}
 </ul>

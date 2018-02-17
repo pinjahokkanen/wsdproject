@@ -1,3 +1,17 @@
+#site-nav {
+	height: 80px;
+}
+
+#back-arrow{
+	position: absolute;
+	left: 40px;
+}
+
+#cart {
+	position: absolute;
+	left: 80px;
+}
+
 
 /*GAME STORE LIST*/
 
@@ -10,6 +24,10 @@ h3.gallery {
 	padding: 15px 0;
 	clear: both;
 	width: 100%;
+}
+
+#top {
+	padding-top: 30px;
 }
 
 .gallery li {
