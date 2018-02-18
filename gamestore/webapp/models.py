@@ -49,7 +49,7 @@ class Game(models.Model):
 
 
     def get_absolute_url(self):
-        return reverse()
+        return reverse('games:detail', kwargs={'pk': self.pk})
 
     def __unicode__(self):
         return str(self.name)

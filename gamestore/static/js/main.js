@@ -173,6 +173,7 @@ $( document ).ready(function() {
         }
     })
 }
+<<<<<<< HEAD
 
 
 
@@ -180,3 +181,5 @@ $( document ).ready(function() {
 
 
 
+=======
+>>>>>>> 7cbb8e072afc647e894738c78da2469976c76a59

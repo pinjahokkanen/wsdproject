@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'social_django',
     'webapp',
     'games',
+    'developer'
 ]
 
 MIDDLEWARE = [

@@ -31,14 +31,6 @@ class SignUpForm(forms.ModelForm):
  		model = User
  		fields = ['username', 'password', 'email']
  		# Developer should be also on this list
-
-
-class NewGameForm(forms.ModelForm):
-
-	class Meta:
-		model = Game
-		fields = ('url', 'name', 'description', 'price', 'developer')
-
 		
 class UserLoginForm(forms.Form):
 	username = forms.CharField()
