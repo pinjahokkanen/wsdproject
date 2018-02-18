@@ -1,0 +1,7 @@
+{% autoescape off %}
+Hei {{ user.username }},
+
+Vahvista tilisi painamalla linkkiä:
+
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+{% endautoescape %}

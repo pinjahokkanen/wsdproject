@@ -10,6 +10,7 @@ from django.shortcuts import get_object_or_404
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    email_confirmed = models.BooleanField(default=False)
     bio = models.TextField(max_length=500, blank=True)
     developer = models.BooleanField(default=False) #false = player, True=developer
     games = models.ManyToManyField('Game', related_name='+')

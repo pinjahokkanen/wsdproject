@@ -39,6 +39,9 @@ urlpatterns = [
 
     re_path(r'^cart/', include('games.urls'), name='cart'),
 
+    re_path(r'^account_activation_sent/$', views.account_activation_sent, name='account_activation_sent'),
+    re_path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        views.activate, name='activate'),
     re_path(r'^developer/', include('developer.urls'), name='developer'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
