@@ -29,14 +29,15 @@ urlpatterns = [
     #re_path(r'^logout/$', auth_views.logout, {'next_page': '/login'},  name='logout'),
     path('accounts/', include('django.contrib.auth.urls')),
 
+    #social media login
+    re_path(r'^oauth/', include('social_django.urls', namespace='social')),
+
     path('admin/', admin.site.urls),
     path('', views.index, name="index"),
     re_path(r'^signup/$', views.UserFormView.as_view(), name='signup'),
 
 
     re_path(r'^games/', include('games.urls'), name='games'),
-    re_path(r'^savescore/$', include('games.urls'), name='savescore'),
-
     re_path(r'^cart/', include('games.urls'), name='cart'),
 
     re_path(r'^account_activation_sent/$', views.account_activation_sent, name='account_activation_sent'),
