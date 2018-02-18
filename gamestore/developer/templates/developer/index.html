@@ -4,16 +4,11 @@
 
 {% block content %}
 {% load static %}
-
-
+<br>
+<a href="{% url 'developer:game-add' %}"> Add game</a>
 {% if all_games %}
 
-<h3 class="cart-header"> Game sales statistics</h3>
-
-
 <h3 class="gallery" id="top">Games developed by you</h3>
-
-<a href="{% url 'developer:game-add' %}"> Add game</a>
 
 <ul class="gallery">
 	{% for game in request.user.profile.games.all %}

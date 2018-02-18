@@ -25,10 +25,13 @@ class IndexView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         return Game.objects.all()
 
+
 class DetailView(LoginRequiredMixin, generic.DetailView):
     model = Game
     template_name = 'developer/developedgame.html'
 
+    def statistics(self):
+        return Order.objects.filter(status='success', games=self.object)
 
 ## Create, edit and delete games
 class GameCreate(CreateView):
@@ -58,7 +61,7 @@ def addgame(request):
             url = form.cleaned_data.get('url')
             price = form.cleaned_data.get('price')
             developer = form.cleaned_data.get('developer')
-            
+
             form.save()
             request.user.profile.games.add(game)
             return redirect('/developer/')

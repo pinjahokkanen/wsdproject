@@ -23,7 +23,17 @@
 	  	</ol>
 	  	<label class="font-weight-bold">Game description:</label>
 	  	<p>{{game.description}}</p>
-	  	<p>Game By: {{game.developer}}  &nbsp; | &nbsp;  <i class="far fa-clock"></i> Added on {{game.pubDate}}</p>
+      <p>{{game.price}}</p>
+      <label class="font-weight-bold">Sales statistics:</label>
+      <p>Game has been bought <b>{{view.statistics.count }}</b> times, total amount earned is {% widthratio view.statistics.count 1 game.price %}€</p>
+      <p>Exact payment dates:</p>
+      <ul>
+        {% for order in view.statistics %}
+          <li><i> {{order.paymentDate}} </i></li>
+        {% endfor %}
+      </ul>
+
+      <p>Game By: {{game.developer}}  &nbsp; | &nbsp;  <i class="far fa-clock"></i> Added on {{game.pubDate}}</p>
 	</div>
 
 </div>
