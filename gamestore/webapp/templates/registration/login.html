@@ -9,5 +9,8 @@
     {{ form.as_p }}
     <button type="submit">Login</button>
   </form>
+  <hr>
+  <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
+
   <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
 {% endblock %}
