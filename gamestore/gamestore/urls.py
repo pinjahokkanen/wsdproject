@@ -35,8 +35,6 @@ urlpatterns = [
 
 
     re_path(r'^games/', include('games.urls'), name='games'),
-    re_path(r'^savescore/$', include('games.urls'), name='savescore'),
-
     re_path(r'^cart/', include('games.urls'), name='cart'),
 
     re_path(r'^account_activation_sent/$', views.account_activation_sent, name='account_activation_sent'),

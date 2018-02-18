@@ -58,8 +58,8 @@ def savescore(request, pk):
         #return render(request, 'games/highscores.html', {'passedscore': highscore})
     else:
         highscore = scoreobj.score
-        return HttpResponse(highscore)
-        #raise Http404("You didn't score high enough")
+        #return HttpResponse(highscore)
+        raise Http404("You didn't score high enough")
 
 def savestate(request, pk):
 
