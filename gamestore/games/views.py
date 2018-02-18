@@ -62,7 +62,7 @@ def savescore(request, pk):
     print(type(data))
     highscore = data['score']
     #Alternative?: data = { 'scored score': highscore.score }
-    print(highscore)
+    print(pk)
 
     scoreobj = GameState.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
     print(scoreobj)
@@ -235,7 +235,7 @@ def orders(request):
         # Same as; order.games = queryset.all()
         for obj in queryset:
             order.games.add(obj)
-        
+
 
         order.save()
 
@@ -341,6 +341,9 @@ def purchase_result(request):
         if result == "success":
             for item in order.games.all():
                 order.player.games.add(item)
+                testi = GameState(game = item, user = order.player, timestamp = datetime.datetime.now())
+                testi.save()
+                print(testi, "moiii")
             order.player.save()
             order.status = "success"
             order.paymentRefernce = ref

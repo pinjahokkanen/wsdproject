@@ -29,13 +29,17 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
-    <script href="{% static 'js/scripts.js' %}"></script> <!-- Turha? -->
+  <!--  <script href="{% static 'js/scripts.js' %}"></script>  Turha? -->
 
    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
    {% block stylesheet %}{% endblock %}  <!-- APPLY -->
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 9ef91bbd0a7dab098c2be8ab81f1d06bdd7e693a
   </head>
+
   <body>
      {% block body %}  <!-- HERE -->
       <nav class="navbar navbar-dark bg-dark" id="site-nav">
@@ -46,23 +50,23 @@
           <a id="back-arrow" class="navbar-brand navbar-left" href="../"><i class="fas fa-arrow-left"></i></a>
           {%endif%}
 
-          
+
           <a id="cart" class="navbar-brand navbar-left" href="{% url 'games:cart' %}"><i class="fas fa-shopping-cart"></i></a>
-        
+
           <a class="navbar-brand navbar-left" href="{% url 'index' %}">Home page</a>
 
           {% if not user.is_active %}
           <a class="navbar-brand" href="{% url 'signup' %}">Signup</a>
           {% endif %}
 
-          
+
           <a class="navbar-brand" href="/games">Games</a>
 
           {% if user.is_active %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 
-              
+
               <p class="navbar-brand">
               Hi {% firstof user.get_short_name user.get_username %}!</p>
 
@@ -85,7 +89,7 @@
 
           {% else %}
               <a class="navbar-brand" href="{% url 'login'%}?next={{request.path}}">Login</a>
-              {% endif %} 
+              {% endif %}
             </a>
 
         </div>
