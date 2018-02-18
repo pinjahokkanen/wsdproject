@@ -77,7 +77,7 @@ class UserFormView(View):
             #    login(request, user)
             #    return redirect('/games/')
 
-        
+
         return render(request, 'signup.html', {'form': form})
 
 def account_activation_sent(request):
@@ -94,7 +94,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.profile.email_confirmed = True
         user.save()
-        login(request, user)
+        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         return redirect('/')
     else:
         return render(request, 'account_activation_invalid.html')
