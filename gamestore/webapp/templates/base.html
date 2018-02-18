@@ -68,12 +68,6 @@
             <div class="dropdown-menu">
 
               <a class="dropdown-item" href="{% url 'games:cart' %}">Cart</a>
-
-              {% if user.is_active %}
-                {% if perms.webapp.add_game %}
-                 <a class="dropdown-item" href="{% url 'developer:addgame' %}">Add Game</a>
-                {% endif %}
-              {% endif %}
               <a class="dropdown-item" href="#">Profile</a>
               <div class="dropdown-divider"></div>
 

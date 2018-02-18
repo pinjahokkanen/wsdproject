@@ -4,7 +4,9 @@ from django.urls import reverse
 from webapp.models import Game, Profile, GameState, Order
 from developer.templates.forms import NewGameForm
 from django.views import generic
-from django.views.generic import UpdateView
+
+from django.views.generic.edit import UpdateView, DeleteView, CreateView
+from django.urls import reverse_lazy
 
 from django.shortcuts import redirect
 
@@ -27,11 +29,20 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
     model = Game
     template_name = 'developer/developedgame.html'
 
-class GameUpdateView(UpdateView):
-	model = Game
-	template_name = 'developer/addgame.html'
-	# form_class = addgame
-	success_url = '/developer/{{ game.id }}/'
+
+## Create, edit and delete games
+class GameCreate(CreateView):
+    model = Game
+    template_name = 'developer/game_form.html'
+    fields = ('url', 'name', 'description', 'price', 'developer')
+
+class GameUpdate(UpdateView):
+    model = Game
+    fields = ('url', 'name', 'description', 'price', 'developer')
+
+class GameDelete(DeleteView):
+    model = Game
+    succes_url = reverse_lazy('/developer/')
 
 @permission_required('webapp.addgame')
 def addgame(request):

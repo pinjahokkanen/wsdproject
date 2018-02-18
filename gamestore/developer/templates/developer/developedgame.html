@@ -26,12 +26,6 @@
 	  	<p>Game By: {{game.developer}}  &nbsp; | &nbsp;  <i class="far fa-clock"></i> Added on {{game.pubDate}}</p>
 	</div>
 
-    <div class="col">
-      <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-       <button type="submit">Submit Game</button>
-    </div>
 </div>
 
 
