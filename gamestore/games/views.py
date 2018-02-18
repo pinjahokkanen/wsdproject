@@ -41,19 +41,6 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
         user = self.request.user
         return GameState.objects.get(game=self.object, user=self.request.user.profile);
 
-
-class GenericView(LoginRequiredMixin, generic.ListView):
-    template_name = 'games/developed.html'
-    context_object_name = 'all_games'
-
-    def get_queryset(self):
-        return Game.objects.all()
-
-class DetailedView(LoginRequiredMixin, generic.DetailView):
-    model = Game
-    template_name = 'games/developedgame.html'
-
-
 #NOTE! CSRF NEEDS TO BE IMPLEMENTED
 
 def savescore(request, pk):
