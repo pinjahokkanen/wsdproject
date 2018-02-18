@@ -18,7 +18,7 @@
 		{% if game.developer == request.user.profile %}
 		<li class="card bg-dark">
 			<img class="card-image-top" src="{% static "img/NaN.png" %}" alt="Image not found"/>
-			<h4 class="game-name text-white ellipsis"><a href="/games/developed/{{ game.id }}/">{{ game.name }}</a></h4>
+			<h4 class="game-name text-white ellipsis"><a href="/developer/{{ game.id }}/">{{ game.name }}</a></h4>
 			<p class="text-white foot">Developer: <span class="badge badge-pill badge-secondary">{{game.developer}}</span></p>
 		</li>
 		{% endif %}

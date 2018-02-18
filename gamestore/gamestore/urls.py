@@ -33,12 +33,18 @@ urlpatterns = [
     path('', views.index, name="index"),
     re_path(r'^signup/$', views.UserFormView.as_view(), name='signup'),
     re_path(r'^addgame/$', views.addgame, name='addgame'),
+
     re_path(r'^games/', include('games.urls'), name='games'),
     re_path(r'^savescore/$', include('games.urls'), name='savescore'),
+
     re_path(r'^cart/', include('games.urls'), name='cart'),
 
+<<<<<<< HEAD
     re_path(r'^account_activation_sent/$', views.account_activation_sent, name='account_activation_sent'),
     re_path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         views.activate, name='activate'),
+=======
+    re_path(r'^developer/', include('developer.urls'), name='developer'),
+>>>>>>> dc37c7e51d68c77c69b9eaa3fd790234d43e7461
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

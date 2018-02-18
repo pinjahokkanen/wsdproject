@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}{{game.name}} developed by {{game.developer}} {% endblock %}
+
+{% block content %}
+{% load static %}
+
+<!-- User does not own the game -->
+{% if game.developer == request.user.profile %}
+
+<input type="hidden" id="gameobject" name="gameobject" value="{{game}}"/>
+<input type="hidden" id="profileobject" name="profileobject" value="{{user.profile}}"/>
+
+<!-- VIEW IF GAME IS IN INVENTORY -->
+<a href="../">Back</a>
+
+<div class="container" style="padding-top: 20px">
+
+  <div class="row">
+	<div class="col">
+	  	<p class="font-weight-bold">{{game.name}}</p>
+	  	<ol class="breadcrumb">
+	  	    <li class="breadcrumb-item active" aria-current="page">{{game.url}}</li>
+	  	</ol>
+	  	<label class="font-weight-bold">Game description:</label>
+	  	<p>{{game.description}}</p>
+	  	<p>Game By: {{game.developer}}  &nbsp; | &nbsp;  <i class="far fa-clock"></i> Added on {{game.pubDate}}</p>
+	</div>
+
+    <div class="col">
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+       <button type="submit">Submit Game</button>
+    </div>
+</div>
+
+
+
+{% endif %}
+
+
+{% endblock %}

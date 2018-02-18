@@ -16,10 +16,6 @@ urlpatterns = [
 	re_path(r'^(?P<pk>[0-9]+)/savestate', views.savestate, name='savestate'),
 	re_path(r'^(?P<pk>[0-9]+)/loadstate', views.loadstate, name='loadstate'),
 
-	# Developer pages
-	re_path(r'^developed', views.GenericView.as_view(), name='developed'),
-	re_path(r'^(?P<pk>[0-9]+)/$', views.DetailedView.as_view(), name='developedgame'),
-
 	# Store pages
 	re_path(r'^cart/', views.cart, name='cart'),
 	re_path(r'^orders/$', views.orders, name='orders'),
