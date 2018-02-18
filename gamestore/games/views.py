@@ -41,27 +41,25 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
         user = self.request.user
         return GameState.objects.get(game=self.object, user=self.request.user.profile);
 
-#NOTE! CSRF NEEDS TO BE IMPLEMENTED
+    def gamestate(self):
+        return GameState.objects.filter(game=self.object).exclude(user=self.request.user.profile).order_by('-score')[:3]
 
 def savescore(request, pk):
     #highscore = request.GET.get('score', None)
     data = json.loads(request.POST.get('jsondata', None))
-    print(type(data))
     highscore = data['score']
     #Alternative?: data = { 'scored score': highscore.score }
-    print(pk)
-
     scoreobj = GameState.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
-    print(scoreobj)
+
     if scoreobj.score < highscore:
         scoreobj.score = highscore
         scoreobj.save()
         return HttpResponse(highscore)
+        #return render(request, 'games/highscores.html', {'passedscore': highscore})
     else:
-    #   highscore = scoreobj.score
-        raise Http404("You didn't score high enough")
-    #return render(request, "games/highscores.html", {'highscore': highscore})
-
+        highscore = scoreobj.score
+        return HttpResponse(highscore)
+        #raise Http404("You didn't score high enough")
 
 def savestate(request, pk):
 
