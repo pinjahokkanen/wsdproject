@@ -101,8 +101,7 @@ $(document).ready(function() {
   });
 });
 
-// Game cart functions
-<script type="text/javascript">
+//# Game cart functionality #//
 
   function game_to_cart(gameid) {
     $.ajax({
@@ -138,40 +137,39 @@ $(document).ready(function() {
 }
 
 
-     <script type="text/javascript">
+//# Remove game from cart #//
 
-        //add active class to the navbar item
-        $( "#navbar-Profile" ).addClass('active');
+//add active class to the navbar item
+$( "#navbar-Profile" ).addClass('active');
 
-        //initialize the table
-        $( document ).ready(function() {
-            $("#tableId").bootstrapTable();
-        });
+//initialize the table
+$( document ).ready(function() {
+    $("#tableId").bootstrapTable();
+});
 
-        //this function is used to remove a game from the cart.
-        // It notifies to the server and remove the game from the user interface.
-         function removeList(gameid) {
-            $.ajax({
-                method:'POST',
-                url: "{% url 'games:cart' %}",
-                data: {
-                    csrfmiddlewaretoken: "{{ csrf_token  }}",
-                    game:gameid,
-                    action:'remove'
-                },
-                success:function(data) {
-                    if (data.error) {
-                        alert("Error: " + data.error);
-                    }
-                    else{
-                        $('#game-'+gameid).fadeOut(400,function(){this.remove()});
-                    }
-                },
-                error: function (data) {
-                    if (data.error) {
-                        alert("There was a problem during the request. Please try again.");
-                    }
-                }
-            })
+//this function is used to remove a game from the cart.
+// It notifies to the server and remove the game from the user interface.
+ function removeList(gameid) {
+    $.ajax({
+        method:'POST',
+        url: "{% url 'games:cart' %}",
+        data: {
+            csrfmiddlewaretoken: "{{ csrf_token  }}",
+            game:gameid,
+            action:'remove'
+        },
+        success:function(data) {
+            if (data.error) {
+                alert("Error: " + data.error);
+            }
+            else{
+                $('#game-'+gameid).fadeOut(400,function(){this.remove()});
+            }
+        },
+        error: function (data) {
+            if (data.error) {
+                alert("There was a problem during the request. Please try again.");
+            }
         }
-     </script>
+    })
+}
