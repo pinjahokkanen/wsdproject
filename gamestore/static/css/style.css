@@ -1,5 +1,7 @@
 /*NAVIGATION*/
-
+#navigationbar{
+	margin-bottom: 70px;
+}
 
 #back-arrow{
 	position: absolute;
@@ -12,7 +14,7 @@
 }
 
 .navbar-toggler {
-	border: none!important; 
+	border: none!important;
 	color: white!important;
 }
 
@@ -232,14 +234,3 @@ div.gamedetails h4 {
 	float: right;
 	margin-bottom: 1%;
 }
-
-
-
-
-
-
-
-
-
-
-
