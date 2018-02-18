@@ -71,7 +71,7 @@
 
               {% if user.is_active %}
                 {% if perms.webapp.add_game %}
-                 <a class="dropdown-item" href="{% url 'addgame' %}">Add Game</a>
+                 <a class="dropdown-item" href="{% url 'developer:addgame' %}">Add Game</a>
                 {% endif %}
               {% endif %}
               <a class="dropdown-item" href="#">Profile</a>
