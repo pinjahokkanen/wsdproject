@@ -42,7 +42,6 @@
    {% block stylesheet %}{% endblock %}  <!-- APPLY -->
 
   </head>
-
   <body>
      {% block body %}  
       
@@ -78,7 +77,6 @@
                 <a class="dropdown-item" href="{% url 'games:cart' %}"><i class="fa fa-shopping-cart"></i> Cart</a>
                 {% if user.is_active %}
                   {% if perms.webapp.add_game %}
-                   <a class="dropdown-item" href="/addgame"><i class="fa fa-plus"></i> Add Game</a> 
                    <a class="dropdown-item" href="/developer"><i class="fa fa-code"></i> Developer Portal</a>
                   {% endif %}
                 {% endif %}
@@ -108,19 +106,15 @@
 
       </nav>
 
+        </div>
+      </nav>
 
-  
+    {% endblock body %}
 
+    <!-- FOR CONTENT!!! DO NOT REMOVE -->
+    {% block content %}
 
+    {% endblock content %}
 
-      <div class="container">
-       <!-- ei toimi <ol class="breadcrumb my-4">
-          {% block breadcrumb %}
-          {% endblock %}
-        </ol> -->
-        {% block content %}
-        {% endblock %}
-      </div>
-    {% endblock body %}  <!-- AND HERE -->
   </body>
 </html>

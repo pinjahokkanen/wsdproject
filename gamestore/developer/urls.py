@@ -9,16 +9,15 @@ urlpatterns = [
 	# Developer pages
 	re_path(r'^$', views.IndexView.as_view(), name='index'),
 	re_path(r'^(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='developedgame'),
-	# re_path(r'^addgame/$', views.addgame, name='addgame'),
 
 	# /developer/add
 	re_path(r'^add/$', views.GameCreate.as_view(), name='game-add'),
 
-	# # /developer/[id]/update
-	# re_path(r'^(?P<pk>[0-9]+)/$', views.GameUpdate.as_view(), name='game-update'),
+	# /developer/[id]/update
+	re_path(r'^(?P<pk>[0-9]+)/update/$', views.GameUpdate.as_view(), name='game-update'),
 
 	# # /developer/[id]/delete
-	# re_path(r'^(?P<pk>[0-9]+)/$', views.GameDelete.as_view(), name='game-delete'),
+	re_path(r'^(?P<pk>[0-9]+)/delete/$', views.GameDelete.as_view(), name='game-delete'),
 
 
 ]
