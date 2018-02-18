@@ -42,6 +42,18 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
         return GameState.objects.get(game=self.object, user=self.request.user.profile);
 
 
+class GenericView(LoginRequiredMixin, generic.ListView):
+    template_name = 'games/developed.html'
+    context_object_name = 'all_games'
+
+    def get_queryset(self):
+        return Game.objects.all()
+
+class DetailedView(LoginRequiredMixin, generic.DetailView):
+    model = Game
+    template_name = 'games/developedgame.html'
+
+
 #NOTE! CSRF NEEDS TO BE IMPLEMENTED
 
 def savescore(request, pk):
@@ -126,17 +138,6 @@ def cart(request):
 
         ## For handling all the error cases
         jsondata = {'error': None}
-
-        # if not user.request.is_active():
-        #     jsondata['error'] = "Not a player. Aborted..."
-        #     return HttpResponseRedirect(reverse("cart"))
-
-        ## CASES TO DO:
-        ## [ ] CLIENT NOT USER
-        ## [x] CASE FORM VALID
-        ## [x] CASE NOT AJAX
-        ## [x] DUPLICATES
-        ## [x] GAME ALREADY OWNED BY USER
 
         form = CartForm(request.POST)
 
@@ -249,9 +250,6 @@ def orders(request):
 def order_details(request, order_id):
     if request.method == 'GET':
 
-        # if order is None:
-        #     messsages.error(request, "Invalid order.")
-        #     return HttpResponseRedirect(reverse("cart"))
 
         pid = order_id
 
@@ -273,7 +271,7 @@ def order_details(request, order_id):
         # All good
         action = "http://payments.webcourse.niksula.hut.fi/pay/"
         amount = order.total
-        sid = "slipsum"  # Fixme Todo: parametrize
+        sid = "slipsum"
         success_url = request.build_absolute_uri(reverse("games:purchase_result"))
         cancel_url = request.build_absolute_uri(reverse("games:purchase_result"))
         error_url = request.build_absolute_uri(reverse("games:purchase_result"))
@@ -340,13 +338,6 @@ def purchase_result(request):
             messages.error(request, "You are not authorized to make this order.")
             return HttpResponseRedirect(redirect_to=reverse("cart"))
 
-        ## CASES TO CHECK:
-        ## [x ] CHECKSUM MATCHES
-        ## [ ] STATUS CHECKS OUT
-        ## [ ] STATUS IS ALLOWED
-        ## [ ] PID IS CORRECT
-        ## [ ] USER AUTHORIZED (ORDERS IS USERS)
-
         if result == "success":
             for item in order.games.all():
                 order.player.games.add(item)
@@ -369,8 +360,6 @@ def purchase_result(request):
             order.status = "error"
             messages.error(request,"Order encountered error. Please try again.")
             return HttpResponseRedirect(redirect_to=reverse("order_details", kwargs={'order_id': pid}))
-
-        ## TO DO: CANCELLED AND ERROR ORDER STATUS
 
     else:
         return HttpResponse(status=405, content="Invalid method.")

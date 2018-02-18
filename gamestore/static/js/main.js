@@ -100,3 +100,78 @@ $(document).ready(function() {
    }
   });
 });
+
+// Game cart functions
+<script type="text/javascript">
+
+  function game_to_cart(gameid) {
+    $.ajax({
+      method: 'POST',
+      url: "{% url 'games:cart' %}",
+      data: {
+        csrfmiddlewaretoken: "{{ csrf_token  }}",
+                game: gameid,
+                action:'add'
+      },
+
+      success:function(data) {
+        if (data.error){
+          alert("An error occurred.");
+        } else {
+          window.location.href = "{% url 'games:cart' %}"
+        //  alert("The game was added to the cart.");
+        }
+      },
+
+      error: function(data) {
+        if (data.responseJSON && data.responseJSON.error) {
+          alert(data.responseJSON.error);
+        }else if (data.status = 403) {
+          alert("You are not allowed to purchase this game.");
+        }else if (data.status == 400) {
+          alert("Game already in the cart.");
+        }else{
+          alert("Unexpected error occurred. Please refresh page and try again.");
+        }
+      },
+    })
+}
+
+
+     <script type="text/javascript">
+
+        //add active class to the navbar item
+        $( "#navbar-Profile" ).addClass('active');
+
+        //initialize the table
+        $( document ).ready(function() {
+            $("#tableId").bootstrapTable();
+        });
+
+        //this function is used to remove a game from the cart.
+        // It notifies to the server and remove the game from the user interface.
+         function removeList(gameid) {
+            $.ajax({
+                method:'POST',
+                url: "{% url 'games:cart' %}",
+                data: {
+                    csrfmiddlewaretoken: "{{ csrf_token  }}",
+                    game:gameid,
+                    action:'remove'
+                },
+                success:function(data) {
+                    if (data.error) {
+                        alert("Error: " + data.error);
+                    }
+                    else{
+                        $('#game-'+gameid).fadeOut(400,function(){this.remove()});
+                    }
+                },
+                error: function (data) {
+                    if (data.error) {
+                        alert("There was a problem during the request. Please try again.");
+                    }
+                }
+            })
+        }
+     </script>
