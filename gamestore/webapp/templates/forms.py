@@ -24,6 +24,8 @@ class SignUpForm(UserCreationForm):
 class SignUpForm(forms.ModelForm):
  	password = forms.CharField(widget=forms.PasswordInput)
  	developer = forms.BooleanField(required=False)
+ 	email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
+
 
  	class Meta:
  		model = User
