@@ -1,8 +1,5 @@
 /*NAVIGATION*/
 
-#site-nav {
-	height: 80px;
-}
 
 #back-arrow{
 	position: absolute;
@@ -14,6 +11,10 @@
 	left: 80px;
 }
 
+.navbar-toggler {
+	border: none!important; 
+	color: white!important;
+}
 
 /*GAME STORE LIST*/
 
@@ -229,4 +230,13 @@ div.gamedetails h4 {
 	margin-bottom: 1%;
 }
 
-}
+
+
+
+
+
+
+
+
+
+

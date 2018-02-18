@@ -29,6 +29,9 @@ urlpatterns = [
     #re_path(r'^logout/$', auth_views.logout, {'next_page': '/login'},  name='logout'),
     path('accounts/', include('django.contrib.auth.urls')),
 
+    #social media login
+    re_path(r'^oauth/', include('social_django.urls', namespace='social')),
+
     path('admin/', admin.site.urls),
     path('', views.index, name="index"),
     re_path(r'^signup/$', views.UserFormView.as_view(), name='signup'),
