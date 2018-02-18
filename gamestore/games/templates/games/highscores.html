@@ -4,7 +4,7 @@
   <p>Your own highscore is now: {{passedscore}}</p>
 {% elif view.highscore %}
   {% if view.highscore.score ==  0 %}
-    <p>You haven't scored yet!</p>
+    <p><span id="score">You haven't scored yet!</span></p>
     {% else %}
     <p><b>Your own highscore: <span id="score">{{view.highscore.score}}</span></b></p>
     {% endif %}
