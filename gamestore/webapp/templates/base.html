@@ -38,10 +38,11 @@
     <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
   <!--  <script href="{% static 'js/scripts.js' %}"></script>  Turha? -->
 
-
    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
    {% block stylesheet %}{% endblock %}  <!-- APPLY -->
+   {% block meta %}{% endblock %}
   </head>
+
   <body>
      {% block body %}
     <div id="navigationbar">

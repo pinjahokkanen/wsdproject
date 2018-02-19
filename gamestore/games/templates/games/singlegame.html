@@ -2,8 +2,16 @@
 {% block title %}Play {{game.name}}{% endblock %}
 
 {% block content %}
- {% load static %}
+{% load static %}
 
+{% block meta %}
+<meta property="og:title" content="{{ game.name }}" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ request.build_absolute_uri }}" />
+<meta property="og:image" content="{{ game.img }}" />
+<meta property="og:description" content="{{ game.description }} PLAY NOW!" />
+<meta property="og:site_name" content="WSD Game Store" />
+{% endblock %}
 <!-- User does not own the game -->
 {% if game not in request.user.profile.games.all and game.price != 0 %}
 
@@ -41,13 +49,11 @@
 			},
 		})
 }
-
-
-
 </script>
 
-<input type="hidden" id="gameobject" name="gameobject" value="{{game}}"/>
-<input type="hidden" id="profileobject" name="profileobject" value="{{user.profile}}"/>
+
+<!--<input type="hidden" id="gameobject" name="gameobject" value="{{game}}"/>
+<input type="hidden" id="profileobject" name="profileobject" value="{{user.profile}}"/>-->
 
 <!-- VIEW FOR GAME NOT IN USER INVENTORY -->
 
@@ -56,7 +62,7 @@
 
 	<h3>{{ game.name }}</h3>
 	<hr>
-	<iframe src="{% static "img/NoAccess.png" %}" height="500" width="700" style="border:none;"></iframe>
+	<iframe src="{% static "img/Store_Logo.png" %}" height="600" width="700" style="border:none;"></iframe>
 
 	<section>
 		<p id="sec-header"> <i class="fas fa-caret-down"></i> Purchase</p>
@@ -128,5 +134,8 @@
 </div>
 {% endif %}
 
+<!--<a href="http://www.facebook.com/sharer/sharer.php?u=http://protected-hamlet-88117.herokuapp.com{{ request.get_full_path|urlencode }}">Facebook2</a>-->
+<a href="http://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"> Facebook </a>
+<a href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>Google Plus </a>
 
 {% endblock %}

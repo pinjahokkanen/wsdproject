@@ -26,7 +26,7 @@
 		{% for game in request.user.profile.games.all %}
 		<div class={{ game.category }}>
 			<li class="card bg-dark">
-				<img class="card-image-top" src="{% static "img/NaN.png" %}" alt="Image not found"/>
+				<img class="card-image-top" src="{% static "img/Store_Logo_small.png" %}" alt="Image not found"/>
 				<h4 class="game-name text-white ellipsis"><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
 				<p class="text-white foot">Developer: <span class="badge badge-pill badge-secondary">{{game.developer}}</span></p>
 			</li>
@@ -54,5 +54,4 @@
 {% else %}
 	<h3>No games to show</h3>
 {% endif %}
-
 {% endblock %}
