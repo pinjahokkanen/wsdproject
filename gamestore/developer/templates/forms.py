@@ -6,8 +6,6 @@ from webapp.models import Game
 
 from django.contrib.auth import login, authenticate
 
-## For adding and removing games ## 
-
 class NewGameForm(forms.ModelForm):
 
 	class Meta:

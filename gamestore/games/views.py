@@ -326,9 +326,8 @@ def purchase_result(request):
         if result == "success":
             for item in order.games.all():
                 order.player.games.add(item)
-                testi = GameState(game = item, user = order.player, timestamp = datetime.datetime.now())
-                testi.save()
-                print(testi, "moiii")
+                new_state = GameState(game = item, user = order.player, timestamp = datetime.datetime.now())
+                new_state.save()
             order.player.save()
             order.status = "success"
             order.paymentRefernce = ref

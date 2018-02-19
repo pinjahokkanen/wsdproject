@@ -15,7 +15,7 @@
 
 <div class="container" style="padding-top: 20px">
 
-  <div class="row">
+<div class="row">
 	<div class="col">
 	  	<p class="font-weight-bold">{{game.name}}</p>
 	  	<ol class="breadcrumb">
@@ -33,14 +33,21 @@
         {% endfor %}
       </ul>
 
+      {% comment %}
+      <form action="{% url 'developer:tolibrary' game.id %}" method="post">
+        {% crsf_token %}
+        <input type="hidden" name="pk" value="{{ game.pk }}" />
+        <button type="submit" class="btn btn-secondary btn-sm">
+          Add to library
+        </button>
+      </form>
+      {% endcomment %}
+
       <p>Game By: {{game.developer}}  &nbsp; | &nbsp;  <i class="far fa-clock"></i> Added on {{game.pubDate}}</p>
 	</div>
 
 </div>
-
-
-
 {% endif %}
 
 
-{% endblock %}
+{% endblock content %}
