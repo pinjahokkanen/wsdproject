@@ -4,6 +4,9 @@ from django.urls import reverse, reverse_lazy
 from webapp.models import Game, Profile, GameState, Order
 from developer.templates.forms import NewGameForm
 from django.views import generic
+from django.db import models
+from django import forms
+import datetime
 
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 
@@ -15,6 +18,9 @@ import json
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your views here.
 class IndexView(LoginRequiredMixin, generic.ListView):
@@ -38,41 +44,29 @@ class GameCreate(CreateView):
     template_name = 'developer/game_form.html'
     fields = ('url', 'name', 'description', 'price', 'developer', 'category')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        user = self.request.user
+
+        #TO-DO: Security
+
+        # Add Game
+        user.profile.games.add(self.object)
+
+        # Create game state for the added game
+        new_state = GameState(game = self.object, user = user.profile, timestamp = datetime.datetime.now())
+        new_state.save()
+
+        ## Add current user as developer
+        return HttpResponseRedirect('/developer/')
+    
 
 class GameUpdate(UpdateView):
     model = Game
-    fields = ('url', 'name', 'description', 'price', 'developer', 'category')
+    fields = ('url', 'name', 'description', 'price', 'category')
 
 class GameDelete(DeleteView):
     model = Game
     success_url = reverse_lazy('developer:index')
 
 
-
-# @permission_required('webapp.addgame')
-# def addgame(request):
-#     if request.method == 'POST':
-#         form = NewGameForm(request.POST, initial={'developer': request.user})
-#         print("Try to add game")
-#         print(form)
-#         if form.is_valid():
-#             print("Form is valid")
-#             game = form.save(commit=False)
-#             name = form.cleaned_data.get('name')
-#             description = form.cleaned_data.get('description')
-#             url = form.cleaned_data.get('url')
-#             price = form.cleaned_data.get('price')
-#             developer = form.cleaned_data.get('developer')
-
-#             form.save()
-#             request.user.profile.games.add(game)
-#             return redirect('/developer/')
-#         else:
-#             print(form.errors.as_data())
-
-
-#     else:
-#         # alert("Adding the game failed. Please try again.")
-#         form = NewGameForm()
-#         print("Sanity check")
-#     return render(request, 'addgame.html', {'form': form})

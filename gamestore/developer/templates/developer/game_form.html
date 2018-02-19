@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+% extends 'base.html' %}
 {% block title %} Add a New Game {% endblock %}
 
 
@@ -10,7 +10,6 @@
 		{% csrf_token %}
 		{% include 'developer/form-template.html' %}
 		<div class="form-row"> 
-
 			<div class="form-group col-md-6">
 				<input type="submit" class="btn btn-success" value="Submit game"  onclick="location.href='{% url 'developer:index' %}" ">
 			</div>
