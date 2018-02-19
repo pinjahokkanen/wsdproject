@@ -36,12 +36,12 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
 class GameCreate(CreateView):
     model = Game
     template_name = 'developer/game_form.html'
-    fields = ('url', 'name', 'description', 'price', 'developer')
+    fields = ('url', 'name', 'description', 'price', 'developer', 'category')
 
 
 class GameUpdate(UpdateView):
     model = Game
-    fields = ('url', 'name', 'description', 'price', 'developer')
+    fields = ('url', 'name', 'description', 'price', 'developer', 'category')
 
 class GameDelete(DeleteView):
     model = Game

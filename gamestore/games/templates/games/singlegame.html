@@ -99,14 +99,13 @@
 	<iframe src="{{game.url}}" id="gameframe" height="500" width="700" style="border:none;"></iframe>
 
 	<section>
-		<p id="sec-header"> <i class="fas fa-caret-down"></i> Description</p>
+		<p id="sec-header"> <i class="fas fa-caret-down"></i> DESCRIPTION</p>
 		<div class="snippet">
 			<p>{{game.description}}</p>
 		</div>
 
-	<p id="sec-header"> <i class="fas fa-caret-down"></i> Highscores</p>
+	<p id="sec-header"><i class="fas fa-caret-down"></i> SCOREBOARD</p>
 	<div class="snippet">
-
 		<div class="link">
 			{% include "games/highscores.html" %}
 			<!--{% if view.highscore %}
