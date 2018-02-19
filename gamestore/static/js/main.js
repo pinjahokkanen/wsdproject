@@ -27,6 +27,69 @@ $(document).ready(function() {
     return cookieValue;
   }
 
+  //Function used to filter the showed categories of games in users inventory
+  function categoriseInventory() {
+   var selection = document.getElementById("inventory_selection").value;
+
+   function Display(category, act) {
+     [].forEach.call(document.querySelectorAll(category), function (el) {
+       el.style.display = act
+     }
+   )}
+
+   if (selection == 'ALL') {
+     Display('.ACTION', 'block');
+     Display('.ADVENTURE', 'block');
+     Display('.PUZZLE', 'block');
+     Display('.SPORTS', 'block');
+     Display('.EDUCATIONAL', 'block');
+     Display('.UNDEFINED', 'block');
+   } else if (selection == 'ACTION'){
+     Display('.ACTION', 'block');
+     Display('.ADVENTURE', 'none');
+     Display('.PUZZLE', 'none');
+     Display('.SPORTS', 'none');
+     Display('.EDUCATIONAL', 'none');
+     Display('.UNDEFINED', 'none');
+   } else if (selection == 'ADVENTURE'){
+     Display('.ACTION', 'none');
+     Display('.ADVENTURE', 'block');
+     Display('.PUZZLE', 'none');
+     Display('.SPORTS', 'none');
+     Display('.EDUCATIONAL', 'none');
+     Display('.UNDEFINED', 'none');
+   } else if (selection == 'PUZZLE'){
+     Display('.ACTION', 'none');
+     Display('.ADVENTURE', 'none');
+     Display('.PUZZLE', 'block');
+     Display('.SPORTS', 'none');
+     Display('.EDUCATIONAL', 'none');
+     Display('.UNDEFINED', 'none');
+   } else if (selection == 'SPORTS'){
+     Display('.ACTION', 'none');
+     Display('.ADVENTURE', 'none');
+     Display('.PUZZLE', 'none');
+     Display('.SPORTS', 'block');
+     Display('.EDUCATIONAL', 'none');
+     Display('.UNDEFINED', 'none');
+   } else if (selection == 'EDUCATIONAL'){
+     Display('.ACTION', 'none');
+     Display('.ADVENTURE', 'none');
+     Display('.PUZZLE', 'none');
+     Display('.SPORTS', 'none');
+     Display('.EDUCATIONAL', 'block');
+     Display('.UNDEFINED', 'none');
+   } else if (selection == 'UNDEFINED'){
+     Display('.ACTION', 'none');
+     Display('.ADVENTURE', 'none');
+     Display('.PUZZLE', 'none');
+     Display('.SPORTS', 'none');
+     Display('.EDUCATIONAL', 'none');
+     Display('.UNDEFINED', 'block');
+   }
+ }
+
+
 //NOTE! Doesn't save gamestates if no game state has been created. ==> Has to be created when the game is bought
   $(window).on('message', function(evt) {
     //Note that messages from all origins are accepted
