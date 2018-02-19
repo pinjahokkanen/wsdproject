@@ -1,23 +1,30 @@
 {% block content %}
+<div id="score">
 <br>
-{% if passedscore %}
-  <p>Your own highscore is now: {{passedscore}}</p>
-{% elif view.highscore %}
-  {% if view.highscore.score ==  0 %}
-    <p><span id="score">You haven't scored yet!</span></p>
-    {% else %}
-    <p><b>Your own highscore: <span id="score">{{view.highscore.score}}</span></b></p>
-    {% endif %}
+<h5>HIGHSCORES:</h5>
+{% if passedallscores %}
+  {% for score in passedallscores %}
+    <p>{{score.user}}: {{score.score}}</p>
+  {% endfor %}
 {% else %}
-<p>There was a problem loading your score</p>
+  {% for state in view.gamestate %}
+    <p>{{state.user}}: {{state.score}}</p>
+    {% endfor %}
 {% endif %}
 
 <br>
-<h4>Your main competitors:</h4>
-<p><i> = Top scores excluding your own</i></p>
-{% for state in view.gamestate %}
-<p>{{state.user}}: {{state.score}}</p>
+{% if passedscore %}
+  <p><b>Your own highscore: {{passedscore}}</b></p>
 
-{% endfor %}
+{% elif view.highscore %}
+  {% if view.highscore.score ==  0 %}
+    <p>You haven't scored yet!</p>
+  {% else %}
+    <p><b>YOUR TOP SCORE: {{view.highscore.score}}</b></p>
+{% endif %}
 
+{% else %}
+  <p>There was a problem loading your score</p>
+{% endif %}
+</div>
 {% endblock %}

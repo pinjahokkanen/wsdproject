@@ -43,8 +43,16 @@ class Game(models.Model):
 #    highscores = models.ManyToManyField('Profile', related_name='highscores', related_query_name='scores')
 
     pubDate = models.DateTimeField(auto_now_add=True)
+    CATEGORY_CHOICES = (
+        ('ACTION', 'Action'),
+        ('ADVENTURE', 'Adventure'),
+        ('PUZZLE', 'Puzzle'),
+        ('SPORTS', 'Sports'),
+        ('EDUCATIONAL', 'Educational'),
+        ('UNDEFINED', 'Undefined')
+    )
+    category = models.CharField(max_length=6,choices=CATEGORY_CHOICES, default='UNDEFINED')
 #   img = models.URLField(default="http://www.google.com") ##Game logo to be displayed
-
     #category = models.ForeignKey('Category', null=False, on_delete=models.CASCADE)
 
 

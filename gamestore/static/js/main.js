@@ -59,12 +59,8 @@ $(document).ready(function() {
        url : "savescore",
        data : { 'jsondata' : JSON.stringify(data), csrfmiddlewaretoken: csrftoken},
        dataType: 'json',
-       success : function(data) {
-         $('#score').html(data);
-         alert("New highscore saved succesfully!");
-       },
-       error : function() {
-         postError("Highscore could not be saved!")
+       complete: function(data) {
+         $('#score').html(data.responseText);
        }
      })
 

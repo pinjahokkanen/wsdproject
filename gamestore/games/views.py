@@ -1,5 +1,5 @@
 from django.http import Http404, HttpResponse, JsonResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response, render, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.template import RequestContext
@@ -36,30 +36,25 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
     model = Game
     template_name = 'games/singlegame.html'
 
-
     def highscore(self):
         user = self.request.user
         return GameState.objects.get(game=self.object, user=self.request.user.profile);
 
     def gamestate(self):
-        return GameState.objects.filter(game=self.object).exclude(user=self.request.user.profile).order_by('-score')[:3]
+        return GameState.objects.filter(game=self.object).order_by('-score')[:3] #.exclude(user=self.request.user.profile)
 
 def savescore(request, pk):
-    #highscore = request.GET.get('score', None)
     data = json.loads(request.POST.get('jsondata', None))
     highscore = data['score']
-    #Alternative?: data = { 'scored score': highscore.score }
-    scoreobj = GameState.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
 
+    scoreobj = GameState.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
     if scoreobj.score < highscore:
         scoreobj.score = highscore
         scoreobj.save()
-        return HttpResponse(highscore)
-        #return render(request, 'games/highscores.html', {'passedscore': highscore})
-    else:
-        highscore = scoreobj.score
-        #return HttpResponse(highscore)
-        raise Http404("You didn't score high enough")
+
+    gamestate = GameState.objects.filter(game=Game.objects.get(pk=pk)).order_by('-score')[:3]
+    return render(request, 'games/highscores.html', {'passedscore': scoreobj.score, 'passedallscores': gamestate})
+
 
 def savestate(request, pk):
 

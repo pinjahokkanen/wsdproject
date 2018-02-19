@@ -41,7 +41,8 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
 ## Create, edit and delete games
 class GameCreate(CreateView):
     model = Game
-    fields = ('url', 'name', 'description', 'price', 'developer')
+    template_name = 'developer/game_form.html'
+    fields = ('url', 'name', 'description', 'price', 'developer', 'category')
 
     def form_valid(self, form):
         self.object = form.save()
@@ -62,50 +63,10 @@ class GameCreate(CreateView):
 
 class GameUpdate(UpdateView):
     model = Game
-    fields = ('url', 'name', 'description', 'price')
+    fields = ('url', 'name', 'description', 'price', 'category')
 
 class GameDelete(DeleteView):
     model = Game
     success_url = reverse_lazy('developer:index')
 
-# def developer_add_game(request):
-#     if request.method == 'post':
-#         print("Post went through!")
-#         # game_to_add = Game.objects.get(pk=pk)
 
-#         # if not request.is_ajax():
-#         #     messages.error(request, "Only Ajax calls permitted")
-
-#         # if request.user == game_to_add.developer:
-#         #     request.user.profile.games(game_to_add)
-#         #     HttpResponse("Game added successfully to developer")
-
-
-
-# @permission_required('webapp.addgame')
-# def addgame(request):
-#     if request.method == 'POST':
-#         form = NewGameForm(request.POST, initial={'developer': request.user})
-#         print("Try to add game")
-#         print(form)
-#         if form.is_valid():
-#             print("Form is valid")
-#             game = form.save(commit=False)
-#             name = form.cleaned_data.get('name')
-#             description = form.cleaned_data.get('description')
-#             url = form.cleaned_data.get('url')
-#             price = form.cleaned_data.get('price')
-#             developer = form.cleaned_data.get('developer')
-
-#             form.save()
-#             request.user.profile.games.add(game)
-#             return redirect('/developer/')
-#         else:
-#             print(form.errors.as_data())
-
-
-#     else:
-#         # alert("Adding the game failed. Please try again.")
-#         form = NewGameForm()
-#         print("Sanity check")
-#     return render(request, 'addgame.html', {'form': form})
