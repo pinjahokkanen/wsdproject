@@ -135,7 +135,8 @@
 {% endif %}
 
 <!--<a href="http://www.facebook.com/sharer/sharer.php?u=http://protected-hamlet-88117.herokuapp.com{{ request.get_full_path|urlencode }}">Facebook2</a>-->
-<a href="http://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"> Facebook </a>
-<a href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>Google Plus </a>
+<a href="http://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"> Facebook</a>
+<a href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>Google Plus</a>
+<a href="https://twitter.com/home?status=I%20want%20to%20share%20this%20awesome%20game%20from%20Game%20Away!%20WSD%20Game%20Store%20with%20you.%20Play%20here!%20{{ request.build_absolute_uri }}">Twitter</a>
 
 {% endblock %}
