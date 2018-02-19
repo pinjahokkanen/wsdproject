@@ -51,7 +51,7 @@ class Game(models.Model):
         ('EDUCATIONAL', 'Educational'),
         ('UNDEFINED', 'Undefined')
     )
-    category = models.CharField(max_length=6,choices=CATEGORY_CHOICES, default='UNDEFINED')
+    category = models.CharField(max_length=12,choices=CATEGORY_CHOICES, default='UNDEFINED')
 #   img = models.URLField(default="http://www.google.com") ##Game logo to be displayed
     #category = models.ForeignKey('Category', null=False, on_delete=models.CASCADE)
 
