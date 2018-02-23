@@ -35,7 +35,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name="index"),
     re_path(r'^signup/$', views.UserFormView.as_view(), name='signup'),
-
+    re_path(r'^profile/$', views.update_profile, name='profile_update'),
 
     re_path(r'^games/', include('games.urls'), name='games'),
     re_path(r'^cart/', include('games.urls'), name='cart'),

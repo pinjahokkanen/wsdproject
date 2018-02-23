@@ -1,7 +1,7 @@
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect, get_object_or_404
-from webapp.templates.forms import SignUpForm, UserLoginForm
+from webapp.templates.forms import SignUpForm, UserLoginForm, UserProfileForm
 from django.forms.fields import DateTimeField
 from django.views.generic import View
 from django.views.generic.edit import FormView
@@ -11,6 +11,9 @@ from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.sites.shortcuts import get_current_site
+from django.forms import inlineformset_factory #update profile
+from django.core.exceptions import PermissionDenied #update profile
+from django.shortcuts import HttpResponseRedirect #update profile
 
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
@@ -98,6 +101,37 @@ def activate(request, uidb64, token):
         return redirect('/')
     else:
         return render(request, 'account_activation_invalid.html')
+
+@login_required()
+def update_profile(request):
+    pk = request.user.pk
+    user = User.objects.get(pk=pk)
+    user_form = UserProfileForm(instance=user) #Not needed?
+
+    ProfileInlineFormset = inlineformset_factory(User, Profile, fields=('bio',))
+    formset = ProfileInlineFormset(instance=user)
+
+    if request.user.id == user.id:
+        if request.method == "POST":
+            user_form = UserProfileForm(request.POST, request.FILES, instance=user)
+            formset = ProfileInlineFormset(request.POST, request.FILES, instance=user)
+
+            if user_form.is_valid():
+                created_user = user_form.save(commit=False)
+                formset = ProfileInlineFormset(request.POST, request.FILES, instance=created_user)
+
+                if formset.is_valid():
+                    created_user.save()
+                    formset.save()
+                    return HttpResponseRedirect('/profile/')
+
+        return render(request, "profile.html", {
+            "noodle": pk,
+            "noodle_form": user_form,
+            "formset": formset,
+        })
+    else:
+        raise PermissionDenied
 
 
 class LoginView(FormView):

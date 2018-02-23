@@ -14,13 +14,13 @@ class SignUpForm(UserCreationForm):
     #if developer:
     #	user.has_perm('webapp.add_game')
     #	user.has_perm('change_game')
-    #	user.has_perm('add_game')	
+    #	user.has_perm('add_game')
 
     class Meta:
         model = User
         fields = ('username', 'password1', 'password2', 'developer', 'email')
 '''
-   
+
 class SignUpForm(forms.ModelForm):
  	password = forms.CharField(widget=forms.PasswordInput)
  	developer = forms.BooleanField(required=False)
@@ -31,7 +31,12 @@ class SignUpForm(forms.ModelForm):
  		model = User
  		fields = ['username', 'password', 'email']
  		# Developer should be also on this list
-		
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+
 class UserLoginForm(forms.Form):
 	username = forms.CharField()
 	password = forms.CharField(widget=forms.PasswordInput)
@@ -43,9 +48,9 @@ class UserLoginForm(forms.Form):
 
 
 		if username and password:
-			
+
 			user = authenticate(username=username, password=raw_password)
-			
+
 			if not user:
 				raise forms.ValidationError("This user does not exist")
 
@@ -55,15 +60,3 @@ class UserLoginForm(forms.Form):
 			if not user.is_active:
 				raise forms.ValidationError("This user is not longer active")
 			return super(UserLoginForm, self).clean(*args, **kwargs)
-
-
-
-
-
-
-
-
-
-
-
-
