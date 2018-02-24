@@ -42,7 +42,7 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
 class GameCreate(CreateView):
     model = Game
     template_name = 'developer/game_form.html'
-    fields = ('url', 'name', 'description', 'price', 'category', 'developer')
+    fields = ('url', 'name', 'description', 'price', 'category','img','developer')
 
     def form_valid(self, form):
         self.object = form.save()
@@ -63,7 +63,7 @@ class GameCreate(CreateView):
 
 class GameUpdate(UpdateView):
     model = Game
-    fields = ('url', 'name', 'description', 'price', 'category')
+    fields = ('url', 'name', 'description', 'price', 'category','img')
 
 class GameDelete(DeleteView):
     model = Game

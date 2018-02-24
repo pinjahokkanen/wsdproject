@@ -17,7 +17,11 @@
 		{% if game.developer == request.user.profile %}
 		<li class="card bg-dark">
 
-		<img class="card-img" src="{% static "img/NaN.png" %}" alt="Image not found"/>
+		{% if game.img %}
+			<img class="card-image-top" id="game-img" src={{game.img}} alt="img of game"/>
+		{% else %}
+			<img class="card-image-top" src="{% static "img/Nan.png" %}"  alt="img of game"/>
+		{% endif%}
 
 		<div class="card-img-overlay dev-buttons">
 				<a class="btn btn-secondary btn-sm" href="{% url 'developer:game-update' game.id %}" role="button"><i class="fas fa-edit"></i></a>
