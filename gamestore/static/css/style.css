@@ -1,6 +1,6 @@
 /*NAVIGATION*/
 #navigationbar{
-	margin-bottom: 70px;
+	/* margin-bottom: 70px; */
 }
 
 #back-arrow{
@@ -19,7 +19,7 @@
 }
 
 .container {
-	padding-top: 40px;
+	padding-top: 80px;
 	padding-bottom: 40px;
 }
 /*GAME STORE LIST*/

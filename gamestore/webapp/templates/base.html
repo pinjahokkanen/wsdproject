@@ -11,14 +11,6 @@
 
     <!-- Bootstrap -->
 
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-TP795MG');</script>
-    <!-- End Google Tag Manager -->
-
 
     <link href="{% static 'css/bootstrap.css' %} " rel="stylesheet" media="all">
     <link href="{% static 'css/bootstrap.min.css' %} " rel="stylesheet" media="all">
@@ -31,6 +23,12 @@
     <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/bootstrap-table.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/bootstrap.bundle.js' %}"></script>
+
+    <!-- Greensock animation library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/plugins/CSSPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/easing/EasePack.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenLite.min.js"></script>
+
 
     <!-- Our own stylesheet  -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -109,7 +107,8 @@
 
         </div>
       </nav>
-</div>
+  </div>
+  <section class="rain">
     {% endblock body %}
 
     <!-- FOR CONTENT!!! DO NOT REMOVE -->
@@ -118,6 +117,6 @@
 
     {% endblock content %}
     </div>
-
+</section>
   </body>
 </html>
