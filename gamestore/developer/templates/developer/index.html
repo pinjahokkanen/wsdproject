@@ -16,7 +16,9 @@
 	{% for game in all_games %}
 		{% if game.developer == request.user.profile %}
 		<li class="card bg-dark">
+
 		<img class="card-img" src="{% static "img/NaN.png" %}" alt="Image not found"/>
+
 		<div class="card-img-overlay dev-buttons">
 				<a class="btn btn-secondary btn-sm" href="{% url 'developer:game-update' game.id %}" role="button"><i class="fas fa-edit"></i></a>
 			<form action="{% url 'developer:game-delete' game.id %}" method="post">
@@ -31,6 +33,7 @@
 		</div>
 			
 		<div class="card-title">
+			<a href="/developer/{{ game.id }}/"></a>
 			<h4 class="game-name text-white ellipsis"><a href="/developer/{{ game.id }}/">{{ game.name }}</a></h4>
 		</div>
 

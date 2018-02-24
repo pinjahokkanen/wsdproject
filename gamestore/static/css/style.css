@@ -18,9 +18,10 @@
 	color: white!important;
 }
 
-.container {
+/*.container {
 	padding-top: 60px;
-}
+}*/
+
 /*GAME STORE LIST*/
 
 
@@ -200,9 +201,6 @@ div.gamedetails h4 {
 }
 
 /* DEVZONE*/
-#dev-zone {
-	padding-top: 0;
-}
 
 #id_developer {
 	display: none;
@@ -215,6 +213,7 @@ div.gamedetails h4 {
 
 .dev-buttons {
 	margin-top: 50%;
+	height: 10%;
 }
 
 
