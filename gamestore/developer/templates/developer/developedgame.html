@@ -10,41 +10,51 @@
 <input type="hidden" id="gameobject" name="gameobject" value="{{game}}"/>
 <input type="hidden" id="profileobject" name="profileobject" value="{{user.profile}}"/>
 
-<!-- VIEW IF GAME IS IN INVENTORY -->
-<a href="../">Back</a>
-
-<div class="container" style="padding-top: 20px">
-
 <div class="row">
 	<div class="col">
 	  	<p class="font-weight-bold">{{game.name}}</p>
-	  	<ol class="breadcrumb">
-	  	    <li class="breadcrumb-item active" aria-current="page">{{game.url}}</li>
-	  	</ol>
+
+  	  	<ol class="breadcrumb">
+  	  	    Game url: &nbsp; <li class="breadcrumb-item active" aria-current="page">{{game.url}}</li>
+  	  	</ol>
+
 	  	<label class="font-weight-bold">Game description:</label>
-	  	<p>{{game.description}}</p>
-      <p>{{game.price}}</p>
-      <label class="font-weight-bold">Sales statistics:</label>
-      <p>Game has been bought <b>{{view.statistics.count }}</b> times, total amount earned is {% widthratio view.statistics.count 1 game.price %}€</p>
+  	  	<ol class="breadcrumb" style="min-height: 75px">
+          {{game.description}}
+        </ol>
+
+      <label class="font-weight-bold">Game price:</label>
+        <ol class="breadcrumb">
+          {{game.price}} €
+        </ol>
+
+      <p></p>
+
+      
+
+      <button type="submit" class="btn btn-danger btn-md">
+          <i class="fas fa-trash-alt"></i></button>
+        <a class="btn btn-secondary btn-md" href="{% url 'developer:game-update' game.id %}" role="button"><i class="fas fa-edit"> </i> Edit Game</a>
+
+      <form action="{% url 'developer:game-delete' game.id %}" method="post">
+        {% csrf_token %}
+      </form>
+
+      <button type="button" class="btn btn-light btn-md" style="cursor: default"><i class="far fa-clock"></i> Added on {{game.pubDate}}</button>
+
+  </div>
+
+
+  <div class="col">
+    <label class="font-weight-bold">Sales statistics:</label>
+      <p>Game has been bought <b>{{view.statistics.count }}</b> times, total amount earned is <b>{% widthratio view.statistics.count 1 game.price %}€</b></p>
       <p>Exact payment dates:</p>
       <ul>
         {% for order in view.statistics %}
           <li><i> {{order.paymentDate}} </i></li>
         {% endfor %}
       </ul>
-
-      {% comment %}
-      <form action="{% url 'developer:tolibrary' game.id %}" method="post">
-        {% crsf_token %}
-        <input type="hidden" name="pk" value="{{ game.pk }}" />
-        <button type="submit" class="btn btn-secondary btn-sm">
-          Add to library
-        </button>
-      </form>
-      {% endcomment %}
-
-      <p>Game By: {{game.developer}}  &nbsp; | &nbsp;  <i class="far fa-clock"></i> Added on {{game.pubDate}}</p>
-	</div>
+  </div>
 
 </div>
 {% endif %}
