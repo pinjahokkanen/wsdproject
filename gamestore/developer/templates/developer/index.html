@@ -5,24 +5,20 @@
 {% block content %}
 {% load static %}
 <br>
-<a href="{% url 'developer:game-add' %}"> Add game</a>
+
+<div class="container" id="dev-zone">
+
 {% if all_games %}
+<div class="row"> 
+<h3 class="gallery mx-auto" style="max-width: 80%" id="top">Games developed by you</h3>
 
-<h3 class="gallery" id="top">Games developed by you</h3>
-
-
-<a href="{% url 'developer:game-add' %}"> Add game</a>
-
-<ul class="gallery">
+<ul class="gallery mx-auto" style="max-width: 80%">
 	{% for game in all_games %}
 		{% if game.developer == request.user.profile %}
 		<li class="card bg-dark">
-			<img class="card-image-top" src="{% static "img/NaN.png" %}" alt="Image not found"/>
-			<h4 class="game-name text-white ellipsis"><a href="/developer/{{ game.id }}/">{{ game.name }}</a></h4>
-
-			<a class="btn btn-secondary btn-sm" href="{% url 'developer:game-update' game.id %}" role="button"><i class="fas fa-edit"></i></a>
-	
-
+		<img class="card-img" src="{% static "img/NaN.png" %}" alt="Image not found"/>
+		<div class="card-img-overlay dev-buttons">
+				<a class="btn btn-secondary btn-sm" href="{% url 'developer:game-update' game.id %}" role="button"><i class="fas fa-edit"></i></a>
 			<form action="{% url 'developer:game-delete' game.id %}" method="post">
 				{% csrf_token %}
 				<input type="hidden" name="game_id" value="{{ game.id }}">
@@ -32,17 +28,36 @@
 				</button>
 			</form>
 
-			<p class="text-white foot">Developer: <span class="badge badge-pill badge-secondary">{{game.developer}}</span></p>
-				}
+		</div>
+			
+		<div class="card-title">
+			<h4 class="game-name text-white ellipsis"><a href="/developer/{{ game.id }}/">{{ game.name }}</a></h4>
+		</div>
+
+		<div class="container-fluid">
+			<div class="row">
+				<p class="text-white foot">Developer: <span class="badge badge-pill badge-secondary">{{game.developer}}</span></p>
+			</div>			
+
+		</div>
 		</li>
 
 		{% endif %}
 	{% endfor %}
+</div>
 </ul>
 
 
 {% else %}
 	<h3>No games to show</h3>
 {% endif %}
+
+
+	
+
+</div>
+<div class="row">
+	<a href="{% url 'developer:game-add' %}" style="max-width:50%;" class="btn btn-secondary btn-lg btn-block mx-auto"> Add new game</a>
+</div>
 
 {% endblock %}

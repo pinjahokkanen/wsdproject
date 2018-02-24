@@ -42,7 +42,7 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
 class GameCreate(CreateView):
     model = Game
     template_name = 'developer/game_form.html'
-    fields = ('url', 'name', 'description', 'price', 'developer', 'category')
+    fields = ('url', 'name', 'description', 'price', 'category', 'developer')
 
     def form_valid(self, form):
         self.object = form.save()
