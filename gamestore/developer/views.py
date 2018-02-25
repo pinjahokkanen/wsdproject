@@ -39,7 +39,7 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
         return Order.objects.filter(status='success', games=self.object)
 
 ## Create, edit and delete games
-class GameCreate(CreateView):
+class GameCreate(LoginRequiredMixin,CreateView):
     model = Game
     template_name = 'developer/game_form.html'
     fields = ('url', 'name', 'description', 'price', 'category','img')
@@ -64,10 +64,10 @@ class GameCreate(CreateView):
         return HttpResponseRedirect('/developer/')
 
 
-class GameUpdate(UpdateView):
+class GameUpdate(LoginRequiredMixin, UpdateView):
     model = Game
     fields = ('url', 'name', 'description', 'price', 'category','img')
 
-class GameDelete(DeleteView):
+class GameDelete(LoginRequiredMixin, DeleteView):
     model = Game
     success_url = reverse_lazy('developer:index')

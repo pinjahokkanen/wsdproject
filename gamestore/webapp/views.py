@@ -14,6 +14,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.forms import inlineformset_factory #update profile
 from django.core.exceptions import PermissionDenied #update profile
 from django.shortcuts import HttpResponseRedirect #update profile
+from django.contrib.auth.models import Permission
 
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
@@ -50,14 +51,23 @@ class UserFormView(View):
             raw_password = form.cleaned_data['password']
             developer = form.cleaned_data.get('developer')
             email = form.cleaned_data.get('email')
-            print(developer)
             #save password
             user.set_password(raw_password)
 
             user.save()
+
             if developer:
                 profile = user.profile
                 profile.developer = True
+
+                addgame_permission = Permission.objects.get(name='Can add game')
+                editgame_permission = Permission.objects.get(name='Can change game')
+                deletegame_permission = Permission.objects.get(name='Can delete game')
+
+                user.user_permissions.add(addgame_permission)
+                user.user_permissions.add(editgame_permission)
+                user.user_permissions.add(deletegame_permission)
+
                 profile.save()
 
 
