@@ -23,6 +23,7 @@ from django.shortcuts import render
 from .forms import CartForm
 
 from django.contrib.auth.decorators import user_passes_test
+from django.utils.decorators import method_decorator
 
 
 class IndexView(LoginRequiredMixin, generic.ListView):
@@ -43,7 +44,6 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
 
 #Loads data from game's ajax message, queries the gamestate - object for current game and player and checks if a new highscore was made.
 #Returns a render function, with highscore html and updated top score objects
-@login_required(login_url='login')
 def savescore(request, pk):
     if request.method=='POST' and request.is_ajax:
         data = json.loads(request.POST.get('jsondata', None))
@@ -58,7 +58,6 @@ def savescore(request, pk):
 
 #Loads data from game's ajax message, queries the gamestate - object for current game and player, saves the gamestate and checks if a new highscore was made.
 #Returns a render function, with highscore html and updated top score objects
-@login_required(login_url='login')
 def savestate(request, pk):
     if request.method=='POST' and request.is_ajax:
         data = json.loads(request.POST.get('jsondata', None))
@@ -76,7 +75,6 @@ def savestate(request, pk):
 
 #Receives a request to load state. Queries the Gamestate object for current user and player, and checks if there is a state saved (if no state saved, state will be None).
 #If state has been saved, returns httpresponse to the javascript with the state. If not, returns error messages to be shown to the user.
-@login_required(login_url='login')
 def loadstate(request, pk):
     if request.method=='POST' and request.is_ajax:
 
@@ -89,68 +87,69 @@ def loadstate(request, pk):
             data['messageType'] = "NO_STATE"
             data['errorText'] = "No previous gamestate saved."
             return HttpResponse(data, content_type='application/json')
-            
 
-@login_required(login_url='login')
+
+
 def cart(request):
+    if request.user.is_authenticated:
     ## Handle case not logged in
 
     ## Handle GET
-    if request.method == 'GET':
-        game_ids = request.session.get('cart_items',[])
-        return render(request, 'games/cart.html', {'user':request.user, 'cart': to_cart(game_ids)})
+        if request.method == 'GET':
+            game_ids = request.session.get('cart_items',[])
+            return render(request, 'games/cart.html', {'user': request.user, 'cart': to_cart(game_ids)})
 
-    ## Handle POST
+        ## Handle POST
 
-    elif request.method == 'POST':
+        elif request.method == 'POST':
 
-        if not request.is_ajax():
-            messages.error(request, "Only Ajax calls permitted")
-            return HttpResponseRedirect(reverse("cart"))
+            if not request.is_ajax():
+                messages.error(request, "Only Ajax calls permitted")
+                return HttpResponseRedirect(reverse("cart"))
 
-        ## For handling all the error cases
-        jsondata = {'error': None}
+            ## For handling all the error cases
+            jsondata = {'error': None}
 
-        form = CartForm(request.POST)
+            form = CartForm(request.POST)
 
-        if not form.is_valid():
-            jsondata['error'] = form.errors
-            return JsonResponse(status=400, data=jsondata)
+            if not form.is_valid():
+                jsondata['error'] = form.errors
+                return JsonResponse(status=400, data=jsondata)
 
-        ## For adding games to cart ##
-        if form.cleaned_data['action'] == 'add':
+            ## For adding games to cart ##
+            if form.cleaned_data['action'] == 'add':
 
-            sessioncart = request.session.get('cart_items',[])
+                sessioncart = request.session.get('cart_items',[])
 
-            if form.cleaned_data['game'].id in sessioncart:
-                jsondata['error'] = "Cart already contains this game"
+                if form.cleaned_data['game'].id in sessioncart:
+                    jsondata['error'] = "Cart already contains this game"
 
-            #Succesful request
-            if jsondata['error'] is None:
-                sessioncart.append(form.cleaned_data['game'].id)
-                request.session['cart_items'] = sessioncart
-                # redirect("games:cart")
+                #Succesful request
+                if jsondata['error'] is None:
+                    sessioncart.append(form.cleaned_data['game'].id)
+                    request.session['cart_items'] = sessioncart
+                    # redirect("games:cart")
 
-        ## For removing games from cart ##
-        elif form.cleaned_data['action'] == 'remove':
-            items = request.session.get('cart_items', [])
-            if form.cleaned_data['game'].id in items:
-                items.remove(form.cleaned_data['game'].id)
-                request.session['cart_items'] = items
+            ## For removing games from cart ##
+            elif form.cleaned_data['action'] == 'remove':
+                items = request.session.get('cart_items', [])
+                if form.cleaned_data['game'].id in items:
+                    items.remove(form.cleaned_data['game'].id)
+                    request.session['cart_items'] = items
 
-        else:
-            jsondata['error'] = "Unknown action requested."
+            else:
+                jsondata['error'] = "Unknown action requested."
 
-        if jsondata['error'] is not None:
-            return JsonResponse(status=400, data=jsondata)
-        else:
-            return JsonResponse(status=201, data=jsondata)
+            if jsondata['error'] is not None:
+                return JsonResponse(status=400, data=jsondata)
+            else:
+                return JsonResponse(status=201, data=jsondata)
 
     else:
+        return HttpResponseRedirect('/accounts/login/')
         return HttpResponse(status=405, content="Invalid action.")
 
-
-@login_required(login_url='login')
+#@login_required(login_url='login')
 def to_cart(game_ids, user=None):
 
     result = {}
@@ -167,7 +166,7 @@ def to_cart(game_ids, user=None):
             continue
     return result
 
-@login_required(login_url='login')
+#@login_required(login_url='login')
 def orders(request):
     if request.method == 'GET':
 
@@ -218,7 +217,7 @@ def orders(request):
     else:
         return HttpResponse(status=405, content="Invalid method.")
 
-@login_required(login_url='login')
+#@login_required(login_url='login')
 def order_details(request, order_id):
     if request.method == 'GET':
 
@@ -271,7 +270,7 @@ def order_details(request, order_id):
     else:
         return HttpResponse(status=405, content="Invalid action.")
 
-@login_required(login_url='login')
+#@login_required(login_url='login')
 def purchase_result(request):
     if request.method == 'GET':
         pid = request.GET['pid']
