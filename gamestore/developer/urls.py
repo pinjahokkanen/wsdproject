@@ -19,7 +19,5 @@ urlpatterns = [
 	# # /developer/[id]/delete
 	re_path(r'^(?P<pk>[0-9]+)/delete/$', views.GameDelete.as_view(), name='game-delete'),
 
-	# re_path(r'^(?P<pk>[0-9]+)/tolibrary/$', views.developer_add_game, name='tolibrary'),
-
 
 ]

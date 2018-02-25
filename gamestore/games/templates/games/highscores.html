@@ -1,19 +1,74 @@
 {% block content %}
 <div id="score">
-<br>
-<h5>HIGHSCORES:</h5>
 {% if passedallscores %}
-  {% for score in passedallscores %}
-    <p>{{score.user}}: {{score.score}}</p>
-  {% endfor %}
-{% else %}
-  {% for state in view.gamestate %}
-    <p>{{state.user}}: {{state.score}}</p>
+<p>First option</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">User</th>
+      <th scope="col">Score</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for score in passedallscores %}
+    
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>{{score.user}}</td>
+      <td>{{score.score}}</td>
     {% endfor %}
+
+  </tbody>
+</table>
+
+{% else %}
+<p>Second option</p>
+<table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">User</th>
+          <th scope="col">Score</th>
+        </tr>
+      </thead>
+
+    <tbody>
+      {% for state in view.gamestate %}
+    
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{state.user}}</td>
+        <td>{{state.score}}</td>
+      {% endfor %}
+    </tbody>
+
+</table>
+
 {% endif %}
+
+
+
 
 <br>
 {% if passedscore %}
+<p>Third option</p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">User</th>
+        <th scope="col">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for score in passedallscores %}
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{score.user}}</td>
+        <td>{{score.score}}</td>
+      {% endfor %}
+    </tbody>
+  </table>
+
   <p><b>Your own highscore: {{passedscore}}</b></p>
 
 {% elif view.highscore %}

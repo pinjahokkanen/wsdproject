@@ -12,8 +12,6 @@
 <meta property="og:description" content="{{ game.description }} PLAY NOW!" />
 <meta property="og:site_name" content="WSD Game Store" />
 {% endblock %}
-<!-- User does not own the game -->
-{% if game not in request.user.profile.games.all and game.price != 0 %}
 
 <script type="text/javascript">
 
@@ -55,88 +53,111 @@
 <!--<input type="hidden" id="gameobject" name="gameobject" value="{{game}}"/>
 <input type="hidden" id="profileobject" name="profileobject" value="{{user.profile}}"/>-->
 
-<!-- VIEW FOR GAME NOT IN USER INVENTORY -->
 
-<a href="../">Back</a>
-<div class="game">
-
-	<h3>{{ game.name }}</h3>
-	<hr>
-	<iframe src="{% static "img/Store_Logo.png" %}" height="600" width="700" style="border:none;"></iframe>
-
-	<section>
-		<p id="sec-header"> <i class="fas fa-caret-down"></i> Purchase</p>
-		<div class="snippet">
-			<div>
-				<span id="price">{{game.price}} €</span>
-				<button type="button" class="btn-success" onclick="game_to_cart({{game.id}})"><i class="fas fa-cart-plus"> </i></a> PURCHASE</button>
-			</div>
-
-		</div>
-
-		<p id="sec-header"> <i class="fas fa-caret-down"></i> Description</p>
-		<div class="snippet">
-			<p>{{game.description}}</p>
-		</div>
-<br>
-  <!--  <p id="sec-header"> <i class="fas fa-caret-down"></i></p>-->
-		<div class="snippet">
-      <h5><u>Highscores</u></h5>
-      {% for state in view.gamestate %}
-      <p>{{state.user}}: {{state.score}}</p>
-      {% endfor %}
-		</div>
-	</section>
-
- </div>
-
-<div class="gamedetails">
-	<h4>{{game.name}}</h4>
-	<p>Game By: {{game.developer}}  &nbsp; | &nbsp;  <i class="far fa-clock"></i> Added on {{game.pubDate}}</p>
-</div>
-
-
-<!-- VIEW IF GAME IS IN INVENTORY -->
-{% else %}
 <a href="../">Back</a>
 <div class="game">
 	<h3><a href="{{game.url}}">{{ game }}</a></h3>
 	<hr>
-	<iframe src="{{game.url}}" id="gameframe" height="500" width="700" style="border:none;"></iframe>
+	{% if game not in request.user.profile.games.all and game.price != 0 %}
+		<iframe src="{% static "img/NoAccess.png" %}" height="500" width="700" style="border:none;"></iframe>
+	{% else %}
+		<iframe src="{{game.url}}" id="gameframe" height="500" width="700" style="border:none;"></iframe>
+	{% endif %}
+
+	
 
 	<section>
-		<p id="sec-header"> <i class="fas fa-caret-down"></i> DESCRIPTION</p>
-		<div class="snippet">
-			<p>{{game.description}}</p>
-		</div>
+	<div class="card-header" id="game-info">
+		<nav>
+		  <div class="nav nav-tabs card-header-tabs" id="nav-tab" role="tablist">
+		    <a class="nav-item nav-link active" id="nav-game-tab" data-toggle="tab" href="#nav-game" role="tab" aria-controls="nav-game" aria-selected="true">Game</a>
+		    <a class="nav-item nav-link" id="nav-score-tab" data-toggle="tab" href="#nav-score" role="tab" aria-controls="nav-score" aria-selected="false">Highscores</a>
+		  </div>
+		</nav>
 
-	<p id="sec-header"><i class="fas fa-caret-down"></i> SCOREBOARD</p>
-	<div class="snippet">
-		<div class="link">
-			{% include "games/highscores.html" %}
-			<!--{% if view.highscore %}
-  			<p>Your own highscore: {{view.highscore.score}}</p>
-			{% else %}
-			<p>You haven't scored yet</p>
-			{% endif %}-->
-		</div>
+		<div class="tab-content" id="nav-tabContent" >
 
-		<ul id="actions">
+			<div class="tab-pane fade show active pre-scrollable nav-element" id="nav-game" role="tabpanel" aria-labelledby="nav-game-tab" >
 
-		</ul>
+				<p id="sec-header"> <i class="fas fa-caret-down"></i> INFO</p>
+				<div class="snippet">
+					<span>Game By: <b>{{game.developer}}</b></span>
+					<br>
+					<span><i class="far fa-clock"></i> {{game.pubDate}}</span>
+
+					<br>
+					<span>Share game on:</span>
+					<ul class="game-share">
+						<li>
+							<a href="http://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
+								<i class="fab fa-facebook-square"></i> 
+								Facebook
+							</a>
+						</li>
+
+						<li>
+							<a href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>
+								<i class="fab fa-google-plus-square"></i>
+								Google Plus
+							</a>
+						</li>
+
+						<li>
+							<a href="https://twitter.com/home?status=I%20want%20to%20share%20this%20awesome%20game%20from%20Game%20Away!%20WSD%20Game%20Store%20with%20you.%20Play%20here!%20{{ request.build_absolute_uri }}">
+								<i class="fab fa-twitter-square"></i>
+								Twitter
+							</a>
+						</li>
+					</ul>
+				</div>
+
+				<p id="sec-header"> <i class="fas fa-caret-down"></i> DESCRIPTION</p>
+				<div class="snippet">
+					{{game.description}}
+				</div>
+
+				{% if game not in request.user.profile.games.all and game.price != 0 %}
+				<p id="sec-header"> <i class="fas fa-caret-down"></i> PURCHASE</p>
+				<div class="snippet" id="buy-info">
+					<span id="price">{{game.price}} €</span>
+					<button type="button" class="btn-success" onclick="game_to_cart({{game.id}})"><i class="fas fa-cart-plus"> </i></a> PURCHASE</button>
+				</div>
+				{% endif %} 
+
+			</div>
+
+
+			<div class="tab-pane fade pre-scrollable nav-element" role="tabpanel" id="nav-score" aria-labelledby="nav-score-tab">
+					<p id="sec-header"><i class="fas fa-caret-down"></i> SCOREBOARD</p>
+					<div class="snippet">
+						<div class="link">
+							{% include "games/highscores.html" %}
+						</div>
+					</div>
+				
+
+		 	</div>
+		 </div>
+
+	<ul id="actions">
+
+	</ul>
+
 	</div>
 	</section>
  </div>
+
+ 
 
 <div class="gamedetails">
 	<h4>{{game.name}}</h4>
 	<p>Game By: {{game.developer}}  &nbsp; | &nbsp;  <i class="far fa-clock"></i> Added on {{game.pubDate}}</p>
 </div>
-{% endif %}
+
 
 <!--<a href="http://www.facebook.com/sharer/sharer.php?u=http://protected-hamlet-88117.herokuapp.com{{ request.get_full_path|urlencode }}">Facebook2</a>-->
-<a href="http://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"> Facebook</a>
-<a href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>Google Plus</a>
-<a href="https://twitter.com/home?status=I%20want%20to%20share%20this%20awesome%20game%20from%20Game%20Away!%20WSD%20Game%20Store%20with%20you.%20Play%20here!%20{{ request.build_absolute_uri }}">Twitter</a>
+
+
+
 
 {% endblock %}

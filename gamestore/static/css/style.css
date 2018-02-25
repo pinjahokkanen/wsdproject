@@ -23,6 +23,7 @@
 	padding-top: 80px;
 	padding-bottom: 40px;
 }
+
 /*GAME STORE LIST*/
 
 
@@ -50,12 +51,43 @@ h3.gallery {
     float: left;
     margin: 0 10px 10px 0;
     text-align: left;
-
-    border-style: solid;
-    border-width: 1px;
-    border-color: #dddddd;
-
 }
+
+
+/*
+Copyright (c) 2018 by Jason Hee (https://codepen.io/jasonheecs/pen/GNNwpZ)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+
+.gallery li {
+  transition: transform .5s;
+}
+.gallery li::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.15);
+  content: '';
+  opacity: 0;
+  z-index: -1;
+}
+.gallery li:hover, .gallery li:focus {
+  transform: scale3d(1.006, 1.006, 1);
+}
+.gallery li:hover::after, .gallery li:focus::after {
+  opacity: 1;
+}
+
+/*License ends here*/
 
 .game-name a {
 	color: white;
@@ -98,15 +130,8 @@ h3.gallery {
 }
 
 
-
-.gallery li img{
-	border-color: #cccccc;
-	border-width: 1px;
-	border-style: solid;
-}
-
 .gallery li h4 {
-	margin: 10px 20px;
+	margin: 5% 10%  0% 10%;
 	font-size: 16px;
 }
 
@@ -118,10 +143,18 @@ h3.gallery {
 	text-decoration: none;
 }
 
-/*SINGLE GAME*/
+#game-img {
+	max-height: 100%; 
+	max-width: 100%; 
+	height: 152px; 
+	width:194px ; 
+	object-fit: contain
+}
+
+/*SINGLE GAME
 
 div.game {
-	background-color: grey;
+	background-color: #343a40;
 	width: 100%;
 	min-height: 600px;
 }
@@ -147,13 +180,37 @@ div.game hr {
 }
 
 div.game section {
-	background-color: lightgrey;
+	background-color: #f8f9fa;
 	float:right;
 
 	margin: 20px 2.5% 0 0;
 	width: 30%;
 	height: 500px;
 }
+
+#game-info {
+	padding: 10px;
+	height: 500px !important;
+}
+
+#buy-info {
+	padding: 10px 5px;
+}
+
+.nav-element {
+	margin-top: 10px;
+	max-height: 435px !important;
+}
+
+ul.game-share {
+	list-style-type: none;
+
+}
+
+ul.game-share li a {
+	color: black;
+}
+
 
 #price {
 	background-color: #28a745;
@@ -168,12 +225,13 @@ div.game section {
     text-align: center;
     vertical-align: center;
 
+    padding: 2px 0 1px 0;
+
     border-bottom: 2px solid black;
 }
 
 .snippet {
-	background-color: whitesmoke;
-	margin: 0 10px;
+	background-color: #f8f9fa;
 	padding: 5px ;
 }
 
@@ -188,7 +246,8 @@ div.game section {
 }
 
 div.gamedetails{
-	background-color: whitesmoke;
+	background-color:  #343a40;
+	color: white;
 }
 
 div.gamedetails p {
@@ -202,8 +261,19 @@ div.gamedetails h4 {
 }
 
 /* DEVZONE*/
+
 #id_developer {
 	/* display: none;  miks tämä on olemassa? */
+}
+
+.dev-buttons a, form{
+	float: left;
+	margin-right: 5px;
+}
+
+.dev-buttons {
+	margin-top: 50%;
+	height: 10%;
 }
 
 
