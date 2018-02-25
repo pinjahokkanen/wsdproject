@@ -2,22 +2,21 @@
 $(document).ready(function() {
   'use strict';
 
+  /* Posting errormessages */
   function postError(text) {
       var message =  {
         messageType: "ERROR",
         info: text
       };
-      //send message to iframe
       document.getElementById('gameframe').contentWindow.postMessage(message, "*");
     }
-
+  /* Get Cookie - function given in django documentation */
   function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
         var cookies = document.cookie.split(';');
         for (var i = 0; i < cookies.length; i++) {
             var cookie = jQuery.trim(cookies[i]);
-              // Does this cookie string begin with the name we want?
             if (cookie.substring(0, name.length + 1) === (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                 break;
@@ -27,35 +26,33 @@ $(document).ready(function() {
     return cookieValue;
   }
 
-  //Function used to filter the showed categories of games in users inventory
-
-
-//NOTE! Doesn't save gamestates if no game state has been created. ==> Has to be created when the game is bought
+//Reacting when window receives a message
   $(window).on('message', function(evt) {
-    //Note that messages from all origins are accepted
-   //Get data from sent message
-    var data = evt.originalEvent.data;
-    var csrftoken = getCookie('csrftoken');
 
+   //Get data from sent message.
+   var data = evt.originalEvent.data;
+
+/* When receiving a message from iframe with attribute messageType and value SAVE, posting a request to savestate url and savestate view.
+View returns a render function with highscores.html and updated highscores, and javascript replaces old highscore.html with new content.
+*/
    if (data.messageType == "SAVE"){
+     var csrftoken = getCookie('csrftoken');//Get csrf token using cookies.
+
      $.ajax({
        type : "POST",
        url : "savestate",
        data : { 'jsondata' : JSON.stringify(data), csrfmiddlewaretoken: csrftoken},
        dataType: 'json',
-       success : function(data) {
-         if (data.score) {
-           $('#score').html(data.score);
-         }
-         alert("Gamestate saved succesfully!")
-       },
-       error : function() {
-         postError("Gamestate could not be saved!")
+       complete: function(data) {
+         $('#score').html(data.responseText);
        }
      })
 
+/* When receiving a message from iframe with attribute messageType and value SCORE, posting a request to savescore url and savescore view.
+View returns a render function with highscores.html and updated highscores, and javascript replaces old highscore.html with new content.
+*/
    } else if(data.messageType == "SCORE") {
-
+     var csrftoken = getCookie('csrftoken');//Get csrf token using cookies.
      //Sending the ajax post to the server, directing to the "savescore" url => directed to savescore view.
      $.ajax({
        type : "POST",
@@ -65,9 +62,14 @@ $(document).ready(function() {
        complete: function(data) {
          $('#score').html(data.responseText);
        }
+
      })
 
+/*When receiving a message from iframe with attribute messageType and value LOAD_REQUEST, sends a load request to loadstate url and loadstate view.
+If state has been saved, view returns the state which will be posted as a postMessage to the game iframe. If no state has been saved, returns an error message.
+*/
    } else if(data.messageType == "LOAD_REQUEST") {
+     var csrftoken = getCookie('csrftoken');//Get csrf token using cookies.
      $.ajax({
        type : "POST",
        url : "loadstate",
@@ -88,8 +90,12 @@ $(document).ready(function() {
          postError("Gamestate could not be loaded!")
        }
      })
+
+//Posts error message
    } else if(data.messageType == "ERROR") {
      error(data.info);
+
+//Adjusts the iframe dimension and resolusions when receives a message with MessageType SETTING.
    } else if(data.messageType == "SETTING") {
      var width = data.options.width;
      var height = data.options.height;
@@ -101,7 +107,6 @@ $(document).ready(function() {
 });
 
 //# Game cart functionality #//
-
   function game_to_cart(gameid) {
     $.ajax({
       method: 'POST',
@@ -173,9 +178,11 @@ $( document ).ready(function() {
     })
 }
 
+/* Function categoriseInventory called onchange in game index selection. Gets the selected category, and changes display value on every game using class, which is the game category*/
 function categoriseInventory() {
  var selection = document.getElementById("inventory_selection").value;
 
+//For all elements on a page with a specific class, changes display settings according to act.
  function Display(category, act) {
    [].forEach.call(document.querySelectorAll(category), function (el) {
      el.style.display = act
