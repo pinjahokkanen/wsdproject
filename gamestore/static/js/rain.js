@@ -8,8 +8,32 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+
 // number of drops created.
  $(document).ready(function(){
+
+
+var logo = $(".page-header");
+var drop = $(".drop");
+var nav = $("#navigationbar");
+
+//var tl = new TimelineLite({});
+//tl.from(logo, 2, {alpha:1, ease:Expo.easeOut});
+
+if(Cookies.get('animationDone') != 'true') {
+	TweenMax.to(logo, 4, {alpha:1, ease:Power2.easeIn});
+	TweenMax.to(nav, 6, {alpha:1, ease:Power2.easeIn});
+	Cookies.set('animationDone', 'true');
+}else if(Cookies.get('animationDone') == 'true') {
+	logo.css("opacity","1");
+	nav.css("opacity","1");
+}
+
+
+
+
+
+
 
 // number of drops created.
 var nbDrop = 858; 

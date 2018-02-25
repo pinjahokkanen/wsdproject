@@ -25,16 +25,18 @@
     <script type="text/javascript" src="{% static 'js/bootstrap.bundle.js' %}"></script>
 
     <!-- Greensock animation library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/plugins/CSSPlugin.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/easing/EasePack.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenLite.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
 
     <!-- Our own stylesheet  -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
   <!--  <script href="{% static 'js/scripts.js' %}"></script>  Turha? -->
+
+
+    <!-- js cookie  -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+
 
    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
    {% block stylesheet %}{% endblock %}  <!-- APPLY -->

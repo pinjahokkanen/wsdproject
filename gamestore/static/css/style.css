@@ -1,6 +1,7 @@
 /*NAVIGATION*/
 #navigationbar{
 	/* margin-bottom: 70px; */
+	opacity: 0;
 }
 
 #back-arrow{
