@@ -43,14 +43,8 @@ $(document).ready(function() {
        url : "savestate",
        data : { 'jsondata' : JSON.stringify(data), csrfmiddlewaretoken: csrftoken},
        dataType: 'json',
-       success : function(data) {
-         if (data.score) {
-           $('#score').html(data.score);
-         }
-         alert("Gamestate saved succesfully!")
-       },
-       error : function() {
-         postError("Gamestate could not be saved!")
+       complete: function(data) {
+         $('#score').html(data.responseText);
        }
      })
 

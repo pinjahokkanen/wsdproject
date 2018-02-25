@@ -36,12 +36,12 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
     model = Game
     template_name = 'games/singlegame.html'
 
-    def highscore(self):
-        user = self.request.user
-        return GameState.objects.get(game=self.object, user=self.request.user.profile);
+    #def highscore(self):
+    #    user = self.request.user
+    #    return GameState.objects.get(game=self.object, user=self.request.user.profile);
 
     def gamestate(self):
-        return GameState.objects.filter(game=self.object).order_by('-score')[:3] #.exclude(user=self.request.user.profile)
+        return GameState.objects.filter(game=self.object).order_by('-score')[:5] #.exclude(user=self.request.user.profile)
 
 def savescore(request, pk):
     data = json.loads(request.POST.get('jsondata', None))
@@ -52,32 +52,30 @@ def savescore(request, pk):
         scoreobj.score = highscore
         scoreobj.save()
 
-    gamestate = GameState.objects.filter(game=Game.objects.get(pk=pk)).order_by('-score')[:3]
+    gamestate = GameState.objects.filter(game=Game.objects.get(pk=pk)).order_by('-score')[:5]
     return render(request, 'games/highscores.html', {'passedscore': scoreobj.score, 'passedallscores': gamestate})
 
 
 def savestate(request, pk):
-
     data = json.loads(request.POST.get('jsondata', None))
-    print(type(data))
-
     state = data['gameState']
+
     stateobj = GameState.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
 
     stateobj.state = json.dumps(state)
     stateobj.save()
-    print('GAMESTATE SAVED SUCCESSFULLY!')
 
     score = data['gameState']['score']
     if stateobj.score < score:
         stateobj.score = score
         stateobj.save()
-        print('vaihtoehto1')
-        return HttpResponse(json.dumps(state), content_type='application/json')
-    else:
-        del state['score']
-        print(state)
-        return HttpResponse(json.dumps(state), content_type='application/json')
+
+    gamestate = GameState.objects.filter(game=Game.objects.get(pk=pk)).order_by('-score')[:5]
+    return render(request, 'games/highscores.html', {'passedscore': stateobj.score, 'passedallscores': gamestate})
+#        return HttpResponse(json.dumps(state), content_type='application/json')
+#    else:
+#        del state['score']
+#        return HttpResponse(json.dumps(state), content_type='application/json')
 
     #stateobj.state = json.dumps(state)
     #stateobj.save()

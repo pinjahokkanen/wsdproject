@@ -1,7 +1,7 @@
 {% block content %}
+
+<!-- Div #score including highscore table, content replaced when rendered after save or submit score  -->
 <div id="score">
-{% if passedallscores %}
-<p>First option</p>
 <table class="table">
   <thead>
     <tr>
@@ -11,75 +11,30 @@
     </tr>
   </thead>
 
+<!-- If saved/submited score, views passes render function with passedallscores list with 5 top scores-->
   <tbody>
-    {% for score in passedallscores %}
-    
-      <th scope="row">{{ forloop.counter }}</th>
-      <td>{{score.user}}</td>
-      <td>{{score.score}}</td>
-    {% endfor %}
-
-  </tbody>
-</table>
-
-{% else %}
-<p>Second option</p>
-<table class="table">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">User</th>
-          <th scope="col">Score</th>
-        </tr>
-      </thead>
-
-    <tbody>
-      {% for state in view.gamestate %}
-    
-        <th scope="row">{{ forloop.counter }}</th>
-        <td>{{state.user}}</td>
-        <td>{{state.score}}</td>
-      {% endfor %}
-    </tbody>
-
-</table>
-
-{% endif %}
-
-
-
-
-<br>
-{% if passedscore %}
-<p>Third option</p>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">User</th>
-        <th scope="col">Score</th>
-      </tr>
-    </thead>
-    <tbody>
+    {% if passedallscores %}
       {% for score in passedallscores %}
+      <tr>
         <th scope="row">{{ forloop.counter }}</th>
         <td>{{score.user}}</td>
         <td>{{score.score}}</td>
+      </tr>
       {% endfor %}
-    </tbody>
-  </table>
 
-  <p><b>Your own highscore: {{passedscore}}</b></p>
+<!-- If passedallscores doesn't exist (loaded for the first time through DetailView)
+the scores fetched through gamestate queryset-->
+    {% else %}
+      {% for state in view.gamestate %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{state.user}}</td>
+        <td>{{state.score}}</td>
+      </tr>
+    {% endfor %}
 
-{% elif view.highscore %}
-  {% if view.highscore.score ==  0 %}
-    <p>You haven't scored yet!</p>
-  {% else %}
-    <p><b>YOUR TOP SCORE: {{view.highscore.score}}</b></p>
-{% endif %}
-
-{% else %}
-  <p>There was a problem loading your score</p>
-{% endif %}
+  {% endif %}
+</tbody>
+</table>
 </div>
 {% endblock %}
