@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Game</title>
+  <meta charset="utf-8"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+window.onload=function() {
+	canv=document.getElementById("gamecanvas");
+	ctx=canv.getContext("2d");
+	document.addEventListener("keydown",keyPush);
+	setInterval(game,1000/10);
+}
+
+$(document).ready( function() {
+  "use strict";
+
+  // Simulates "game over" when a score would be sent
+  $("#submit_score").click( function () {
+    var msg = {
+      "messageType": "SCORE",
+      "score": score,
+    };
+    window.parent.postMessage(msg, "*");
+  });
+
+  // Sends this game's state to the service.
+  // The format of the game state is decided
+  // by the game
+  $("#save").click( function () {
+    var msg = {
+      "messageType": "SAVE",
+      "gameState": {
+        "tail": tail,
+        "score": score,
+      }
+    };
+    window.parent.postMessage(msg, "*");
+    alert(msg.gameState.tail)
+  });
+
+  // Sends a request to the service for a
+  // state to be sent, if there is one.
+  $("#load").click( function () {
+    var msg = {
+      "messageType": "LOAD_REQUEST",
+    };
+    window.parent.postMessage(msg, "*");
+  });
+
+  // Listen incoming messages, if the messageType
+  // is LOAD then the game state will be loaded.
+  // Note that no checking is done, whether the
+  // gameState in the incoming message contains
+  // correct information.
+  //
+  // Also handles any errors that the service
+  // wants to send (displays them as an alert).
+  window.addEventListener("message", function(evt) {
+    if(evt.data.messageType === "LOAD") {
+      tail = evt.data.gameState.tail;
+      score = evt.data.gameState.score;
+    } else if (evt.data.messageType === "ERROR") {
+      alert(evt.data.info);
+    }
+  });
+
+  var message =  {
+      messageType: "SETTING",
+      options: {
+      	"width": 400, //Integer
+        "height": 400 //Integer
+        }
+    };
+    window.parent.postMessage(message, "*");
+});
+//playerpositions
+px=py=10;
+//gridsize, tilecount
+gs=tc=20;
+//aplex, appley
+ax=ay=15;
+//xvelocity, yvelocity
+xv=yv=0;
+trail=[];
+tail = 5;
+score = 0;
+
+function game() {
+	px+=xv;
+	py+=yv;
+	if(px<0) {
+		px= tc-1;
+	}
+	if(px>tc-1) {
+		px= 0;
+	}
+	if(py<0) {
+		py= tc-1;
+	}
+	if(py>tc-1) {
+		py= 0;
+	}
+	ctx.fillStyle="grey";
+	ctx.fillRect(0,0,canv.width,canv.height);
+
+	ctx.fillStyle="lime";
+	for(var i=0;i<trail.length;i++) {
+		ctx.fillRect(trail[i].x*gs,trail[i].y*gs,gs-2,gs-2);
+		if(trail[i].x==px && trail[i].y==py) {
+			tail = 5;
+      score = 0;
+		}
+	}
+	trail.push({x:px,y:py});
+	while(trail.length>tail) {
+	trail.shift();
+	}
+  ctx.font = "20px Arial";
+  ctx.fillStyle="black";
+  ctx.fillText("Your points: " + score,10,20);
+
+	if(ax==px && ay==py) {
+		tail++;
+    score++;
+		ax=Math.floor(Math.random()*tc);
+		ay=Math.floor(Math.random()*tc);
+	}
+	ctx.fillStyle="red";
+	ctx.fillRect(ax*gs,ay*gs,gs-2,gs-2);
+}
+function keyPush(evt) {
+	switch(evt.keyCode) {
+		case 37:
+			xv=-1;yv=0;
+			break;
+		case 38:
+			xv=0;yv=-1;
+			break;
+		case 39:
+			xv=1;yv=0;
+			break;
+		case 40:
+			xv=0;yv=1;
+			break;
+	}
+}
+</script>
+</head>
+<body>
+<canvas id="gamecanvas" width="400" height="400"></canvas>
+<br>
+<div><span  id="score">0</span> Points</div><br>
+<button id="submit_score">Submit score</button><br>
+
+  <button id="save">Save</button>
+  <button id="load">Load</button>
+</body>
+</html>
