@@ -4,25 +4,11 @@
 	opacity: 1;
 }
 
-#back-arrow{
-	position: absolute;
-	left: 40px;
-}
-
-#cart {
-	position: absolute;
-	left: 80px;
-}
-
 .navbar-toggler {
 	border: none!important;
 	color: white!important;
 }
 
-.container {
-	padding-top: 80px;
-	padding-bottom: 40px;
-}
 
 /*GAME STORE LIST*/
 

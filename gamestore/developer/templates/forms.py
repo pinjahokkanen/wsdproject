@@ -12,8 +12,6 @@ class NewGameForm(forms.ModelForm):
 		model = Game
 		fields = ('url', 'name', 'description', 'price', 'developer')
 
-
-
 ## For editing existing games ## 
 class EditGameForm(forms.Form):
 		class Meta:
