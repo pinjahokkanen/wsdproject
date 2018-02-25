@@ -13,8 +13,8 @@
 
 <!-- If saved/submited score, views passes render function with passedallscores list with 5 top scores-->
   <tbody>
-    {% if passedallscores %}
-      {% for score in passedallscores %}
+    {% if passed_scores %}
+      {% for score in passed_scores %}
       <tr>
         <th scope="row">{{ forloop.counter }}</th>
         <td>{{score.user}}</td>
@@ -25,11 +25,11 @@
 <!-- If passedallscores doesn't exist (loaded for the first time through DetailView)
 the scores fetched through gamestate queryset-->
     {% else %}
-      {% for state in view.gamestate %}
+      {% for score in view.topscores %}
       <tr>
         <th scope="row">{{ forloop.counter }}</th>
-        <td>{{state.user}}</td>
-        <td>{{state.score}}</td>
+        <td>{{score.user}}</td>
+        <td>{{score.score}}</td>
       </tr>
     {% endfor %}
 

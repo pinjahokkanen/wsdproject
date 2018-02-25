@@ -36,58 +36,51 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
     model = Game
     template_name = 'games/singlegame.html'
 
-    #def highscore(self):
-    #    user = self.request.user
-    #    return GameState.objects.get(game=self.object, user=self.request.user.profile);
+    #Querying 5 gamestate objects according to current game and ordered by score decending order.
+    def topscores(self):
+        return GameState.objects.filter(game=self.object).order_by('-score')[:5]
 
-    def gamestate(self):
-        return GameState.objects.filter(game=self.object).order_by('-score')[:5] #.exclude(user=self.request.user.profile)
 
+#Loads data from game's ajax message, queries the gamestate - object for current game and player and checks if a new highscore was made.
+#Returns a render function, with highscore html and updated top score objects
+@login_required(login_url='login')
 def savescore(request, pk):
-    data = json.loads(request.POST.get('jsondata', None))
-    highscore = data['score']
+    if request.method=='POST' and request.is_ajax:
+        data = json.loads(request.POST.get('jsondata', None))
+        scoreobj = GameState.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
+        if scoreobj.score < data['score']:
+            scoreobj.score = data['score']
+            scoreobj.save()
 
-    scoreobj = GameState.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
-    if scoreobj.score < highscore:
-        scoreobj.score = highscore
-        scoreobj.save()
-
-    gamestate = GameState.objects.filter(game=Game.objects.get(pk=pk)).order_by('-score')[:5]
-    return render(request, 'games/highscores.html', {'passedscore': scoreobj.score, 'passedallscores': gamestate})
+        gamestate = GameState.objects.filter(game=Game.objects.get(pk=pk)).order_by('-score')[:5]
+        return render(request, 'games/highscores.html', {'passed_scores': gamestate})
 
 
+#Loads data from game's ajax message, queries the gamestate - object for current game and player, saves the gamestate and checks if a new highscore was made.
+#Returns a render function, with highscore html and updated top score objects
+@login_required(login_url='login')
 def savestate(request, pk):
-    data = json.loads(request.POST.get('jsondata', None))
-    state = data['gameState']
+    if request.method=='POST' and request.is_ajax:
+        data = json.loads(request.POST.get('jsondata', None))
 
-    stateobj = GameState.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
-
-    stateobj.state = json.dumps(state)
-    stateobj.save()
-
-    score = data['gameState']['score']
-    if stateobj.score < score:
-        stateobj.score = score
+        stateobj = GameState.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
+        stateobj.state = json.dumps(data['gameState'])
         stateobj.save()
 
-    gamestate = GameState.objects.filter(game=Game.objects.get(pk=pk)).order_by('-score')[:5]
-    return render(request, 'games/highscores.html', {'passedscore': stateobj.score, 'passedallscores': gamestate})
-#        return HttpResponse(json.dumps(state), content_type='application/json')
-#    else:
-#        del state['score']
-#        return HttpResponse(json.dumps(state), content_type='application/json')
+        if stateobj.score < data['gameState']['score']:
+            stateobj.score = data['gameState']['score']
+            stateobj.save()
 
-    #stateobj.state = json.dumps(state)
-    #stateobj.save()
-    #return HttpResponse(status=200)
-    #   highscore = scoreobj.score
-    #    raise Http404("You didn't score high enough")
-    #return render(request, "games/highscores.html", {'highscore': highscore})
+        gamestate = GameState.objects.filter(game=Game.objects.get(pk=pk)).order_by('-score')[:5]
+        return render(request, 'games/highscores.html', {'passed_scores': gamestate})
 
+#Receives a request to load state. Queries the Gamestate object for current user and player, and checks if there is a state saved (if no state saved, state will be None).
+#If state has been saved, returns httpresponse to the javascript with the state. If not, returns error messages to be shown to the user.
+@login_required(login_url='login')
 def loadstate(request, pk):
     if request.method=='POST' and request.is_ajax:
 
-        data = json.loads(request.POST.get('jsondata', None)) #tarviiko edes?
+        data = json.loads(request.POST.get('jsondata', None))
         stateobj = GameState.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
 
         if stateobj.state != None:
@@ -96,6 +89,7 @@ def loadstate(request, pk):
             data['messageType'] = "NO_STATE"
             data['errorText'] = "No previous gamestate saved."
             return HttpResponse(data, content_type='application/json')
+            
 
 @login_required(login_url='login')
 def cart(request):
@@ -156,7 +150,7 @@ def cart(request):
         return HttpResponse(status=405, content="Invalid action.")
 
 
-
+@login_required(login_url='login')
 def to_cart(game_ids, user=None):
 
     result = {}

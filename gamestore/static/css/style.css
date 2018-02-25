@@ -139,14 +139,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 }
 
 #game-img {
-	max-height: 100%; 
-	max-width: 100%; 
-	height: 152px; 
-	width:194px ; 
+	max-height: 100%;
+	max-width: 100%;
+	height: 152px;
+	width:194px ;
 	object-fit: contain
 }
 
-/*SINGLE GAME
+/*SINGLE GAME*/
 
 div.game {
 	background-color: #343a40;
