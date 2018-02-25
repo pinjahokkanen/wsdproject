@@ -21,8 +21,8 @@
 			url: "{% url 'games:cart' %}",
 			data: {
 				csrfmiddlewaretoken: "{{ csrf_token  }}",
-                game: gameid,
-                action:'add'
+				game: gameid,
+				action:'add'
 			},
 
 			success:function(data) {
@@ -31,25 +31,83 @@
 				} else {
 					window.location.href = "{% url 'games:cart' %}"
 				// 	alert("The game was added to the cart.");
-				}
-			},
+			}
+		},
 
-			error: function(data) {
-				if (data.responseJSON && data.responseJSON.error) {
-					alert(data.responseJSON.error);
-				}else if (data.status = 403) {
-					alert("You are not allowed to purchase this game.");
-				}else if (data.status == 400) {
-					alert("Game already in the cart.");
-				}else{
-					alert("Unexpected error occurred. Please refresh page and try again.");
-				}
-			},
-		})
-}
+		error: function(data) {
+			if (data.responseJSON && data.responseJSON.error) {
+				alert(data.responseJSON.error);
+			}else if (data.status = 403) {
+				alert("You are not allowed to purchase this game.");
+			}else if (data.status == 400) {
+				alert("Game already in the cart.");
+			}else{
+				alert("Unexpected error occurred. Please refresh page and try again.");
+			}
+		},
+	})
+	}
 </script>
 
+<div class="container-fluid bg-dark">
+		<h3  id="game-name"><a href="{{game.url}}">{{ game }}</a></h3>
+		<hr>
+	<div class="row">
+		<div class="game col ">
+			
+			{% if game not in request.user.profile.games.all and game.price != 0 %}
+			<iframe src="{% static "img/NoAccess.png" %}" height="500" width="700" style="border:none;"></iframe>
+			{% else %}
+			<iframe src="{{game.url}}" id="gameframe" height="500" width="700" style="border:none;"></iframe>
+			{% endif %}
+		</div>
 
+		<div class="game_info col d-flex align-items-stretch" >
+			<div class="card-header" id="game-info">
+				<nav>
+					<div class="nav nav-tabs card-header-tabs navbar-dark bg-dark " id="nav-tab" role="tablist">
+						<a class="nav-item nav-link active" id="nav-game-tab" data-toggle="tab" href="#nav-game" role="tab" aria-controls="nav-game" aria-selected="true">Game</a>
+						<a class="nav-item nav-link " id="nav-score-tab" data-toggle="tab" href="#nav-score" role="tab" aria-controls="nav-score" aria-selected="false">Highscores</a>
+					</div>
+				</nav>
+
+				<div class="tab-content" id="nav-tabContent" >
+
+					<div class="tab-pane fade show active pre-scrollable nav-element" id="nav-game" role="tabpanel" aria-labelledby="nav-game-tab" >
+
+						<p id="sec-header"> <i class="fas fa-caret-down"></i> INFO</p>
+						<div class="snippet">
+							<span>Game By: <b>{{game.developer}}</b></span>
+							<br>
+							<span><i class="far fa-clock"></i> {{game.pubDate}}</span>
+
+							<br>
+							<span>Share game on:</span>
+							<ul class="game-share">
+								<li>
+									<a href="http://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
+										<i class="fab fa-facebook-square"></i> 
+										Facebook
+									</a>
+								</li>
+
+								<li>
+									<a href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>
+										<i class="fab fa-google-plus-square"></i>
+										Google Plus
+									</a>
+								</li>
+
+								<li>
+									<a href="https://twitter.com/home?status=I%20want%20to%20share%20this%20awesome%20game%20from%20Game%20Away!%20WSD%20Game%20Store%20with%20you.%20Play%20here!%20{{ request.build_absolute_uri }}">
+										<i class="fab fa-twitter-square"></i>
+										Twitter
+									</a>
+								</li>
+							</ul>
+						</div>
+
+<<<<<<< HEAD
 <!--<input type="hidden" id="gameobject" name="gameobject" value="{{game}}"/>
 <input type="hidden" id="profileobject" name="profileobject" value="{{user.profile}}"/>-->
 
@@ -125,41 +183,62 @@
 					<button type="button" class="btn-success" onclick="game_to_cart({{game.id}})"><i class="fas fa-cart-plus"> </i></a> PURCHASE</button>
 				</div>
 				{% endif %}
-
-			</div>
-
-
-			<div class="tab-pane fade pre-scrollable nav-element" role="tabpanel" id="nav-score" aria-labelledby="nav-score-tab">
-					<p id="sec-header"><i class="fas fa-caret-down"></i> SCOREBOARD</p>
-					<div class="snippet">
-						<div class="link">
-							{% include "games/highscores.html" %}
+=======
+						<p id="sec-header"> <i class="fas fa-caret-down"></i> DESCRIPTION</p>
+						<div class="snippet">
+							{{game.description}}
 						</div>
+
+						{% if game not in request.user.profile.games.all and game.price != 0 %}
+						<p id="sec-header"> <i class="fas fa-caret-down"></i> PURCHASE</p>
+						<div class="snippet" id="buy-info">
+							<span id="price">{{game.price}} €</span>
+							<button type="button" class="btn-success" onclick="game_to_cart({{game.id}})"><i class="fas fa-cart-plus"> </i></a> PURCHASE</button>
+						</div>
+						{% endif %} 
+>>>>>>> 3e1a064dfbeca1baf49b7ded48969c7168c540e0
+
 					</div>
 
 
-		 	</div>
-		 </div>
+					<div class="tab-pane fade pre-scrollable nav-element" role="tabpanel" id="nav-score" aria-labelledby="nav-score-tab">
+						<p id="sec-header"><i class="fas fa-caret-down"></i> SCOREBOARD</p>
+						<div class="snippet">
+							<div class="link">
+								{% include "games/highscores.html" %}
+							</div>
+						</div>
 
-	<ul id="actions">
+					</div>
+<<<<<<< HEAD
 
-	</ul>
+=======
+					
+				
+				</div >
+>>>>>>> 3e1a064dfbeca1baf49b7ded48969c7168c540e0
 
+			</div >
+
+		</div for="Ends Sidebar">
+
+	<div class="container-fluid bg-dark game-footer">
+		<div class="row ">
+			<div class="col text-white">
+				<h4>{{game.name}}</h4>
+				<p>Game By: {{game.developer}}  &nbsp; | &nbsp;  <i class="far fa-clock"></i> Added on {{game.pubDate}}</p>
+			</div>
+		</div>
 	</div>
-	</section>
- </div>
+	
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3e1a064dfbeca1baf49b7ded48969c7168c540e0
 
-<div class="gamedetails">
-	<h4>{{game.name}}</h4>
-	<p>Game By: {{game.developer}}  &nbsp; | &nbsp;  <i class="far fa-clock"></i> Added on {{game.pubDate}}</p>
 </div>
 
 
-<!--<a href="http://www.facebook.com/sharer/sharer.php?u=http://protected-hamlet-88117.herokuapp.com{{ request.get_full_path|urlencode }}">Facebook2</a>-->
 
-
-
-
-{% endblock %}
+	{% endblock %}

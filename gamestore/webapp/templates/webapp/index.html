@@ -1,21 +1,38 @@
 {% extends 'base.html' %}
+
+<head>
+	{% block stylesheet %}
+	{% load static %}
+    <!-- Rain -->
+    <script type="text/javascript" src="{% static 'js/rain.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/rain.css' %}">
+    {% endblock %}
+
+</head>
 {% load static %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Front Page{% endblock %}
+
+
 
 {% block content %}
-<h2>This is the front page</h2>
-<br>
+
+<div class="page-header section-header" style="text-align:  center;margin-top: 200px; z-index: 100;">
+	<h1 style="color:white;">Want to play a game?</h1>
+	<p class="secondary-header" style="color:white;">Yes you do.</p>
+</div>
+
 {% if user.is_active %}
 <p> Your name is {{user}}</p>
 <p>Your bio is {{user.profile.bio}}</p>
-<p>Your games are:</p>
+<!--<p>Your games are:</p>
 {% for game in request.user.profile.games.all %}
   <li>{{ game.name }}</li>
 {% empty %}
   <p>No games!</p>
-{% endfor %}
+{% endfor %}-->
 {% endif %}
 <br>
-<img src="{% static "img/samuel.jpg" %}" alt="Samuel L Jackson"/>
+
+
 {% endblock %}
