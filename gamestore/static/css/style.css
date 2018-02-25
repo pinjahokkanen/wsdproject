@@ -1,6 +1,7 @@
 /*NAVIGATION*/
 #navigationbar{
-	margin-bottom: 70px;
+	/* margin-bottom: 70px; */
+	opacity: 0;
 }
 
 #back-arrow{
@@ -18,6 +19,10 @@
 	color: white!important;
 }
 
+.container {
+	padding-top: 80px;
+	padding-bottom: 40px;
+}
 
 /*GAME STORE LIST*/
 
@@ -231,7 +236,7 @@ ul.game-share li a {
 /* DEVZONE */
 
 #id_developer {
-	display: none;
+	/* display: none;  miks tämä on olemassa? */
 }
 
 .dev-buttons a, form{
