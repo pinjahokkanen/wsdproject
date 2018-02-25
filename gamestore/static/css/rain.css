@@ -11,9 +11,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 html {height:100%;}
 body {
 height: 100%;
-background:#061147;
-background:-webkit-gradient(linear,0% 0%,0% 100%, from(#07B9BE ), to(#000000)  );
-background: -moz-linear-gradient(top, rgba(13,52,58,1) 0%, rgba(0,0,0,1) 100%);
+background:#719FB2;
 overflow:hidden;
 
 }
@@ -23,6 +21,8 @@ background-image: linear-gradient(-180deg, #061147 0%, #000000 100%);
 
 .page-header {
 	opacity: 0;
+	width: 50%!important;
+    margin: 0 auto!important;
 }
 
 

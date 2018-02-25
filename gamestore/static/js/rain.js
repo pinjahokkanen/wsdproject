@@ -21,6 +21,7 @@ var nav = $("#navigationbar");
 //tl.from(logo, 2, {alpha:1, ease:Expo.easeOut});
 
 if(Cookies.get('animationDone') != 'true') {
+	nav.css("opacity","0");
 	TweenMax.to(logo, 4, {alpha:1, ease:Power2.easeIn});
 	TweenMax.to(nav, 6, {alpha:1, ease:Power2.easeIn});
 	Cookies.set('animationDone', 'true');
@@ -28,6 +29,7 @@ if(Cookies.get('animationDone') != 'true') {
 	logo.css("opacity","1");
 	nav.css("opacity","1");
 }
+
 
 
 
