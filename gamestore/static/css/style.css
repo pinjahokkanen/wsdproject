@@ -35,8 +35,9 @@ input[type=text], input[type=password], input[type=email], select {
     box-sizing: border-box;
 }
 
-input[type=submit] {
-  
+#inventory_selection {
+  width: 140px;
+  margin-left: 15px;
 }
 
 
