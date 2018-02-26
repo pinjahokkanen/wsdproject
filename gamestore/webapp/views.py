@@ -136,8 +136,8 @@ def update_profile(request):
                     return HttpResponseRedirect('/profile/')
 
         return render(request, "profile.html", {
-            "noodle": pk,
-            "noodle_form": user_form,
+            "profile": pk,
+            "profile_form": user_form,
             "formset": formset,
         })
     else:

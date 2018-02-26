@@ -7,7 +7,7 @@
   <h2>Edit your profile</h2>
   <form method="post" action=".">
     {% csrf_token %}
-    {{ noodle_form.as_p }}
+    {{ profile_form.as_p }}
     <div class="divider"></div>
     {{ formset.management_form }}
     {{ formset.as_p }}

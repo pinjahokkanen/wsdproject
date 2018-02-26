@@ -44,9 +44,6 @@ class GameCreate(LoginRequiredMixin,CreateView):
     template_name = 'developer/game_form.html'
     fields = ('url', 'name', 'description', 'price', 'category','img')
 
-#    def post(self, request):
-#        form = self.form_class(request.POST)
-
     def form_valid(self, form):
         self.object = form.save()
         user = self.request.user
@@ -66,6 +63,7 @@ class GameCreate(LoginRequiredMixin,CreateView):
 
 class GameUpdate(LoginRequiredMixin, UpdateView):
     model = Game
+    template_name = 'developer/game_form.html'
     fields = ('url', 'name', 'description', 'price', 'category','img')
 
 class GameDelete(LoginRequiredMixin, DeleteView):
