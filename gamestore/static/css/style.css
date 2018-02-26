@@ -25,6 +25,10 @@ p {
   font-family: 'Maven Pro', sans-serif;
 }
 
+.card-head-text {
+  margin-top: 25px;
+}
+
 input[type=text], input[type=password], input[type=email], select {
     width: 100%;
     padding: 12px 20px;
@@ -53,8 +57,13 @@ input[type=text], input[type=password], input[type=email], select {
 
 .card-item img {
   width: 100%;
-  min-height: 200px;
-  max-height: 200px;
+  max-height: 320px;
+  
+}
+
+.card-item {
+  padding: 0px;
+  margin: 15px;
 }
 
 .card-item > .card-title {
