@@ -9,12 +9,34 @@ window.onload=function() {
 	canv=document.getElementById("gamecanvas");
 	ctx=canv.getContext("2d");
 	document.addEventListener("keydown",keyPush);
-	setInterval(game,1000/10);
+  setInterval(game,1000/10);
+}
+loadedTail = 0;
+loadedScore = 0;
+//player positions
+playerx=playery=10;
+//gridsize, tilecount
+gs=tc=20;
+//food coordinates
+foodx=foody=15;
+//foodscore to add to the highscore
+foodscore=1;
+//xvelocity, yvelocity
+xv=yv=0;
+trail=[];
+tail = 5;
+score = 0;
+
+
+//A function to determine the score of the next apple
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive
 }
 
 $(document).ready( function() {
   "use strict";
-
   // Simulates "game over" when a score would be sent
   $("#submit_score").click( function () {
     var msg = {
@@ -36,7 +58,6 @@ $(document).ready( function() {
       }
     };
     window.parent.postMessage(msg, "*");
-    alert(msg.gameState.tail)
   });
 
   // Sends a request to the service for a
@@ -68,67 +89,71 @@ $(document).ready( function() {
   var message =  {
       messageType: "SETTING",
       options: {
-      	"width": 400, //Integer
-        "height": 400 //Integer
+      	"width": 500, //Integer
+        "height": 500 //Integer
         }
     };
     window.parent.postMessage(message, "*");
 });
-//playerpositions
-px=py=10;
-//gridsize, tilecount
-gs=tc=20;
-//aplex, appley
-ax=ay=15;
-//xvelocity, yvelocity
-xv=yv=0;
-trail=[];
-tail = 5;
-score = 0;
+
 
 function game() {
-	px+=xv;
-	py+=yv;
-	if(px<0) {
-		px= tc-1;
+	playerx+=xv;
+	playery+=yv;
+  //if the snake goes over the edge, continues from the other side of canvas
+	if(playerx<0) {
+		playerx= tc-1;
 	}
-	if(px>tc-1) {
-		px= 0;
+	if(playerx>tc-1) {
+		playerx= 0;
 	}
-	if(py<0) {
-		py= tc-1;
+	if(playery<0) {
+		playery= tc-1;
 	}
-	if(py>tc-1) {
-		py= 0;
+	if(playery>tc-1) {
+		playery= 0;
 	}
+
 	ctx.fillStyle="grey";
 	ctx.fillRect(0,0,canv.width,canv.height);
 
-	ctx.fillStyle="lime";
+  ctx.font = "15px Arial";
+  ctx.fillStyle="black";
+  ctx.fillText("Your points: " + score,10,20);
+
+	ctx.fillStyle="white";
 	for(var i=0;i<trail.length;i++) {
 		ctx.fillRect(trail[i].x*gs,trail[i].y*gs,gs-2,gs-2);
-		if(trail[i].x==px && trail[i].y==py) {
+		if(trail[i].x==playerx && trail[i].y==playery) {
+      //eats its own tail
 			tail = 5;
       score = 0;
 		}
 	}
-	trail.push({x:px,y:py});
+
+	trail.push({x:playerx,y:playery});
 	while(trail.length>tail) {
 	trail.shift();
 	}
-  ctx.font = "20px Arial";
-  ctx.fillStyle="black";
-  ctx.fillText("Your points: " + score,10,20);
 
-	if(ax==px && ay==py) {
+  //eating and drawing the food. Food gets different values, red is more valuable than green.
+	if(foodx==playerx && foody==playery) {
 		tail++;
-    score++;
-		ax=Math.floor(Math.random()*tc);
-		ay=Math.floor(Math.random()*tc);
+    score = score + foodscore;
+		foodx=Math.floor(Math.random()*tc);
+		foody=Math.floor(Math.random()*tc);
+    foodscore = getRandomIntInclusive(1,2)
 	}
-	ctx.fillStyle="red";
-	ctx.fillRect(ax*gs,ay*gs,gs-2,gs-2);
+  if (foodscore==2) {
+    ctx.fillStyle="red";
+	  ctx.fillRect(foodx*gs,foody*gs,gs-2,gs-2);
+  } else {
+    ctx.fillStyle="lime";
+	  ctx.fillRect(foodx*gs,foody*gs,gs-2,gs-2);
+  }
 }
+
+//Key control events
 function keyPush(evt) {
 	switch(evt.keyCode) {
 		case 37:
@@ -145,15 +170,15 @@ function keyPush(evt) {
 			break;
 	}
 }
+
 </script>
 </head>
 <body>
 <canvas id="gamecanvas" width="400" height="400"></canvas>
 <br>
-<div><span  id="score">0</span> Points</div><br>
 <button id="submit_score">Submit score</button><br>
 
   <button id="save">Save</button>
-  <button id="load">Load</button>
+  <button id="load">Load</button><p><b>Loads only when game is running (snake is moving)</b></p>
 </body>
 </html>
