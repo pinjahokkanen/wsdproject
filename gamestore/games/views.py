@@ -46,56 +46,62 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
 # Loads data from game's ajax message, queries the gamestate - object for current game and player and checks if a new highscore was made.
 # Returns a render function, with highscore html and updated top score objects
 def savescore(request, pk):
-    if request.method=='POST' and request.is_ajax:
-        data = json.loads(request.POST.get('jsondata', None))
-        scoreobj = GameState.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
-        if scoreobj.score < data['score']:
-            scoreobj.score = data['score']
-            scoreobj.save()
+    if request.user.is_authenticated:
+        if request.method=='POST' and request.is_ajax:
+            data = json.loads(request.POST.get('jsondata', None))
+            scoreobj = GameState.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
+            if scoreobj.score < data['score']:
+                scoreobj.score = data['score']
+                scoreobj.save()
 
-        gamestate = GameState.objects.filter(game=Game.objects.get(pk=pk)).order_by('-score')[:5]
-        return render(request, 'games/highscores.html', {'passed_scores': gamestate})
-
+            gamestate = GameState.objects.filter(game=Game.objects.get(pk=pk)).order_by('-score')[:5]
+            return render(request, 'games/highscores.html', {'passed_scores': gamestate})
+    else:
+        return HttpResponseRedirect('/accounts/login/')
 
 # Loads data from game's ajax message, queries the gamestate - object for current game and player, saves the gamestate and checks if a new highscore was made.
 # Returns a render function, with highscore html and updated top score objects
 def savestate(request, pk):
-    if request.method=='POST' and request.is_ajax:
-        data = json.loads(request.POST.get('jsondata', None))
+    if request.user.is_authenticated:
+        if request.method=='POST' and request.is_ajax:
+            data = json.loads(request.POST.get('jsondata', None))
 
-        stateobj = GameState.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
-        stateobj.state = json.dumps(data['gameState'])
-        stateobj.save()
-
-        if stateobj.score < data['gameState']['score']:
-            stateobj.score = data['gameState']['score']
+            stateobj = GameState.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
+            stateobj.state = json.dumps(data['gameState'])
             stateobj.save()
 
-        gamestate = GameState.objects.filter(game=Game.objects.get(pk=pk)).order_by('-score')[:5]
-        return render(request, 'games/highscores.html', {'passed_scores': gamestate})
+            if stateobj.score < data['gameState']['score']:
+                stateobj.score = data['gameState']['score']
+                stateobj.save()
 
+            gamestate = GameState.objects.filter(game=Game.objects.get(pk=pk)).order_by('-score')[:5]
+            return render(request, 'games/highscores.html', {'passed_scores': gamestate})
+    else:
+        return HttpResponseRedirect('/accounts/login/')
 # Receives a request to load state. Queries the Gamestate object for current user and player, and checks if there is a state saved (if no state saved, state will be None).
 # If state has been saved, returns httpresponse to the javascript with the state. If not, returns error messages to be shown to the user.
 def loadstate(request, pk):
-    if request.method=='POST' and request.is_ajax:
+    if request.user.is_authenticated:
+        if request.method=='POST' and request.is_ajax:
 
-        data = json.loads(request.POST.get('jsondata', None))
-        stateobj = GameState.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
+            data = json.loads(request.POST.get('jsondata', None))
+            stateobj = GameState.objects.get(game=Game.objects.get(pk=pk), user=request.user.profile)
 
-        if stateobj.state != None:
-            return HttpResponse(stateobj.state, content_type='application/json')
-        else:
-            data['messageType'] = "NO_STATE"
-            data['errorText'] = "No previous gamestate saved."
-            return HttpResponse(data, content_type='application/json')
+            if stateobj.state != None:
+                return HttpResponse(stateobj.state, content_type='application/json')
+            else:
+                data['messageType'] = "NO_STATE"
+                data['errorText'] = "No previous gamestate saved."
+                return HttpResponse(data, content_type='application/json')
+    else:
+        return HttpResponseRedirect('/accounts/login/')
 
-
-# Handles cart functionality. Uses to_cart function in adding games to session's cart. 
+# Handles cart functionality. Uses to_cart function in adding games to session's cart.
 # GET for viewing cart contents, POST for adding items to the cart
 def cart(request):
     ## Handle case not logged in
     if request.user.is_authenticated:
-    
+
     ## Handle GET
         if request.method == 'GET':
             game_ids = request.session.get('cart_items',[])
@@ -152,11 +158,9 @@ def cart(request):
 
     else:
         return HttpResponseRedirect('/accounts/login/')
-        return HttpResponse(status=405, content="Invalid action.")
+        #return HttpResponse(status=405, content="Invalid action.")
 
-#@login_required(login_url='login')
 def to_cart(game_ids, user=None):
-
     result = {}
     result['games'] = []
     result['total'] = 0
@@ -172,7 +176,6 @@ def to_cart(game_ids, user=None):
     return result
 
 #@login_required(login_url='login')
-
 # Handles functionality of creating orders.
 def orders(request):
     ## Handle GET
@@ -214,7 +217,7 @@ def orders(request):
                                     status='pending')
 
         # Add cart games to the order
-        # Same as; order.games = queryset.all() 
+        # Same as; order.games = queryset.all()
         for obj in queryset:
             order.games.add(obj)
 
@@ -231,8 +234,8 @@ def orders(request):
 
 #@login_required(login_url='login')
 
-# Handles functionality of forwarding the created order to payment system. 
-# GET for viewing the contents of an order, POST for sending the order to payment system. 
+# Handles functionality of forwarding the created order to payment system.
+# GET for viewing the contents of an order, POST for sending the order to payment system.
 def order_details(request, order_id):
     if request.method == 'GET':
 

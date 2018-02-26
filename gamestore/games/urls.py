@@ -17,7 +17,7 @@ urlpatterns = [
 	re_path(r'^(?P<pk>[0-9]+)/loadstate', views.loadstate, name='loadstate'),
 
 	# Store pages
-	re_path(r'^cart/', views.cart, name='cart'),
+	re_path(r'cart$', views.cart, name='cart'),
 	re_path(r'^orders/$', views.orders, name='orders'),
 	re_path(r'^order_details/(?P<order_id>[a-zA-Z0-9]+)/$', views.order_details, name='order_details'),
 	re_path(r'^purchase_result/$', views.purchase_result, name='purchase_result'),

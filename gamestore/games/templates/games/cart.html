@@ -7,7 +7,7 @@
 
 
 <div class="" style="max-width: 700px;">
-        
+
 
         {% if cart.games %}
         <h1 class="cart-header" id="local-title">Cart</h1>
@@ -15,18 +15,18 @@
             <div id="game-{{game.id}}" class="card bg-light border-secondary mb-3 cart-item">
 
                 <div class="card-block ">
-                    <h5 class="">{{ game.name }}</h5> 
+                    <h5 class="">{{ game.name }}</h5>
                     <span class="card-text"> By: {{game.developer}}</span>
                     <span class="price-tag">Price: {{game.price}}</span>
 
-                    <div class="d-flex justify-content-end"> 
+                    <div class="d-flex justify-content-end">
                         <span class="gameRemove badge badge-danger badge-button" onclick="removeList({{ game.id }})">REMOVE</span>
                     </div>
                 </div>
 
             </div>
 
-                
+
         {% endfor %}
 
 
@@ -41,55 +41,11 @@
         </div>
 
         {% else %}
-        
+
         <h1 class="cart-header" id="local-title">Cart is empty</h1>
         <hr>
         <a type="button" class="btn btn-secondary" href="/games/">Look for games</a>
         {% endif%}
 
-
-{% comment %}
-    Function for removing games from cart
-{% endcomment %}
-
 </div>
-
-     <script type="text/javascript">
-
-        //add active class to the navbar item
-        $( "#navbar-Profile" ).addClass('active');
-
-        //initialize the table
-        $( document ).ready(function() {
-            $("#tableId").bootstrapTable();
-        });
-
-        //this function is used to remove a game from the cart.
-        // It notifies to the server and remove the game from the user interface.
-         function removeList(gameid) {
-            $.ajax({
-                method:'POST',
-                url: "{% url 'games:cart' %}",
-                data: {
-                    csrfmiddlewaretoken: "{{ csrf_token  }}",
-                    game:gameid,
-                    action:'remove'
-                },
-                success:function(data) {
-                    if (data.error) {
-                        alert("Error: " + data.error);
-                    }
-                    else{
-                        $('#game-'+gameid).fadeOut(400,function(){this.remove()});
-                    }
-                },
-                error: function (data) {
-                    if (data.error) {
-                        alert("There was a problem during the request. Please try again.");
-                    }
-                }
-            })
-        }
-     </script>
-
 {% endblock %}
