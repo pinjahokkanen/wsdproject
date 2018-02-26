@@ -24,12 +24,12 @@
 		{% endif%}
 
 		<div class="card-img-overlay dev-buttons">
-				<a class="btn btn-secondary btn-sm" href="{% url 'developer:game-update' game.id %}" role="button"><i class="fas fa-edit"></i></a>
+				<a class="btn-secondary btn-sm" href="{% url 'developer:game-update' game.id %}" role="button"><i class="fas fa-edit"></i></a>
 			<form action="{% url 'developer:game-delete' game.id %}" method="post">
 				{% csrf_token %}
 				<input type="hidden" name="game_id" value="{{ game.id }}">
 
-				<button type="submit" class="btn btn-secondary btn-sm">
+				<button type="submit" class="btn-secondary btn-sm">
 					<i class="fas fa-trash-alt"></i> 
 				</button>
 			</form>

@@ -52,10 +52,27 @@ body {
 	width: 100%;
 	height: auto;
 }
+button:focus {
+	outline:0;
+}
 
 .navbar-collapse ul {
 	position: absolute;
 	right: 15px;
+/* float: right; */	
+}
+
+@media (max-width: 576px) {
+ 
+    .navbar-collapse ul {
+    	position: relative;
+    	right: 0px;
+    	float: right;
+    }
+}
+
+.dropdown-menu {
+	background-color: #FCF7F8;
 }
 
 #site-nav {
