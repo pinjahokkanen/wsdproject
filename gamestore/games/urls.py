@@ -11,7 +11,7 @@ urlpatterns = [
 	re_path(r'^$', views.IndexView.as_view(), name='index'),
 	re_path(r'^(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='singlegame'),
 
-	# Game highscore
+	# Game highscores
 	re_path(r'^(?P<pk>[0-9]+)/savescore', views.savescore, name='savescore'),
 	re_path(r'^(?P<pk>[0-9]+)/savestate', views.savestate, name='savestate'),
 	re_path(r'^(?P<pk>[0-9]+)/loadstate', views.loadstate, name='loadstate'),

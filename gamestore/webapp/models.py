@@ -68,9 +68,8 @@ class Game(models.Model):
             'description': self.description,
             'url': self.url,
             'price': self.price,
-            # 'developer': self.developer.user.username,
-            #'category': self.category.name,
-            #'category_id': self.category.id,
+            'developer': self.developer,
+            'category': self.category,
         }
 
         # Check user ownership of game
