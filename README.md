@@ -19,19 +19,13 @@ Also, we believe that this project would be a great part to each of our personal
 ## **3. Features**
 ### 3.1 Development
 
- Our start was slow, due to not understanding how to implement the development environment. We tried to take shortcuts with boilerplates, but these efforts were unsuccesful. Also, we realized that this was also not allowed and hence started the project from scratch. 
+Our start was slow, due to not understanding how to implement the development environment. We tried to take shortcuts with boilerplates, but these efforts were unsuccesful. Also, we realized that this was also not allowed and hence started the project from scratch. 
 
-Our biggest development issues came from lack of project management and planning. We did not have a clear task list of features to delegate to team members. This also resulted in a lack of task schedules. We believe that this is mainly due to us not having the experience in carrying a full end-to-end software project.
-
-However, general development of the project was continuous, though used techniques and solutions were usually miscellaneous.
-
-Our development advanced in bursts. Usually, one of us was stuck on some feature issue or bug for a longer period of time until figuring a working solution. 
+Our biggest development issues came from lack of project management and planning. We did not have a clear task list of features to delegate to team members. This also resulted in a lack of task schedules. We believe that this is mainly due to us not having the experience in carrying a full end-to-end software project. However, general development of the project was continuous, though used techniques and solutions were usually miscellaneous. Our development advanced in bursts. Usually, one of us was stuck on some feature issue or bug for a longer period of time until figuring a working solution. 
 
 Our biggest **success** was persistance in creating a working entity. We believe all implemented features are well made.
 
-**Problems**¨
-
-We learned that in software development 10% of time is used to create new features and 90% of time goes to solving all the bugs the features caused. 
+We encountered major **problems** on all the features we implemented. Many times the addition of a new feature broke other parts of the system. Generally, hardest parts of development were related to working with the database, models and AJAX calls. We first tried to work with Django's generic views, but ended up in using own def views. We learned that in software development 10% of time is used to create new features and 90% of time goes to solving all the bugs the features caused. 
 
 ### 3.2 Initial Plan
 We begin our project by creating few visual interpretations of our ideas to establish a common vision on how our platform should look like.  We plan to implement all the mandatory requirements as well as we possibly can to get max points from each item on the list. However, we are interested in implementing multiple additional features for our personal learning, but also to cover if mistakes happen in implementing mandatory requirements. 
