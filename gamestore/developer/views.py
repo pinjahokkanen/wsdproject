@@ -48,6 +48,7 @@ class GameCreate(LoginRequiredMixin,CreateView):
         self.object = form.save()
         user = self.request.user
 
+        # Add current user as developer
         user.profile.developed_games.add(self.object)
 
         # Add Game
@@ -57,7 +58,7 @@ class GameCreate(LoginRequiredMixin,CreateView):
         new_state = GameState(game = self.object, user = user.profile, timestamp = datetime.datetime.now())
         new_state.save()
 
-        ## Add current user as developer
+        
         return HttpResponseRedirect('/developer/')
 
 

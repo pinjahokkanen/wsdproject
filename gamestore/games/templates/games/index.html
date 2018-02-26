@@ -32,8 +32,12 @@
 					<img class="card-image-top" src="{% static "img/Nan.png" %}"  alt="img of game"/>
 				{% endif%}
 
+				<div class="card-img-overlay dev-buttons">
+						<span class="badge badge-warning">{{game.category}}</span>
+				</div>
+
 				<h4 class="game-name text-white ellipsis"><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
-				<p class="text-white foot">Developer: <span class="badge badge-pill badge-secondary">{{game.developer}}</span></p>
+				<p class="text-white foot">By: <span class="badge badge-pill badge-secondary">{{game.developer}}</span></p>
 			</li>
 		</div>
 		{% endfor %}
@@ -52,8 +56,13 @@
 				{% else %}
 					<img class="card-image-top" src="{% static "img/Nan.png" %}"  alt="img of game"/>
 				{% endif%}
+
+				<div class="card-img-overlay dev-buttons">
+						<span class="badge badge-warning">{{game.category}}</span>
+				</div>
+				
 				<h4 class="game-name ellipsis"><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
-				<p class="text-white">Developer: <span class="badge badge-pill badge-light">{{game.developer}}</span></p>
+				<p class="text-white">By: <span class="badge badge-pill badge-light">{{game.developer}}</span></p>
 			</li>
 			</div>
 			{% endif %}

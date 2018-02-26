@@ -6,17 +6,16 @@
 {% block content %}
 
 
-<!-- TO DO: EMPTY CART VIEW -->
-
-    <div class="" style="max-width: 700px;">
+<div class="" style="max-width: 700px;">
         
 
         {% if cart.games %}
         <h1 class="cart-header" id="local-title">Cart</h1>
         {% for game in cart.games %}
             <div id="game-{{game.id}}" class="card bg-light border-secondary mb-3 cart-item">
+
                 <div class="card-block ">
-                    <h5 class="">{{ game.name }}</h5>
+                    <h5 class="">{{ game.name }}</h5> 
                     <span class="card-text"> By: {{game.developer}}</span>
                     <span class="price-tag">Price: {{game.price}}</span>
 
@@ -30,11 +29,14 @@
                 
         {% endfor %}
 
+
+
         <div style="padding-top: 10px;clear: both;">
             <hr>
+            <a class="btn btn-secondary .btn-sm" href="/games/" role="button"> Continue shopping</a>
             <form action="{% url 'games:orders' %}" method="POST">
                 {% csrf_token %}
-            <input type="submit" class="btn btn-success btn-block" value="Send Order">
+            <input type="submit" class="btn btn-success btn-block" value="Go to checkout">
             </form>
         </div>
 
@@ -46,8 +48,11 @@
         {% endif%}
 
 
+{% comment %}
+    Function for removing games from cart
+{% endcomment %}
 
-    </div>
+</div>
 
      <script type="text/javascript">
 
