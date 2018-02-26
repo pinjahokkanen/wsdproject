@@ -11,13 +11,9 @@
 
 Our team consists of two second year students and a fourth year student, all from Information Networks major. We all have some experience on front-end development techniques and UI design, but have never worked with Django before. 
 
-## **2. Goal**
-Our first goal is to develop a well made and neat platform, that has all the mandatory requirements implemented thoroughly to ensure the basic functionalities of the service. We aim to emphasise the usability and user experience of the service, thus make it user-friendly and visually pleasing using common web design principles. Our service aims to cater the needs of our potential users and we will have a user centered approach in our business model, development and design. Since multiple displays and connectedness are important factors influencing web development, we intend to make the platform responsive and have proper social media integrations. 
-	
-Also, we believe that this project would be a great part to each of our personal portfolio, which is why we are ready to invest our efforts in creating a quality platform.
+## **FINAL SUBMISSION**
 
-## **3. Features**
-### 3.1 Development
+### Development
 
 Our start was slow, due to not understanding how to implement the development environment. We tried to take shortcuts with boilerplates, but these efforts were unsuccesful. Also, we realized that this was also not allowed and hence started the project from scratch. 
 
@@ -27,12 +23,7 @@ Our biggest **success** was persistance in creating a working entity. We believe
 
 We encountered major **problems** on all the features we implemented. Many times the addition of a new feature broke other parts of the system. Generally, hardest parts of development were related to working with the database, models and AJAX calls. We first tried to work with Django's generic views, but ended up in using own def views. We learned that in software development 10% of time is used to create new features and 90% of time goes to solving all the bugs the features caused. 
 
-### 3.2 Initial Plan
-We begin our project by creating few visual interpretations of our ideas to establish a common vision on how our platform should look like.  We plan to implement all the mandatory requirements as well as we possibly can to get max points from each item on the list. However, we are interested in implementing multiple additional features for our personal learning, but also to cover if mistakes happen in implementing mandatory requirements. 
-
-Practical implementation will rely on course material, Django’s own documentation and guides found on the internet on Django. We will probably utilize external libraries and resources to increase development speed, naturally in the limitations of course learning objectives and allowance of open-source licenses.
-
-### 3.3 Mandatory requirements **implemented**:
+### Mandatory requirements **implemented**:
 	
 >**Authentication** 
 	 - Utilization of Django Auth 
@@ -75,7 +66,7 @@ We believe our *Quality of Work* counts for **75 points**
 	- Use of management methods to increase team productivity, communication and efficiency
 	- Making good documentation of the project 
 
-### 3.4  Implemented extra features
+### Implemented extra features
 
 > **3rd party login:** 
 > Using Django Social third party login is possible using Facebook API.
@@ -93,11 +84,169 @@ We believe our implementation of *Mobile friendliness* counts for **50 points**
 > Social media sharing is possible on Facebook, Google+ and Twitter. 
 We believe our implementation of *Social Media Sharing* counts for **50 points**
 
-### 3.5 Division of Work
+### Division of Work
 
 In principle, everyone took part in making each part of the platform. Pinja's main contribution was on making the Site communicate with games and implementing the highscores service. Pinja also contributed largely to the implementation of Profiles. She also created the site's own game. Tatu's main focus was on the Profiles and its activation and password changing service. He had a huge impact on the site's visual appearance and front-end functionality (e.g. nav bar, responsivness). Leevi implemented the Store & Cart system and the Developer section of the site. He also had major impact on the site base UX and front-end functionality (e.g. single game view). This kind of division of labour allowed all to work individually and therefore it allowed asynchronous development. 
 
-### 3.6 Model 
+## **PROJECT PLAN**
+
+We begin our project by creating few visual interpretations of our ideas to establish a common vision on how our platform should look like.  We plan to implement all the mandatory requirements as well as we possibly can to get max points from each item on the list. However, we are interested in implementing multiple additional features for our personal learning, but also to cover if mistakes happen in implementing mandatory requirements. 
+	
+Practical implementation will rely on course material, Django’s own documentation and guides found on the internet on Django. We will probably utilize external libraries and resources to increase development speed, naturally in the limitations of course learning objectives and allowance of open-source licenses. 
+
+### 3.1 Mandatory requirements to be implemented:
+	
+>**Authentication** 
+	 - Utilization of Django Auth 
+	 - Login, logout, registration
+	 - Email validation using Django’s built in email back end system
+
+>**Basic player functionalities**
+	 - Buying of games and payment system using Niksula payments 
+	 - Play games
+	 - Basic security restrictions
+
+>**Basic developer functionalities**
+	- Adding of games 
+	-  Sales statistics and analysis tool 
+	-  Security restrictions
+
+>**Game/service interaction**
+	 - postMessage() methods from the game to the platform for saving
+   information, such as highscores Messages from the service to the game
+
+>**Quality of Work**
+	 - Use of quality programming practises (DRY, refactoring, commenting)
+	 - Utilization of HCI methods to develop a quality UI
+	 - Running tests on the service
+
+>**Non-functional requirements**
+	- Use of management methods to increase team productivity, communication and efficiency
+	- Making good documentation of the project 
+
+### 3.2  Additional features
+
+> **3rd party login:** 
+> We aim to integrate and enable logins from other
+> services. Implementation will rely on Google’s and Facebook’s own API
+> guidelines and best practices.
+> 
+> **RESTful API:** 
+> We want to investigate is this something we can
+> implement. We do not have experience to implement this, so this will
+> most likely be the module that requires most research on the team’s
+> behalf.
+> 
+> **Own game:** 
+> We all have experience in coding simple Javascript games,
+> and therefore we are eager to develop our own game to the platform. We
+> have plans to make the game a showcase of our platforms capabilities.
+> A possible shortcut to take could be the use of Phaser library so we
+> would not have to create our own game engine. 
+> 
+> **Mobile friendly:**
+> Responsive web design will be our main design
+> principle, so this feature will emerge as a side product of our work.
+> Implementation relies heavily on the experience that team members have
+> from designing websites and lessons learned on course ‘CS-C1180 -
+> Verkkojulkaisemisen perusteet’.
+> 
+> **Social media sharing:** 
+> Like the the third party login we aim to
+> implement game sharing on social media for advertising games as online
+> advertising is currently a major channel to increase sales. Like 3rd
+> party login, the implementation will rely on social media sites’ API
+> guidelines.
+
+
+
+### 3.3 Priorities
+
+We will have two main priorities when developing the service. First, we will focus on the mandatory requirements and basic functionalities, since everything else is built on that. Even great extra features will not compensate insufficient basic functionality of the service. Second, we’ll focus on the usability of our platform. Competition has a big effect on the current market situation, and our team believes that superior user experience leads to a greater market share. After we have ensured that these priorities have been addressed and fill both mandatory and our requirements, we will implement additional features.
+
+### 3.4 Initial Draft of Models
+
+## **2. Goal**
+Our first goal is to develop a well made and neat platform, that has all the mandatory requirements implemented thoroughly to ensure the basic functionalities of the service. We aim to emphasise the usability and user experience of the service, thus make it user-friendly and visually pleasing using common web design principles. Our service aims to cater the needs of our potential users and we will have a user centered approach in our business model, development and design. Since multiple displays and connectedness are important factors influencing web development, we intend to make the platform responsive and have proper social media integrations. 
+	
+Also, we believe that this project would be a great part to each of our personal portfolio, which is why we are ready to invest our efforts in creating a quality platform.
+
+## **3. Plans**
+
+We begin our project by creating few visual interpretations of our ideas to establish a common vision on how our platform should look like.  We plan to implement all the mandatory requirements as well as we possibly can to get max points from each item on the list. However, we are interested in implementing multiple additional features for our personal learning, but also to cover if mistakes happen in implementing mandatory requirements. 
+	
+Practical implementation will rely on course material, Django’s own documentation and guides found on the internet on Django. We will probably utilize external libraries and resources to increase development speed, naturally in the limitations of course learning objectives and allowance of open-source licenses. 
+
+### 3.1 Mandatory requirements to be implemented:
+	
+>**Authentication** 
+	 - Utilization of Django Auth 
+	 - Login, logout, registration
+	 - Email validation using Django’s built in email back end system
+
+>**Basic player functionalities**
+	 - Buying of games and payment system using Niksula payments 
+	 - Play games
+	 - Basic security restrictions
+
+>**Basic developer functionalities**
+	- Adding of games 
+	-  Sales statistics and analysis tool 
+	-  Security restrictions
+
+>**Game/service interaction**
+	 - postMessage() methods from the game to the platform for saving
+   information, such as highscores Messages from the service to the game
+
+>**Quality of Work**
+	 - Use of quality programming practises (DRY, refactoring, commenting)
+	 - Utilization of HCI methods to develop a quality UI
+	 - Running tests on the service
+
+>**Non-functional requirements**
+	- Use of management methods to increase team productivity, communication and efficiency
+	- Making good documentation of the project 
+
+### 3.2  Additional features
+
+> **3rd party login:** 
+> We aim to integrate and enable logins from other
+> services. Implementation will rely on Google’s and Facebook’s own API
+> guidelines and best practices.
+> 
+> **RESTful API:** 
+> We want to investigate is this something we can
+> implement. We do not have experience to implement this, so this will
+> most likely be the module that requires most research on the team’s
+> behalf.
+> 
+> **Own game:** 
+> We all have experience in coding simple Javascript games,
+> and therefore we are eager to develop our own game to the platform. We
+> have plans to make the game a showcase of our platforms capabilities.
+> A possible shortcut to take could be the use of Phaser library so we
+> would not have to create our own game engine. 
+> 
+> **Mobile friendly:**
+> Responsive web design will be our main design
+> principle, so this feature will emerge as a side product of our work.
+> Implementation relies heavily on the experience that team members have
+> from designing websites and lessons learned on course ‘CS-C1180 -
+> Verkkojulkaisemisen perusteet’.
+> 
+> **Social media sharing:** 
+> Like the the third party login we aim to
+> implement game sharing on social media for advertising games as online
+> advertising is currently a major channel to increase sales. Like 3rd
+> party login, the implementation will rely on social media sites’ API
+> guidelines.
+
+### 3.3 Priorities
+
+We will have two main priorities when developing the service. First, we will focus on the mandatory requirements and basic functionalities, since everything else is built on that. Even great extra features will not compensate insufficient basic functionality of the service. Second, we’ll focus on the usability of our platform. Competition has a big effect on the current market situation, and our team believes that superior user experience leads to a greater market share. After we have ensured that these priorities have been addressed and fill both mandatory and our requirements, we will implement additional features.
+
+### 3.4 Initial Draft of Models
+
 
 ![MODELS](https://lh6.googleusercontent.com/F3_drMVUkObKQfPNquZcMsPJ4Q5f-MQsvFOKQ-rfKiyNJYSTEQu0osS5jwPr2MNCsrFlEWNiR6SjmCzaBR5G=w1920-h925)
 
