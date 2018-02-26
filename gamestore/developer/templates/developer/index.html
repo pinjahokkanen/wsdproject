@@ -2,57 +2,63 @@
 
 {% block title %}Developed games{% endblock %}
 
-{% block content %}
-{% load static %}
-<br>
 
-<div class="container" id="dev-zone">
+	{% block stylesheet %}
+	{% load static %}
+    <!-- Rain -->
+
+    {% endblock %}
+
+
+{% block content %}
+
+
+<div class="container page-container">
 
 {% if all_games %}
+<h1 class="" style="max-width: 80%" id="top">Games developed by you</h1>
+
 <div class="row"> 
-<h3 class="gallery mx-auto" style="max-width: 80%" id="top">Games developed by you</h3>
 
-<ul class="gallery mx-auto" style="max-width: 80%">
-	{% for game in all_games %}
-		{% if game.developer == request.user.profile %}
-		<li class="card bg-dark">
-
+{% for game in all_games %}
+	{% if game.developer == request.user.profile %}
+	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 card-item">
+		
 		{% if game.img %}
-			<img class="card-image-top" id="game-img" src={{game.img}} alt="img of game"/>
+			<img class="card-image-top" src={{game.img}} alt="img of game"/>
 		{% else %}
 			<img class="card-image-top" src="{% static "img/Nan.png" %}"  alt="img of game"/>
 		{% endif%}
 
-		<div class="card-img-overlay dev-buttons">
-				<a class="btn-secondary btn-sm" href="{% url 'developer:game-update' game.id %}" role="button"><i class="fas fa-edit"></i></a>
+		
+		<div class="small-buttons">
+			<a class="btn-secondary btn-sm" href="{% url 'developer:game-update' game.id %}" role="button"><i class="fas fa-edit"></i></a>
 			<form action="{% url 'developer:game-delete' game.id %}" method="post">
 				{% csrf_token %}
 				<input type="hidden" name="game_id" value="{{ game.id }}">
-
 				<button type="submit" class="btn-secondary btn-sm">
 					<i class="fas fa-trash-alt"></i> 
 				</button>
 			</form>
-
 		</div>
-			
+
 		<div class="card-title">
 			<a href="/developer/{{ game.id }}/"></a>
 			<h4 class="game-name text-white ellipsis"><a href="/developer/{{ game.id }}/">{{ game.name }}</a></h4>
 		</div>
-
+		
 		<div class="container-fluid">
 			<div class="row">
 				<p class="text-white foot">Developer: <span class="badge badge-pill badge-secondary">{{game.developer}}</span></p>
 			</div>			
 
 		</div>
-		</li>
 
-		{% endif %}
+	</div>
+	{% endif %}
 	{% endfor %}
-</div>
-</ul>
+
+
 
 
 {% else %}

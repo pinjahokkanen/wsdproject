@@ -8,6 +8,8 @@
     <title>{% block title %}Game Store{% endblock %}</title>
 
     <!-- Bootstrap -->
+    <link href="https://fonts.googleapis.com/css?family=Signika" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Maven+Pro" rel="stylesheet">
 
 
     <link href="{% static 'css/bootstrap.css' %} " rel="stylesheet" media="all">
@@ -45,7 +47,7 @@
 
     <div id="navigationbar">
       <nav class="navbar navbar-expand-sm navbar-dark fixed-top" id="site-nav">
-        <div class="container">
+        <div class="container" style="padding: 1px;">
         <div class="logo-holder pulse">
           <a href="/"><img src="{% static "img/logo.png" %}" alt="gamestore logo"/></a>
         </div>
@@ -94,8 +96,6 @@
               <a class="navbar-text-item" href="{% url 'login'%}?next={{request.path}}"><i class="fa fa-power-off"></i> Login</a>
             </li>
             {% endif %}
-
-
 
 
           </ul>
