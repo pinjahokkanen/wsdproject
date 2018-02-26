@@ -3,11 +3,13 @@
 {% block title %}Game Store{% endblock %}
 
 {% block content %}
-{% load static %}
+	{% load static %}
+
+
 
 <!-- CHECKING THAT GAMES EXIST-->
 {% if all_games %}
-<div class="container-fluid top-padding-fix">
+<div class="container-fluid">
 
 <!-- SELECTION BAR TO CHOOSE ONLY GAMES FROM A CERTAIN CATEGORY. CALLS categoriseInventory() function from javascript-->
 	<div class="alert alert-info row" role="alert">
@@ -74,7 +76,7 @@
 		</ul>
 
 	{% else %}
-		<h3 class="top-padding-fix">No games to show</h3>
+		<h3 class="">No games to show</h3>
 	{% endif %}
 </div>
 

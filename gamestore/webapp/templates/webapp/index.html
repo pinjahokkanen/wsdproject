@@ -16,14 +16,29 @@
 
 
 {% block content %}
+<section class="rain">
+<div class="main-container container">
 
 <div class="page-header section-header" style="text-align:  center;margin-top: 100px; z-index: 100;">
 	<h1 style="color:white;">Want to play a game?</h1>
 	<p class="secondary-header" style="color:white;">Yes you do.</p>
 	<a class="navbar-text-item" href="/games"><button class="btn btn--stripe btn--large">Play Games</button></a>
 </div>
+</div>
+</section>
 
-<br>
+
+{% if user.is_active %}
+<!--<p> Your name is {{user}}</p>
+<p>Your bio is {{user.profile.bio}}</p>
+<p>Your games are:</p>
+{% for game in request.user.profile.games.all %}
+  <li>{{ game.name }}</li>
+{% empty %}
+  <p>No games!</p>
+{% endfor %}-->
+{% endif %}
+
 
 
 {% endblock %}
