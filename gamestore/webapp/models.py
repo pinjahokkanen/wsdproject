@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
 
-
+# Extended Django's user model using OneToOne. Using methods for the creation to create a profile object when user object is created, and saving profile when user object is saved.
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     email_confirmed = models.BooleanField(default=False)
@@ -18,7 +18,7 @@ class Profile(models.Model):
     def __unicode__(self):
         return str(self.user.username) #How viewed in django admin, same as __str__ in python2
     def __str__(self):
-        return self.user.username #These still needed, don't know why
+        return self.user.username
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
@@ -30,9 +30,8 @@ class Profile(models.Model):
         instance.profile.save()
 
 # Setting the name and description of the game. All the names are unique, and primary key (game id, referenced pk) is created automatically by django.
-# States - don't know what this does? Was in the project plan.
-# Added a developer field - foreign key reference to one User (will need to create the user model) that also needs to be a developer. When the user (developer) is deleted, this field is set to NULL (instead of deleting the game). Can also be an admin/platform owner this point, and game would be free?
-# Highcores defined as a ManyToMany - relationship (a game has several highscores from different players (always player's highest score)). No need for a seperate model, since highscores referenced with players_highscores from the User model.
+# Added a developer field - foreign key reference to one User (will need to create the user model) that also needs to be a developer. When the user (developer) is deleted, this field is set to NULL (instead of deleting the game).
+# Giving choices for categories, and then assigning it in the category. Default is the category Undefined.
 class Game(models.Model):
     name = models.CharField(max_length=255, unique=True)
     id = models.AutoField(primary_key=True)
@@ -68,9 +67,8 @@ class Game(models.Model):
             'description': self.description,
             'url': self.url,
             'price': self.price,
-            # 'developer': self.developer.user.username,
-            #'category': self.category.name,
-            #'category_id': self.category.id,
+            'developer': self.developer,
+            'category': self.category,
         }
 
         # Check user ownership of game
@@ -84,19 +82,6 @@ class Game(models.Model):
 
         return result
 
-
-# class Category(models.Model):
-#     name = models.CharField(max_length=30, unique= True)
-#     id = models.AutoField(primary_key=True)
-
-#     def to_json_dict(self):
-#         result = {
-#             'name': self.name,
-#             'id': self.id
-#         }
-#         return result
-#     def __str__(self):
-#         return str(self.name)
 
 class Order(models.Model):
     # Order Id
@@ -119,10 +104,12 @@ class Order(models.Model):
     def __str__(self):
         return str(self.id)
 
+# Creating a gamestate object for each player - game combination. Object is created for developer when they create the game, and players when they purchase it.
+# Holds the gamestate as a text field, and the player's highscore in IntegerField score. The state - field can also contain a score, but during save the score will be checked. If bigger than current highscore, the score -field is updated, if not, score field stays the same.
 class GameState(models.Model):
     game = models.ForeignKey('Game', on_delete=models.CASCADE)
     user = models.ForeignKey('Profile', on_delete=models.CASCADE)
-    score = models.IntegerField(blank=True, null=True, default=0) #needs to be changed to highscore, since gamestate also saves score
+    score = models.IntegerField(blank=True, null=True, default=0)
     state = models.TextField(blank=True, null=True)
     timestamp = models.DateTimeField()
 

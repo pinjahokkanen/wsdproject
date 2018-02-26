@@ -6,8 +6,10 @@ app_name = 'developer'
 
 
 urlpatterns = [
-	# Developer pages
+	# Developed games
 	re_path(r'^$', views.IndexView.as_view(), name='index'),
+
+	# Single developed game
 	re_path(r'^(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='developedgame'),
 
 	# /developer/add

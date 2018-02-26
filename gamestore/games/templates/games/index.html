@@ -7,60 +7,76 @@
 
 <!-- CHECKING THAT GAMES EXIST-->
 {% if all_games %}
-<br>
-<p><b>Show only games from category: </b>
-<select onchange="categoriseInventory()" id="inventory_selection">
-    <option value="ALL">All Games</option>
-    <option value="ACTION">Action</option>
-    <option value="ADVENTURE">Adventure</option>
-    <option value="PUZZLE">Puzzle</option>
-		<option value="SPORTS">Sports</option>
-    <option value="EDUCATIONAL">Educational</option>
-		<option value="UNDEFINED">Undefined</option>
-</select>
-</p>
-<!-- SHOWING USER'S INVENTORY OF GAMES (BOUGHT & DEVELOPED GAMES) -->
-	<h3 class="gallery" id="top">Your game library</h3>
-	<br>
-	<ul class="gallery">
-		{% for game in request.user.profile.games.all %}
-		<div class={{ game.category }}>
-			<li class="card bg-dark">
-				{% if game.img %}
-					<img class="card-image-top" id="game-img" src={{game.img}} alt="img of game"/>
-				{% else %}
-					<img class="card-image-top" src="{% static "img/Nan.png" %}"  alt="img of game"/>
-				{% endif%}
+<div class="container-fluid top-padding-fix">
 
-				<h4 class="game-name text-white ellipsis"><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
-				<p class="text-white foot">Developer: <span class="badge badge-pill badge-secondary">{{game.developer}}</span></p>
-			</li>
-		</div>
-		{% endfor %}
-	</ul>
+<!-- SELECTION BAR TO CHOOSE ONLY GAMES FROM A CERTAIN CATEGORY. CALLS categoriseInventory() function from javascript-->
+	<div class="alert alert-info row" role="alert">
+		<b>Show games: </b> &nbsp;
+		<select onchange="categoriseInventory()" id="inventory_selection">
+		    <option value="ALL">All Games</option>
+		    <option value="ACTION">Action</option>
+		    <option value="ADVENTURE">Adventure</option>
+		    <option value="PUZZLE">Puzzle</option>
+				<option value="SPORTS">Sports</option>
+		    <option value="EDUCATIONAL">Educational</option>
+				<option value="UNDEFINED">Undefined</option>
+		</select>
+	</div>
 
-<!-- SHOWING THE GAMES NOT IN USERS INVENTORY -->
-	<h3 class="gallery"> Game store </h3>
+	<!-- SHOWING USER'S INVENTORY OF GAMES (BOUGHT & DEVELOPED GAMES) -->
+		<h3 class="gallery" >Your game library</h3>
+		<br>
+		<ul class="gallery">
+			{% for game in request.user.profile.games.all %}
+			<div class={{ game.category }}> <!-- Wraps in a div with the category as a class, in javascript changes display settings-->
+				<li class="card bg-dark">
+					{% if game.img %}
+						<img class="card-image-top" id="game-img" src={{game.img}} alt="img of game"/>
+					{% else %}
+						<img class="card-image-top" src="{% static "img/Nan.png" %}"  alt="img of game"/>
+					{% endif%}
 
-	<ul class="gallery">
-		{% for game in all_games %}
-		 {% if game not in request.user.profile.games.all%}
-		 <div class={{ game.category }}>
-			<li class="card bg-secondary">
-				{% if game.img %}
-					<img class="card-image-top" id="game-img" src={{game.img}} alt="img of game"/>
-				{% else %}
-					<img class="card-image-top" src="{% static "img/Nan.png" %}"  alt="img of game"/>
-				{% endif%}
-				<h4 class="game-name ellipsis"><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
-				<p class="text-white">Developer: <span class="badge badge-pill badge-light">{{game.developer}}</span></p>
-			</li>
+					<div class="card-img-overlay dev-buttons">
+							<span class="badge badge-warning">{{game.category}}</span>
+					</div>
+
+					<h4 class="game-name text-white ellipsis"><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
+					<p class="text-white foot">By: <span class="badge badge-pill badge-secondary">{{game.developer}}</span></p>
+				</li>
 			</div>
-			{% endif %}
 			{% endfor %}
-	</ul>
+		</ul>
 
-{% else %}
-	<h3>No games to show</h3>
-{% endif %}
+	<!-- SHOWING THE GAMES NOT IN USERS INVENTORY -->
+		<h3 class="gallery"> Game store </h3>
+
+		<ul class="gallery">
+			{% for game in all_games %}
+			 {% if game not in request.user.profile.games.all%}
+			 <div class={{ game.category }}>
+				<li class="card bg-secondary">
+					{% if game.img %}
+						<img class="card-image-top" id="game-img" src={{game.img}} alt="img of game"/>
+					{% else %}
+						<img class="card-image-top" src="{% static "img/Nan.png" %}"  alt="img of game"/>
+					{% endif%}
+
+					<div class="card-img-overlay dev-buttons">
+							<span class="badge badge-warning">{{game.category}}</span>
+					</div>
+
+					<h4 class="game-name ellipsis"><a href="/games/{{ game.id }}/">{{ game.name }}</a></h4>
+					<p class="text-white">By: <span class="badge badge-pill badge-light">{{game.developer}}</span></p>
+				</li>
+				</div>
+				{% endif %}
+				{% endfor %}
+		</ul>
+
+	{% else %}
+		<h3 class="top-padding-fix">No games to show</h3>
+	{% endif %}
+</div>
+
+
 {% endblock %}

@@ -25,7 +25,11 @@ SECRET_KEY = 'hxmxwy11a$=5oi!w5d901)3e%=+ej27#-ary_8$bw_8=*ld6ed'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+'localhost',
+'127.0.0.1',
+'.protected-hamlet-88117.herokuapp.com',
+]
 
 
 # Application definition
@@ -140,6 +144,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),

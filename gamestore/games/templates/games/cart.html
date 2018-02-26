@@ -6,85 +6,46 @@
 {% block content %}
 
 
-<!-- TO DO: EMPTY CART VIEW -->
+<div class="" style="max-width: 700px;">
 
-    <div class="" style="max-width: 700px;">
-        
 
         {% if cart.games %}
         <h1 class="cart-header" id="local-title">Cart</h1>
         {% for game in cart.games %}
             <div id="game-{{game.id}}" class="card bg-light border-secondary mb-3 cart-item">
+
                 <div class="card-block ">
                     <h5 class="">{{ game.name }}</h5>
                     <span class="card-text"> By: {{game.developer}}</span>
                     <span class="price-tag">Price: {{game.price}}</span>
 
-                    <div class="d-flex justify-content-end"> 
+                    <div class="d-flex justify-content-end">
                         <span class="gameRemove badge badge-danger badge-button" onclick="removeList({{ game.id }})">REMOVE</span>
                     </div>
                 </div>
 
             </div>
 
-                
+
         {% endfor %}
+
+
 
         <div style="padding-top: 10px;clear: both;">
             <hr>
+            <a class="btn btn-secondary .btn-sm" href="/games/" role="button"> Continue shopping</a>
             <form action="{% url 'games:orders' %}" method="POST">
                 {% csrf_token %}
-            <input type="submit" class="btn btn-success btn-block" value="Send Order">
+            <input type="submit" class="btn btn-success btn-block" value="Go to checkout">
             </form>
         </div>
 
         {% else %}
-        
+
         <h1 class="cart-header" id="local-title">Cart is empty</h1>
         <hr>
         <a type="button" class="btn btn-secondary" href="/games/">Look for games</a>
         {% endif%}
 
-
-
-    </div>
-
-     <script type="text/javascript">
-
-        //add active class to the navbar item
-        $( "#navbar-Profile" ).addClass('active');
-
-        //initialize the table
-        $( document ).ready(function() {
-            $("#tableId").bootstrapTable();
-        });
-
-        //this function is used to remove a game from the cart.
-        // It notifies to the server and remove the game from the user interface.
-         function removeList(gameid) {
-            $.ajax({
-                method:'POST',
-                url: "{% url 'games:cart' %}",
-                data: {
-                    csrfmiddlewaretoken: "{{ csrf_token  }}",
-                    game:gameid,
-                    action:'remove'
-                },
-                success:function(data) {
-                    if (data.error) {
-                        alert("Error: " + data.error);
-                    }
-                    else{
-                        $('#game-'+gameid).fadeOut(400,function(){this.remove()});
-                    }
-                },
-                error: function (data) {
-                    if (data.error) {
-                        alert("There was a problem during the request. Please try again.");
-                    }
-                }
-            })
-        }
-     </script>
-
+</div>
 {% endblock %}

@@ -4,7 +4,7 @@
 {% block content %}
 {% load static %}
 
-<!-- User does not own the game -->
+<!-- Check if user the developer of the game. -->
 {% if game.developer == request.user.profile %}
 
 <input type="hidden" id="gameobject" name="gameobject" value="{{game}}"/>
@@ -30,7 +30,7 @@
 
       <p></p>
 
-      
+
 
       <button type="submit" class="btn btn-danger btn-md">
           <i class="fas fa-trash-alt"></i></button>
@@ -47,6 +47,7 @@
 
   <div class="col">
     <label class="font-weight-bold">Sales statistics:</label>
+		<!-- Receiving the list of orders, counting the total amount, earned money and showing exact payment dates. -->
       <p>Game has been bought <b>{{view.statistics.count }}</b> times, total amount earned is <b>{% widthratio view.statistics.count 1 game.price %}€</b></p>
       <p>Exact payment dates:</p>
       <ul>

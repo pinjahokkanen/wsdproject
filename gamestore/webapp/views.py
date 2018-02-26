@@ -51,11 +51,12 @@ class UserFormView(View):
             raw_password = form.cleaned_data['password']
             developer = form.cleaned_data.get('developer')
             email = form.cleaned_data.get('email')
-            #save password
+            # Save password
             user.set_password(raw_password)
 
             user.save()
 
+            # Add permissions
             if developer:
                 profile = user.profile
                 profile.developer = True
@@ -136,8 +137,8 @@ def update_profile(request):
                     return HttpResponseRedirect('/profile/')
 
         return render(request, "profile.html", {
-            "noodle": pk,
-            "noodle_form": user_form,
+            "profile": pk,
+            "profile_form": user_form,
             "formset": formset,
         })
     else:

@@ -5,8 +5,7 @@ from django.contrib.auth.models import Group
 from webapp.models import Game
 
 
-## For adding and removing games ## 
-
+## For adding and removing games from cart## 
 class CartForm(forms.Form):
 	actions = forms.ChoiceField(choices=[('add', 'Add Game'), ('remove', 'Remove Game')], required=True)
 	game = forms.ModelChoiceField(required=True, queryset=None)

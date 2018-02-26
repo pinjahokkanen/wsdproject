@@ -5,11 +5,11 @@
 {% block content %}
 
 <div class="container" style="padding-top: 20px">
-				
+
 	<form class="form-control col-sm-8" action="" method="post" >
 		{% csrf_token %}
 		{% include 'developer/form-template.html' %}
-		<div class="form-row"> 
+		<div class="form-row">
 			<div class="form-group col-md-6">
 				<input type="submit" class="btn btn-success" value="Submit game"  onclick="location.href='{% url 'developer:index' %}" ">
 			</div>
