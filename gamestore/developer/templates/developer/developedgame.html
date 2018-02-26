@@ -4,7 +4,7 @@
 {% block content %}
 {% load static %}
 
-<!-- User does not own the game -->
+<!-- Check if user the developer of the game. -->
 {% if game.developer == request.user.profile %}
 
 <input type="hidden" id="gameobject" name="gameobject" value="{{game}}"/>

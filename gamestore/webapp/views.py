@@ -51,11 +51,12 @@ class UserFormView(View):
             raw_password = form.cleaned_data['password']
             developer = form.cleaned_data.get('developer')
             email = form.cleaned_data.get('email')
-            #save password
+            # Save password
             user.set_password(raw_password)
 
             user.save()
 
+            # Add permissions
             if developer:
                 profile = user.profile
                 profile.developer = True

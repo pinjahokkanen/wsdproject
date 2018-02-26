@@ -1,6 +1,16 @@
 /*NAVIGATION*/
 body {
-	background:#719FB2;
+    background:#719FB2;
+}
+
+@media (max-width: 979px) {
+  body {
+    padding-top: 0px;
+  }
+}
+
+.top-padding-fix {
+  padding-top: 100px
 }
 
 #navigationbar{
@@ -75,7 +85,7 @@ body {
 }
 
 #navigationbar > .navbar {
-	background-color: #FFF;
+	background-color: #FCF7F8;
 }
 
 #library{
