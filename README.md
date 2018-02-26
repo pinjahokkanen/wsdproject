@@ -22,12 +22,12 @@ We begin our project by creating few visual interpretations of our ideas to esta
 	
 Practical implementation will rely on course material, Django’s own documentation and guides found on the internet on Django. We will probably utilize external libraries and resources to increase development speed, naturally in the limitations of course learning objectives and allowance of open-source licenses. 
 
-### 3.1 Mandatory requirements to be implemented:
+### 3.1 Mandatory requirements implemented:
 	
 >**Authentication** 
-	 - Utilization of Django Auth 
-	 - Login, logout, registration
-	 - Email validation using Django’s built in email back end system
+	 - [x] Utilization of Django Auth 
+	 - [x] Login, logout, registration
+	 - [x] Email validation using Django’s built in email back end system
 
 >**Basic player functionalities**
 	 - Buying of games and payment system using Niksula payments 
@@ -52,18 +52,12 @@ Practical implementation will rely on course material, Django’s own documentat
 	- Use of management methods to increase team productivity, communication and efficiency
 	- Making good documentation of the project 
 
-### 3.2  Additional features
+### 3.2  Implemented features
 
 > **3rd party login:** 
 > We aim to integrate and enable logins from other
 > services. Implementation will rely on Google’s and Facebook’s own API
 > guidelines and best practices.
-> 
-> **RESTful API:** 
-> We want to investigate is this something we can
-> implement. We do not have experience to implement this, so this will
-> most likely be the module that requires most research on the team’s
-> behalf.
 > 
 > **Own game:** 
 > We all have experience in coding simple Javascript games,
