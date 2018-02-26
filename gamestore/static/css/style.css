@@ -32,7 +32,7 @@ body {
 
 .navbar-toggler {
 	border: none!important;
-	color: white!important;
+	color: #FCF7F8!important;
 }
 
 .main-container {
@@ -73,6 +73,7 @@ button:focus {
 
 .dropdown-menu {
 	background-color: #FCF7F8;
+	border-radius:0;
 }
 
 #site-nav {
@@ -168,7 +169,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 /*License ends here*/
 
 .game-name a {
-	color: white;
+	color: #FCF7F8;
 }
 
 .game-name a:hover{
@@ -245,7 +246,7 @@ div.game h3 {
 
 div.game h3 a{
 	text-decoration: none;
-	color: white;
+	color: #FCF7F8;
 }
 
 .nav-element {
@@ -270,7 +271,7 @@ ul.game-share li a {
     border-style: solid;
     border-width: 1px;
     font-weight: 800;
-    color: white;
+    color: #FCF7F8;
     display:inline-block;
     height: 30px;
     width: 60px;
@@ -287,7 +288,7 @@ ul.game-share li a {
 }
 
 #game-name a {
-	color: white;
+	color: #FCF7F8;
 	text-decoration: none;
 }
 
@@ -419,7 +420,7 @@ ul.game-share li a {
 }
 
 .dropdown-menu {
-	left: -90px!important;
+	left: -95px!important;
 }
 
 @-webkit-keyframes stripe-slide {
@@ -483,7 +484,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   text-decoration: none;
   text-transform: uppercase;
   padding: 16px 36px 22px;
-  background-color: #fff;
+  background-color: #FCF7F8;
   color: #666;
   border: 2px solid #666;
   border-radius: 6px;
@@ -515,11 +516,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 }
 .btn--stripe:hover {
   background-color: #666;
-  color: #fff;
+  color: #FCF7F8;
   border-color: #000;
 }
 .btn--stripe:hover:after {
-  background-image: repeating-linear-gradient(45deg, #fff, #fff 1px, transparent 2px, transparent 5px);
+  background-image: repeating-linear-gradient(45deg, #FCF7F8, #FCF7F8 1px, transparent 2px, transparent 5px);
   border-top: 1px solid #000;
   -webkit-animation: stripe-slide 12s infinite linear forwards;
           animation: stripe-slide 12s infinite linear forwards;
