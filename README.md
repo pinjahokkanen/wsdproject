@@ -14,6 +14,7 @@ Our team consists of two second year students and a fourth year student, all fro
 ## **FINAL SUBMISSION**
 Heroku url: http://protected-hamlet-88117.herokuapp.com/
 Test users (since signing up requires confirming email, and link comes to heroku log):
+
 	1. 	Username: test_developer
 			Password: testdeveloper
 
