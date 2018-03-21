@@ -165,6 +165,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SOCIAL_AUTH_FACEBOOK_KEY = '146315656046356'  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = '9658861f6c904d33166d8a2e23d94efc'  # App Secret
 
+SOCIAL_AUTH_TWITTER_KEY = '	fJA77N8ylZTuaX8z9gxVeuYtX'
+SOCIAL_AUTH_TWITTER_SECRET = '	rforeygnrgrtsOffTXGDsfKC22fF3QSAYdSE6J1vWwg09VA9YA'
 
 # Only when running in Heroku
 if "DYNO" in os.environ:
