@@ -3,7 +3,6 @@
 {% load static %}
 
 {% block stylesheet %}
-  <link rel="stylesheet" href="{% static 'css/webapp.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -23,11 +22,11 @@
     <button type="submit"  class="btn btn-primary">Sign up</button>
     <hr>
 
-   
+
     Already have an account? <a href="#">Log in</a> <br>
     <a href="{% url 'social:begin' 'facebook' %}"> Or SignUp With Facebook</a>
 
- 
+
   </form>
 </div>
 {% endblock %}
